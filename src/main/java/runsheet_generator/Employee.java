@@ -1,22 +1,24 @@
+package runsheet_generator;
+
 public class Employee {
 	Name name;
 	boolean hasCDL;
 	boolean lineInstructor;
-	
+
 	public Employee(String lastName, String firstName) {
 		this.hasCDL = getCDLStatus(lastName);
 		this.lineInstructor = getLineInstructorStatus(lastName);
 		this.name = new Name(lastName, firstName);
 	}
-	
+
 	private boolean getCDLStatus(String lastName) {
 		return !lastName.toLowerCase().replaceAll(" ", "").contains("(nocdl)");
 	}
-	
+
 	private boolean getLineInstructorStatus(String lastName) {
 		return lastName.toLowerCase().replaceAll(" ", "").contains("(lineinstructor)");
 	}
-	
+
 	@Override
 	public String toString() {
 		return (

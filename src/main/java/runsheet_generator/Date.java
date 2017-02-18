@@ -1,3 +1,5 @@
+package runsheet_generator;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -5,7 +7,7 @@ import java.util.Locale;
 public class Date {
 	int year, month, day;
 	String dayOfWeek;
-	
+
 	public Date(String dateStr) throws ParseException {
 		this.year = Integer.parseInt(
 				dateStr.substring(
@@ -21,7 +23,7 @@ public class Date {
 								String.format("%d-%d-%d",
 										this.year, this.month, this.day)));
 	}
-	
+
 	public boolean equals(Date other) {
 		return (
 				this.year == other.year
@@ -29,7 +31,7 @@ public class Date {
 				&& this.day == other.day
 		);
 	}
-	
+
 	public String toString() {
 		return (
 				this.dayOfWeek + ", " + (
@@ -57,7 +59,7 @@ public class Date {
 							"November"
 					: "December"
 				)
-				
+
 				+ " " + this.day + ", " + this.year
 		);
 	}

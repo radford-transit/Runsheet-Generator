@@ -1,3 +1,5 @@
+package runsheet_generator;
+
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -8,18 +10,18 @@ import org.apache.commons.csv.*;
 
 public class Schedule {
 	Date date;
-		
+
 	ArrayList<RouteDrivingShift> routeDrivingShifts =
 			new ArrayList<RouteDrivingShift>();
 	ArrayList<NonRouteDrivingShift> nonRouteDrivingShifts =
 			new ArrayList<NonRouteDrivingShift>();
 	ArrayList<TrainingShift> trainingShifts =
 			new ArrayList<TrainingShift>();
-	
+
 	// Shift changes
 	ArrayList<ShiftChange> shiftChanges =
 			new ArrayList<ShiftChange>();
-	
+
 	// WhenToWork schedule CSV column header values
 	class Header {
 		static final String SHIFT_ID = "Shift ID";
@@ -38,7 +40,7 @@ public class Schedule {
 		static final String FIRST_NAME = "Employee First Name";
 		static final String LAST_NAME = "Employee Last Name";
 	}
-	
+
 	// WhenToWork schedule CSV column header mapping
 	private static final String[] FILE_HEADER_MAPPING = {
 		Header.SHIFT_ID, Header.SCHEDULE_ID,
@@ -49,13 +51,13 @@ public class Schedule {
 		Header.DAY_OF_WEEK, Header.FULL_NAME,
 		Header.FIRST_NAME, Header.LAST_NAME
 	};
-	
+
 	public Schedule(String fileName, Date date, List<String> ignoredPositions) throws Exception {
 		this.date = date;
-		
+
 		// Create CSVFormat object. New line separates records.
 		CSVFormat scheduleCSVFormat = CSVFormat.DEFAULT.withHeader(FILE_HEADER_MAPPING);
-		
+
 		// File reader
 		FileReader scheduleCSVReader = null;
 		try {
@@ -72,7 +74,7 @@ public class Schedule {
 			e.printStackTrace();
 			System.out.println("error: IOException when attempting to parse schedule CSV file");
 		}
-		
+
 		// Schedule CSV records
 		List<CSVRecord> scheduleCSVRecords = null;
 		try {
@@ -81,11 +83,11 @@ public class Schedule {
 			e.printStackTrace();
 			System.out.println("error: IOException when attempting to parse (scheduleCSVRecords");
 		}
-		
+
 		// Read the CSV file records starting from the second record to skip the header
 		for (int i = 1; i < scheduleCSVRecords.size(); i++) {
 			CSVRecord scheduleCSVRecord = scheduleCSVRecords.get(i);
-			
+
 			// Only add shifts with selected date and not in ignored list
 			if (new Date(scheduleCSVRecord.get(Header.DATE)).equals(this.date)
 					&& !ignoredPositions.contains(scheduleCSVRecord.get(Header.POSITION_NAME))) {
@@ -129,7 +131,7 @@ public class Schedule {
 		this(fileName, date, ignoredPositions);
 		this.shiftChanges = shiftChanges(firstShiftChangeHour);
 	}
-	
+
 	private void add(Shift shift) throws Exception {
 		if (shift instanceof RouteDrivingShift)
 			this.add((RouteDrivingShift) shift);
@@ -137,60 +139,60 @@ public class Schedule {
 			this.add((TrainingShift) shift);
 		else this.add((NonRouteDrivingShift) shift);
 	}
-	
+
 	private void add(RouteDrivingShift shift) throws Exception {
 		if (this.routeDrivingShifts.size() == 0)
 			this.routeDrivingShifts.add(shift);
-			
+
 		else if (this.routeDrivingShifts.size() == 1)
 			if (shift.compareTo(this.routeDrivingShifts.get(0)) == -1)
 				this.routeDrivingShifts.add(0, shift);
 			else
 				this.routeDrivingShifts.add(shift);
-			
+
 		else
 			for (int i = 0; i < this.routeDrivingShifts.size(); i++)
 				if (shift.compareTo(this.routeDrivingShifts.get(i)) == -1) {
 					this.routeDrivingShifts.add(i, shift);
 					break;
 				}
-					
+
 				else if (i == this.routeDrivingShifts.size() - 1) {
 					this.routeDrivingShifts.add(shift);
 					break;
 				}
 	}
-	
+
 	private void add(NonRouteDrivingShift shift) {
 		this.nonRouteDrivingShifts.add(shift);
 	}
-	
+
 	private void add(TrainingShift shift) {
 		if (this.trainingShifts.size() == 0)
 			this.trainingShifts.add(shift);
-		
+
 		else if (this.trainingShifts.size() == 1)
 			if (shift.compareTo(this.trainingShifts.get(0)) == -1)
 				this.trainingShifts.add(0, shift);
 			else
 				this.trainingShifts.add(shift);
-		
+
 		else
 			for (int i = 0; i < this.trainingShifts.size(); i++)
 				if (shift.compareTo(this.trainingShifts.get(i)) == -1) {
 					this.trainingShifts.add(i, shift);
 					break;
 				}
-				
+
 				else if (i == this.trainingShifts.size() - 1) {
 					this.trainingShifts.add(shift);
 					break;
 				}
 	}
-	
+
 	private ArrayList<ShiftChange> shiftChanges(int firstShiftChangeHour) {
 		ArrayList<ShiftChange> shiftChanges = new ArrayList<ShiftChange>();
-			
+
 		if (this.routeDrivingShifts.size() == 0) return shiftChanges;
 		else if (this.routeDrivingShifts.size() == 1) {
 			if (this.routeDrivingShifts.get(0).time.start.hour >= firstShiftChangeHour)
@@ -209,11 +211,11 @@ public class Schedule {
 								new ShiftChangeID(
 										this.routeDrivingShifts.get(0).period,
 										1)));
-					
+
 			int nthShiftChangeInPeriod = 1;
-					
+
 			char currentPeriod = this.routeDrivingShifts.get(0).period;
-					
+
 			for (int i = 1; i < this.routeDrivingShifts.size(); i++) {
 				if (this.routeDrivingShifts.get(i).time.start.hour == firstShiftChangeHour
 						&& this.routeDrivingShifts.get(i).time.start.hour !=
@@ -245,10 +247,10 @@ public class Schedule {
 				}
 			}
 		}
-		
+
 		return shiftChanges;
 	}
-	
+
 	public RouteDrivingShift lastShiftOnRoute(Route route) throws Exception {
 		for (int i = this.routeDrivingShifts.size() - 1; i > 0; i--) {
 			if (route.equals(this.routeDrivingShifts.get(i).route))
@@ -256,7 +258,7 @@ public class Schedule {
 		}
 		throw new Exception();
 	}
-	
+
 	@Override
 	public String toString() {
 		String scheduleStr = "\n-------- Route Driving Shifts --------\n";
@@ -271,7 +273,7 @@ public class Schedule {
 		scheduleStr = scheduleStr + "\n-------- SHIFT CHANGES --------\n";
 		for (int i = 0; i < this.shiftChanges.size(); i++)
 			scheduleStr = scheduleStr + shiftChanges.get(i) + "\n";
-		
+
 		return scheduleStr;
 	}
 }

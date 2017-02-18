@@ -1,8 +1,10 @@
+package runsheet_generator;
+
 public class TrainingShift extends Shift implements Comparable<TrainingShift> {
 	public TrainingShift(String name, TimePeriod time, Employee employee) {
 		super(name, time, employee);
 	}
-	
+
 	@Override
 	public int compareTo(TrainingShift other) {
 		return (

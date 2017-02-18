@@ -1,9 +1,11 @@
+package runsheet_generator;
+
 public class NonRouteDrivingShift extends Shift implements Comparable<NonRouteDrivingShift> {
 	public NonRouteDrivingShift(String name, TimePeriod time,
 			Employee employee) {
 		super(name, time, employee);
 	}
-	
+
 	@Override
 	public int compareTo(NonRouteDrivingShift other) {
 		return (
