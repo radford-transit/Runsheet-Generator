@@ -4,6 +4,7 @@ Generates a Radford Transit runsheet, in the XSLS file format, from a CSV file e
 
 ## Build
 If you have Gradle installed, run `gradle build`
+
 Otherwise, in the project's root directory, run `./gradlew build`
 
 ## Dependencies
