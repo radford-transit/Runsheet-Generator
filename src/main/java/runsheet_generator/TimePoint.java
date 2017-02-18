@@ -4,6 +4,11 @@ public class TimePoint implements Comparable<TimePoint> {
 	int hour;
 	int minute;
 
+	/**
+	 * Constructs a TimePoint object
+	 * @param timeStr A String representation of the time in the format HH:MM BM
+	 * @throws Exception
+	 */
 	public TimePoint(String timeStr) throws Exception {
 		// timeStr format: "HH:MM BM"
 		String period = timeStr.substring(timeStr.indexOf(' ') + 1, timeStr.length());
@@ -15,6 +20,11 @@ public class TimePoint implements Comparable<TimePoint> {
 			this.minute = Integer.parseInt(timeStr.substring(timeStr.indexOf(':') + 1, timeStr.indexOf(' ')));
 	}
 
+	/**
+	 * Constructs a TimePoint object
+	 * @param hour The hour of the TimePoint
+	 * @param minute The minute of the TimePoint
+	 */
 	public TimePoint(int hour, int minute) {
 		if (!(minute >= 0 && minute < 60))
 			System.out.println("ERROR: Invalid minute" + minute);
@@ -23,6 +33,9 @@ public class TimePoint implements Comparable<TimePoint> {
 		this.minute = minute;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return hour + ":"
@@ -30,6 +43,9 @@ public class TimePoint implements Comparable<TimePoint> {
 				+ minute;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int compareTo(TimePoint other) {
 		return (

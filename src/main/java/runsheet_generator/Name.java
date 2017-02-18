@@ -4,6 +4,11 @@ public class Name {
 	String last;
 	String first;
 
+	/**
+	 * Constructs a name object
+	 * @param last The last name
+	 * @param first The first name
+	 */
 	public Name(String last, String first) {
 		this.last = last
 				.replaceAll(" ", "")
@@ -12,14 +17,20 @@ public class Name {
 		this.first = first;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return last + ", " + first;
 	}
 
-	public boolean equals(Name other) {
+	@Override
+	public boolean equals(Object other) {
 		return
-				this.last.equals(other.last)
-				&& this.first.equals(other.first);
+				other instanceof Name ?
+					this.last.equals(((Name) other).last)
+					&& this.first.equals(((Name) other).first)
+				: false;
 	}
 }

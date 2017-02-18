@@ -14,6 +14,11 @@ import org.apache.poi.hssf.util.HSSFColor;
 public class Runsheet extends XSSFWorkbook {
 	Sheet sheet = createSheet("Runsheet");
 
+	/**
+	 * Constructs a Runsheet object
+	 * @param schedule A Schedule object to write the runsheet from
+	 * @throws Exception
+	 */
 	public Runsheet(Schedule schedule) throws Exception {
 		super();
 
@@ -118,6 +123,11 @@ public class Runsheet extends XSSFWorkbook {
 		}
 	}
 
+	/**
+	 * Writes a period row on the runsheet
+	 * @param row Row number on the spreadsheet
+	 * @param period Period ID
+	 */
 	private void writePeriodRow(int row, char period) {
 		Row periodRow = sheet.createRow(row);
 

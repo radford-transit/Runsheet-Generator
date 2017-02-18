@@ -8,6 +8,11 @@ public class Date {
 	int year, month, day;
 	String dayOfWeek;
 
+	/**
+	 * Constructs a Date object
+	 * @param dateStr A String representation of the date
+	 * @throws ParseException
+	 */
 	public Date(String dateStr) throws ParseException {
 		this.year = Integer.parseInt(
 				dateStr.substring(
@@ -24,14 +29,24 @@ public class Date {
 										this.year, this.month, this.day)));
 	}
 
-	public boolean equals(Date other) {
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public boolean equals(Object other) {
 		return (
-				this.year == other.year
-				&& this.month == other.month
-				&& this.day == other.day
+			other instanceof Date ?
+				this.year == ((Date)other).year
+				&& this.month == ((Date)other).month
+				&& this.day == ((Date)other).day
+			: false
 		);
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
 	public String toString() {
 		return (
 				this.dayOfWeek + ", " + (

@@ -3,6 +3,11 @@ package main.java.runsheet_generator;
 public class TimePeriod implements Comparable<TimePeriod> {
 	TimePoint start, end;
 
+	/**
+	 * Constructs a TimePeriod object
+	 * @param start The starting time for the TimePeriod
+	 * @param end The ending time for the TimePeriod
+	 */
 	public TimePeriod(TimePoint start, TimePoint end) {
 		this.start = start;
 		/*
@@ -14,11 +19,17 @@ public class TimePeriod implements Comparable<TimePeriod> {
 		this.end = end;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		return start + " - " + end;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int compareTo(TimePeriod other) {
 		return this.start.compareTo(other.start);

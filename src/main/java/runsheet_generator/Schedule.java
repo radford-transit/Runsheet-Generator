@@ -52,6 +52,13 @@ public class Schedule {
 		Header.FIRST_NAME, Header.LAST_NAME
 	};
 
+	/**
+	 * Constructs a Schedule object
+	 * @param fileName Path of WhenToWork export file (CSV)
+	 * @param date Date to get schedule from
+	 * @param ignoredPositions Names of positions to not include in the schedule
+	 * @throws Exception
+	 */
 	public Schedule(String fileName, Date date, List<String> ignoredPositions) throws Exception {
 		this.date = date;
 
@@ -126,12 +133,25 @@ public class Schedule {
 		}
 	}
 
+	/**
+	 * Constructs a Schedule object
+	 * @param fileName Path of WhenToWork export file (CSV)
+	 * @param date Date to get schedule from
+	 * @param ignoredPositions Names of positions to not include in the schedule
+	 * @param firstShiftChangeHour The hour of the first shift change for the day
+	 * @throws Exception
+	 */
 	public Schedule(String fileName, Date date,
 			List<String> ignoredPositions, int firstShiftChangeHour) throws Exception {
 		this(fileName, date, ignoredPositions);
 		this.shiftChanges = shiftChanges(firstShiftChangeHour);
 	}
 
+	/**
+	 * Adds a shift to the Schedule
+	 * @param shift The shift object to add to the Schedule
+	 * @throws Exception
+	 */
 	private void add(Shift shift) throws Exception {
 		if (shift instanceof RouteDrivingShift)
 			this.add((RouteDrivingShift) shift);
@@ -140,6 +160,11 @@ public class Schedule {
 		else this.add((NonRouteDrivingShift) shift);
 	}
 
+	/**
+	 * Adds a route driving shift to the Schedule
+	 * @param shift The route driving shift to add to the Schedule
+	 * @throws Exception
+	 */
 	private void add(RouteDrivingShift shift) throws Exception {
 		if (this.routeDrivingShifts.size() == 0)
 			this.routeDrivingShifts.add(shift);
@@ -163,10 +188,18 @@ public class Schedule {
 				}
 	}
 
+	/**
+	 * Adds a non-route driving shift to the Schedule
+	 * @param shift The non-route driving shift to add to the Schedule
+	 */
 	private void add(NonRouteDrivingShift shift) {
 		this.nonRouteDrivingShifts.add(shift);
 	}
 
+	/**
+	 * Adds a training shift to the Schedule
+	 * @param shift The training shift to add to the Schedule
+	 */
 	private void add(TrainingShift shift) {
 		if (this.trainingShifts.size() == 0)
 			this.trainingShifts.add(shift);
@@ -190,6 +223,13 @@ public class Schedule {
 				}
 	}
 
+	/**
+	 * Gets a list of shift changes, starting with one during the
+	 * provided shift change hour 
+	 * @param firstShiftChangeHour The hour of the first shift change
+	 * @return A list of shift changes, starting with one during the provided
+	 * hour
+	 */
 	private ArrayList<ShiftChange> shiftChanges(int firstShiftChangeHour) {
 		ArrayList<ShiftChange> shiftChanges = new ArrayList<ShiftChange>();
 
@@ -251,6 +291,12 @@ public class Schedule {
 		return shiftChanges;
 	}
 
+	/**
+	 * Gets the last shift on the provided route 
+	 * @param route The route to get the last shift from
+	 * @return The last shift on the provided route
+	 * @throws Exception
+	 */
 	public RouteDrivingShift lastShiftOnRoute(Route route) throws Exception {
 		for (int i = this.routeDrivingShifts.size() - 1; i > 0; i--) {
 			if (route.equals(this.routeDrivingShifts.get(i).route))
@@ -259,6 +305,9 @@ public class Schedule {
 		throw new Exception();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public String toString() {
 		String scheduleStr = "\n-------- Route Driving Shifts --------\n";
