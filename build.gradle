@@ -17,6 +17,6 @@ repositories {
 dependencies {
   // Apache POI 3.15
   compile 'org.lucee:poi:3.15.0'
-  // Apache Commons CSV
+  // Apache Commons CSV 1.4
   compile 'org.apache.commons:commons-csv:1.4'
 }
