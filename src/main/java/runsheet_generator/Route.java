@@ -1,4 +1,4 @@
-package runsheet_generator;
+package main.java.runsheet_generator;
 
 public class Route implements Comparable<Route> {
 	int id;

@@ -1,4 +1,4 @@
-package runsheet_generator;
+package main.java.runsheet_generator;
 
 import java.util.HashMap;
 import java.util.Map;

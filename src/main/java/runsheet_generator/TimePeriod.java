@@ -1,4 +1,4 @@
-package runsheet_generator;
+package main.java.runsheet_generator;
 
 public class TimePeriod implements Comparable<TimePeriod> {
 	TimePoint start, end;

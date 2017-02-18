@@ -1,4 +1,4 @@
-package runsheet_generator;
+package main.java.runsheet_generator;
 
 public class TrainingShift extends Shift implements Comparable<TrainingShift> {
 	public TrainingShift(String name, TimePeriod time, Employee employee) {

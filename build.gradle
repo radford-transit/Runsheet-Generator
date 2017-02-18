@@ -45,11 +45,9 @@ import org.apache.poi.hssf.util.HSSFColor;
 jar {
   manifest {
     attributes(
-      'MainClass' : 'runsheet_generator.RunsheetGenerator'
+      'MainClass' : 'main.java.runsheet_generator.RunsheetGenerator'
     )
   }
 }
 
-//application {
-  mainClassName = "runsheet_generator.RunsheetGenerator"
-//}
+mainClassName = "main.java.runsheet_generator.RunsheetGenerator"

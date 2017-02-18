@@ -1,4 +1,4 @@
-package runsheet_generator;
+package main.java.runsheet_generator;
 
 public class NonRouteDrivingShift extends Shift implements Comparable<NonRouteDrivingShift> {
 	public NonRouteDrivingShift(String name, TimePeriod time,

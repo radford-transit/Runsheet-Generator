@@ -1,4 +1,4 @@
-package runsheet_generator;
+package main.java.runsheet_generator;
 
 public class RouteDrivingShift extends Shift implements Comparable<RouteDrivingShift> {
 	Route route;
