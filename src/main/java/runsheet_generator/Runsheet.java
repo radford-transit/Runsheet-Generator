@@ -56,7 +56,9 @@ public class Runsheet extends XSSFWorkbook {
 				"Shift Change",
 				""
 		};
-
+		
+		// Merge H3 and I3 for Shift Change title
+		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$3:$I$3"));
 
 		for (int i = 0; i < headerValues.length; i++) {
 			Cell headerCell = headersRow.createCell(i);
@@ -110,6 +112,7 @@ public class Runsheet extends XSSFWorkbook {
 			startTimeCell.setCellValue(schedule.routeDrivingShifts.get(i).time.start.toString());
 
 			Cell endTimeCell = shiftRow.createCell(6);
+			endTimeCell.setCellStyle(styles.get("time"));
 			endTimeCell.setCellValue(schedule.routeDrivingShifts.get(i).time.end.toString());
 
 			Cell shiftChangeBeforeCell = shiftRow.createCell(7);
