@@ -98,7 +98,7 @@ public class Runsheet extends XSSFWorkbook {
 
 			Cell busCell = shiftRow.createCell(3);
 			busCell.setCellStyle(styles.get("bus"));
-			busCell.setCellValue(".");
+			busCell.setCellValue("#");
 
 			Cell positionCell = shiftRow.createCell(4);
 			if (!schedule.routeDrivingShifts.get(i).equals(
@@ -116,13 +116,22 @@ public class Runsheet extends XSSFWorkbook {
 			endTimeCell.setCellValue(schedule.routeDrivingShifts.get(i).time.end.toString());
 
 			Cell shiftChangeBeforeCell = shiftRow.createCell(7);
-			shiftChangeBeforeCell.setCellStyle(styles.get("shiftB"));
+			shiftChangeBeforeCell.setCellStyle(styles.get("shiftA"));
 
 			Cell shiftChangeAfterCell = shiftRow.createCell(8);
 			shiftChangeAfterCell.setCellStyle(styles.get("shiftA"));
 		}
 		
-		// Autosize last name, first name, and route columns to text content
+		// Set 0th column width
+		sheet.setColumnWidth(0, 500);
+		// Set bus column width
+		sheet.setColumnWidth(3, 2000);
+		for (int i = 5; i < 8; i++) {
+			sheet.setColumnWidth(i,  2000);
+		}
+		
+		
+		// Autosize last name, first name, and route columns to fit text content
 		sheet.autoSizeColumn(1);
 		sheet.autoSizeColumn(2);
 		sheet.autoSizeColumn(4);
