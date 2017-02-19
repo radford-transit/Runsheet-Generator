@@ -121,6 +121,11 @@ public class Runsheet extends XSSFWorkbook {
 			Cell shiftChangeAfterCell = shiftRow.createCell(8);
 			shiftChangeAfterCell.setCellStyle(styles.get("shiftA"));
 		}
+		
+		// Autosize last name, first name, and route columns to text content
+		sheet.autoSizeColumn(1);
+		sheet.autoSizeColumn(2);
+		sheet.autoSizeColumn(4);
 	}
 
 	/**
