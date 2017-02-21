@@ -126,9 +126,9 @@ public class Runsheet extends XSSFWorkbook {
 		sheet.setColumnWidth(0, 500);
 		// Set bus column width
 		sheet.setColumnWidth(3, 1500);
-		for (int i = 5; i < 9; i++) {
+		// Set time column widths
+		for (int i = 5; i < 9; i++)
 			sheet.setColumnWidth(i,  2000);
-		}
 
 
 		// Autosize last name, first name, and route columns to fit text content
