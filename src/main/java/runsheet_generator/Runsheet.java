@@ -56,7 +56,7 @@ public class Runsheet extends XSSFWorkbook {
 				"Shift Change",
 				""
 		};
-		
+
 		// Merge H3 and I3 for Shift Change title
 		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$3:$I$3"));
 
@@ -121,16 +121,16 @@ public class Runsheet extends XSSFWorkbook {
 			Cell shiftChangeAfterCell = shiftRow.createCell(8);
 			shiftChangeAfterCell.setCellStyle(styles.get("shiftA"));
 		}
-		
+
 		// Set 0th column width
 		sheet.setColumnWidth(0, 500);
 		// Set bus column width
-		sheet.setColumnWidth(3, 2000);
-		for (int i = 5; i < 8; i++) {
+		sheet.setColumnWidth(3, 1500);
+		for (int i = 5; i < 9; i++) {
 			sheet.setColumnWidth(i,  2000);
 		}
-		
-		
+
+
 		// Autosize last name, first name, and route columns to fit text content
 		sheet.autoSizeColumn(1);
 		sheet.autoSizeColumn(2);
