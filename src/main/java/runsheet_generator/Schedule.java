@@ -311,8 +311,13 @@ public class Schedule {
 	@Override
 	public String toString() {
 		String scheduleStr = "\n-------- Route Driving Shifts --------\n";
-		for (int i = 0; i < this.routeDrivingShifts.size(); i++)
+		for (int i = 0; i < this.routeDrivingShifts.size(); i++) {
 			scheduleStr = scheduleStr + routeDrivingShifts.get(i) + "\n";
+			if (i < this.routeDrivingShifts.size() - 1
+					&& this.routeDrivingShifts.get(i).time.start.hour <
+					this.routeDrivingShifts.get(i + 1).time.start.hour)
+				scheduleStr = scheduleStr + "\n---\n";
+  }
 		scheduleStr = scheduleStr + "\n-------- Non-Route Driving Shifts --------\n";
 		for (int i = 0; i < this.nonRouteDrivingShifts.size(); i++)
 			scheduleStr = scheduleStr + nonRouteDrivingShifts.get(i) + "\n";
