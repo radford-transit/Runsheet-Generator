@@ -31,8 +31,11 @@ public class Route implements Comparable<Route> {
 	 * @throws Exception
 	 */
 	private int getRouteID(String name) throws Exception {
-		if (!(Character.isDigit(name.charAt(0))
-				&& Character.isDigit(name.charAt(1))))
+		if (name.equals("Mega Bus Connect"))
+			return 40;
+		else if ((!(Character.isDigit(name.charAt(0))
+				&& Character.isDigit(name.charAt(1)))) &&
+						!name.equals("Mega Bus Connect"))
 			throw new Exception("Not a route shift.");
 		return Integer.parseInt(name.substring(0, 2));
 	}
