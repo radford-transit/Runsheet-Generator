@@ -5,11 +5,16 @@ import java.util.Map;
 
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFColor;
+import org.apache.poi.xssf.usermodel.XSSFCellStyle;
+import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
 import org.apache.poi.hssf.util.HSSFColor;
+import java.awt.Color;
 
 public class Runsheet extends XSSFWorkbook {
-	Sheet sheet = createSheet("Runsheet");
+	private Sheet sheet = createSheet("Runsheet");
+	private Map<String, XSSFCellStyle> styles;
 
 	/**
 	 * Constructs a Runsheet object
@@ -19,7 +24,7 @@ public class Runsheet extends XSSFWorkbook {
 	public Runsheet(Schedule schedule) throws Exception {
 		super();
 
-		Map<String, CellStyle> styles = createStyles(this);
+		styles = createStyles(this);
 
 		PrintSetup printSetup = sheet.getPrintSetup();
 		printSetup.setLandscape(false);
@@ -60,6 +65,7 @@ public class Runsheet extends XSSFWorkbook {
 		// Merge H3 and I3 for Shift Change title
 		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$3:$I$3"));
 
+		// Write headers
 		for (int i = 0; i < headerValues.length; i++) {
 			Cell headerCell = headersRow.createCell(i);
 			headerCell.setCellValue(headerValues[i]);
@@ -78,8 +84,10 @@ public class Runsheet extends XSSFWorkbook {
 							schedule.routeDrivingShifts.get(i - 1).route.id &&
 						schedule.routeDrivingShifts.get(i).time.start.hour >
 							schedule.routeDrivingShifts.get(i - 1).time.start.hour) {
+
+					writePeriodRow(rowOffset + i, 'X');
 					rowOffset++;
-					Row periodRow = sheet.createRow(rowOffset + i);
+					//Row periodRow = sheet.createRow(rowOffset + i);
 				}
 			}
 
@@ -128,7 +136,7 @@ public class Runsheet extends XSSFWorkbook {
 		sheet.setColumnWidth(3, 1500);
 		// Set time column widths
 		for (int i = 5; i < 9; i++)
-			sheet.setColumnWidth(i,  2000);
+			sheet.setColumnWidth(i, 2000);
 
 
 		// Autosize last name, first name, and route columns to fit text content
@@ -144,16 +152,21 @@ public class Runsheet extends XSSFWorkbook {
 	 */
 	private void writePeriodRow(int row, char period) {
 		Row periodRow = sheet.createRow(row);
-
+		for (int i = 0; i < 9; i++) {
+			Cell someCell = periodRow.createCell(i);
+			someCell.setCellStyle(styles.get("shiftChange"));
+		}
 	}
 
-	private static Map<String, CellStyle> createStyles(
+	private static Map<String, XSSFCellStyle> createStyles(
 			Workbook wb) {
-		Map<String, CellStyle> styles =
-				new HashMap<String, CellStyle>();
+		Map<String, XSSFCellStyle> styles =
+				new HashMap<String, XSSFCellStyle>();
+
+		XSSFCellStyle style;
 
 		// Title cell style
-		CellStyle style = wb.createCellStyle();
+		style = (XSSFCellStyle) wb.createCellStyle();
 		Font titleFont = wb.createFont();
 		titleFont.setBold(true);
 		titleFont.setFontHeightInPoints((short) 15);
@@ -163,7 +176,7 @@ public class Runsheet extends XSSFWorkbook {
 		styles.put("title", style);
 
 		// Date cell style
-		style = wb.createCellStyle();
+		style = (XSSFCellStyle) wb.createCellStyle();
 		Font dateFont = wb.createFont();
 		dateFont.setBold(true);
 		dateFont.setFontHeightInPoints((short) 13);
@@ -174,7 +187,7 @@ public class Runsheet extends XSSFWorkbook {
 		styles.put("date", style);
 
 		// Header cells style
-		style = wb.createCellStyle();
+		style = (XSSFCellStyle) wb.createCellStyle();
 		Font headerFont = wb.createFont();
 		headerFont.setBold(true);
 		headerFont.setFontHeightInPoints((short) 10);
@@ -184,29 +197,30 @@ public class Runsheet extends XSSFWorkbook {
 		styles.put("header", style);
 
 		// Period label cell style
-		style = wb.createCellStyle();
+		style = (XSSFCellStyle) wb.createCellStyle();
 		Font periodLabelFont = wb.createFont();
 		periodLabelFont.setBold(true);
 		periodLabelFont.setFontHeightInPoints((short) 11);
-		style.setFillForegroundColor(HSSFColor.GREY_40_PERCENT.index);
+		style.setFillForegroundColor(new XSSFColor(new Color(211, 211, 211)));
 		style.setAlignment(HorizontalAlignment.LEFT);
 		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style.setFont(periodLabelFont);
 		styles.put("periodLabel", style);
 
 		// Shift change cell style
-		style = wb.createCellStyle();
+		style = (XSSFCellStyle) wb.createCellStyle();
 		Font shiftChangeFont = wb.createFont();
 		shiftChangeFont.setBold(true);
 		shiftChangeFont.setFontHeightInPoints((short) 8);
-		style.setFillForegroundColor(HSSFColor.GREY_40_PERCENT.index);
+		style.setFillForegroundColor(new XSSFColor(new Color(211, 211, 211)));
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 		style.setAlignment(HorizontalAlignment.CENTER);
 		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style.setFont(shiftChangeFont);
 		styles.put("shiftChange", style);
 
 		// First name, last name, position name, and per-employee shift change cell style
-		style = wb.createCellStyle();
+		style = (XSSFCellStyle) wb.createCellStyle();
 		Font shiftFontA = wb.createFont();
 		shiftFontA.setFontHeightInPoints((short) 10);
 		style.setBorderBottom(BorderStyle.THIN);
@@ -219,7 +233,7 @@ public class Runsheet extends XSSFWorkbook {
 		styles.put("shiftA", style);
 
 		// Bus number cell style
-		style = wb.createCellStyle();
+		style = (XSSFCellStyle) wb.createCellStyle();
 		Font busFont = wb.createFont();
 		busFont.setFontHeightInPoints((short) 10);
 		busFont.setBold(true);
@@ -233,7 +247,7 @@ public class Runsheet extends XSSFWorkbook {
 		styles.put("bus", style);
 
 		// Bold position name cell style
-		style = wb.createCellStyle();
+		style = (XSSFCellStyle) wb.createCellStyle();
 		style.setBorderBottom(BorderStyle.THIN);
 		style.setBorderRight(BorderStyle.THIN);
 		style.setBorderTop(BorderStyle.THIN);
@@ -244,7 +258,7 @@ public class Runsheet extends XSSFWorkbook {
 		styles.put("positionBold", style);
 
 		// Time cell style
-		style = wb.createCellStyle();
+		style = (XSSFCellStyle) wb.createCellStyle();
 		shiftFontA.setFontHeightInPoints((short) 10);
 		style.setBorderBottom(BorderStyle.THIN);
 		style.setBorderRight(BorderStyle.THIN);
