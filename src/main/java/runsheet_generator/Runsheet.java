@@ -81,14 +81,11 @@ public class Runsheet extends XSSFWorkbook {
 				rowOffset++;
 			}
 			else {
-				if (schedule.routeDrivingShifts.get(i).route.id <
-							schedule.routeDrivingShifts.get(i - 1).route.id &&
-						schedule.routeDrivingShifts.get(i).time.start.hour >
+				if (schedule.routeDrivingShifts.get(i).time.start.hour >
 							schedule.routeDrivingShifts.get(i - 1).time.start.hour) {
 
-					writePeriodRow(rowOffset + i, 'X');
+					writePeriodRow(rowOffset + i, schedule.routeDrivingShifts.get(i).period);
 					rowOffset++;
-					//Row periodRow = sheet.createRow(rowOffset + i);
 				}
 			}
 
@@ -153,9 +150,14 @@ public class Runsheet extends XSSFWorkbook {
 	 */
 	private void writePeriodRow(int row, char period) {
 		Row periodRow = sheet.createRow(row);
-		for (int i = 0; i < 9; i++) {
-			Cell someCell = periodRow.createCell(i);
-			someCell.setCellStyle(styles.get("shiftChange"));
+
+		Cell cell = periodRow.createCell(0);
+		cell.setCellStyle(styles.get("periodLabel"));
+		cell.setCellValue("" + period);
+
+		for (int i = 1; i < 9; i++) {
+			cell = periodRow.createCell(i);
+			cell.setCellStyle(styles.get("shiftChange"));
 		}
 	}
 
@@ -203,6 +205,7 @@ public class Runsheet extends XSSFWorkbook {
 		periodLabelFont.setBold(true);
 		periodLabelFont.setFontHeightInPoints((short) 11);
 		style.setFillForegroundColor(new XSSFColor(new Color(211, 211, 211)));
+		style.setFillPattern(FillPatternType.SOLID_FOREGROUND);
 		style.setAlignment(HorizontalAlignment.LEFT);
 		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style.setFont(periodLabelFont);
