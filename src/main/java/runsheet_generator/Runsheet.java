@@ -83,7 +83,6 @@ public class Runsheet extends XSSFWorkbook {
 			else {
 				if (schedule.routeDrivingShifts.get(i).time.start.hour >
 							schedule.routeDrivingShifts.get(i - 1).time.start.hour) {
-
 					writePeriodRow(rowOffset + i, schedule.routeDrivingShifts.get(i).period);
 					rowOffset++;
 				}
