@@ -104,7 +104,6 @@ public class Runsheet extends XSSFWorkbook {
 
 			Cell busCell = shiftRow.createCell(3);
 			busCell.setCellStyle(styles.get("bus"));
-			busCell.setCellValue("#");
 
 			Cell positionCell = shiftRow.createCell(4);
 			if (!schedule.routeDrivingShifts.get(i).equals(
@@ -129,18 +128,24 @@ public class Runsheet extends XSSFWorkbook {
 		}
 
 		// Set 0th column width
-		sheet.setColumnWidth(0, 500);
+		sheet.setColumnWidth(0, 750);
 		// Set bus column width
-		sheet.setColumnWidth(3, 1500);
+		sheet.setColumnWidth(3, 1750);
 		// Set time column widths
 		for (int i = 5; i < 9; i++)
 			sheet.setColumnWidth(i, 2000);
 
 
 		// Autosize last name, first name, and route columns to fit text content
-		sheet.autoSizeColumn(1);
-		sheet.autoSizeColumn(2);
-		sheet.autoSizeColumn(4);
+		if (sheet.getColumnWidth(1) > 4608)
+			sheet.autoSizeColumn(1);
+		else sheet.setColumnWidth(1, 4608);
+		if (sheet.getColumnWidth(2) > 4608)
+			sheet.autoSizeColumn(2);
+		else sheet.setColumnWidth(2, 4608);
+		if (sheet.getColumnWidth(4) > 6400)
+			sheet.autoSizeColumn(4);
+		else sheet.setColumnWidth(4, 6400);
 	}
 
 	/**
@@ -171,6 +176,7 @@ public class Runsheet extends XSSFWorkbook {
 		// Title cell style
 		style = (XSSFCellStyle) wb.createCellStyle();
 		Font titleFont = wb.createFont();
+		titleFont.setFontName("Cambria");
 		titleFont.setBold(true);
 		titleFont.setFontHeightInPoints((short) 15);
 		style.setAlignment(HorizontalAlignment.CENTER);
@@ -181,6 +187,7 @@ public class Runsheet extends XSSFWorkbook {
 		// Date cell style
 		style = (XSSFCellStyle) wb.createCellStyle();
 		Font dateFont = wb.createFont();
+		dateFont.setFontName("Cambria");
 		dateFont.setBold(true);
 		dateFont.setFontHeightInPoints((short) 13);
 		dateFont.setColor(Font.COLOR_RED);
@@ -192,6 +199,7 @@ public class Runsheet extends XSSFWorkbook {
 		// Header cells style
 		style = (XSSFCellStyle) wb.createCellStyle();
 		Font headerFont = wb.createFont();
+		headerFont.setFontName("Arial Narrow");
 		headerFont.setBold(true);
 		headerFont.setFontHeightInPoints((short) 10);
 		style.setAlignment(HorizontalAlignment.CENTER);
@@ -202,6 +210,7 @@ public class Runsheet extends XSSFWorkbook {
 		// Period label cell style
 		style = (XSSFCellStyle) wb.createCellStyle();
 		Font periodLabelFont = wb.createFont();
+		periodLabelFont.setFontName("Arial");
 		periodLabelFont.setBold(true);
 		periodLabelFont.setFontHeightInPoints((short) 11);
 		style.setFillForegroundColor(new XSSFColor(new Color(211, 211, 211)));
@@ -214,6 +223,7 @@ public class Runsheet extends XSSFWorkbook {
 		// Shift change cell style
 		style = (XSSFCellStyle) wb.createCellStyle();
 		Font shiftChangeFont = wb.createFont();
+		shiftChangeFont.setFontName("Arial");
 		shiftChangeFont.setBold(true);
 		shiftChangeFont.setFontHeightInPoints((short) 8);
 		style.setFillForegroundColor(new XSSFColor(new Color(211, 211, 211)));
@@ -226,6 +236,7 @@ public class Runsheet extends XSSFWorkbook {
 		// First name, last name, position name, and per-employee shift change cell style
 		style = (XSSFCellStyle) wb.createCellStyle();
 		Font shiftFontA = wb.createFont();
+		shiftFontA.setFontName("Arial");
 		shiftFontA.setFontHeightInPoints((short) 10);
 		style.setBorderBottom(BorderStyle.THIN);
 		style.setBorderRight(BorderStyle.THIN);
@@ -239,6 +250,7 @@ public class Runsheet extends XSSFWorkbook {
 		// Bus number cell style
 		style = (XSSFCellStyle) wb.createCellStyle();
 		Font busFont = wb.createFont();
+		busFont.setFontName("Arial");
 		busFont.setFontHeightInPoints((short) 10);
 		busFont.setBold(true);
 		style.setBorderBottom(BorderStyle.THIN);
@@ -263,7 +275,8 @@ public class Runsheet extends XSSFWorkbook {
 
 		// Time cell style
 		style = (XSSFCellStyle) wb.createCellStyle();
-		shiftFontA.setFontHeightInPoints((short) 10);
+		//shiftFontA.setFontName("Arial");
+		//shiftFontA.setFontHeightInPoints((short) 10);
 		style.setBorderBottom(BorderStyle.THIN);
 		style.setBorderRight(BorderStyle.THIN);
 		style.setBorderTop(BorderStyle.THIN);
