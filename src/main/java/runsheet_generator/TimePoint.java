@@ -38,9 +38,16 @@ public class TimePoint implements Comparable<TimePoint> {
 	 */
 	@Override
 	public String toString() {
-		return (hour >= 24 ? hour - 24 : hour) + ":"
-				+ (minute >= 0 && minute < 10 ? "0" : "")
-				+ minute;
+		return (
+				(hour >= 24) ?
+						(hour - 24 - 12 > 0) ?
+								(hour - 24 - 12) + ":" + minute + " PM"
+								: (hour - 24) + ":" + minute + " AM"
+						: (hour - 12  > 0) ?
+								(hour - 12) + ":" + minute + " PM"
+								: (hour) + ":" + minute + " AM"
+
+		);
 	}
 
 	/**
