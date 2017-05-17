@@ -34,6 +34,16 @@ public class TimePoint implements Comparable<TimePoint> {
 	}
 
 	/**
+	 * Adds a preceding 0 to a String representing a single-digit integer
+	 * @param n The integer
+	 */
+	private String twoDigits(int n) {
+		return (n < 10 && n >= 0) ?
+				"0" + n
+				: "" + n;
+	}
+
+	/**
 	 * {@inheritDoc}
 	 */
 	@Override
@@ -41,11 +51,11 @@ public class TimePoint implements Comparable<TimePoint> {
 		return (
 				(hour >= 24) ?
 						(hour - 24 - 12 > 0) ?
-								(hour - 24 - 12) + ":" + minute + " PM"
-								: (hour - 24) + ":" + minute + " AM"
+								(hour - 24 - 12) + ":" + this.twoDigits(minute) + " PM"
+								: (hour - 24) + ":" + this.twoDigits(minute) + " AM"
 						: (hour - 12  > 0) ?
-								(hour - 12) + ":" + minute + " PM"
-								: (hour) + ":" + minute + " AM"
+								(hour - 12) + ":" + this.twoDigits(minute) + " PM"
+								: (hour) + ":" + this.twoDigits(minute) + " AM"
 
 		);
 	}
