@@ -47,7 +47,7 @@ public class Runsheet extends XSSFWorkbook {
 		Row dateRow = sheet.createRow(1);
 		dateRow.setHeightInPoints(17);
 		Cell dateCell = dateRow.createCell(0);
-		dateCell.setCellValue(schedule.date.toString());
+		dateCell.setCellValue(this.schedule.date.toString());
 		dateCell.setCellStyle(styles.get("date"));
 		sheet.addMergedRegion(CellRangeAddress.valueOf("$A$2:$I$2"));
 
@@ -78,15 +78,15 @@ public class Runsheet extends XSSFWorkbook {
 
 		// Shift rows
 		int rowOffset = 3;
-		for (int i = 0 ; i < schedule.routeDrivingShifts.size(); i++) {
+		for (int i = 0 ; i < this.schedule.routeDrivingShifts.size(); i++) {
 			if (i == 0) {
-				writePeriodRow(rowOffset + i, schedule.routeDrivingShifts.get(i).period);
+				writePeriodRow(rowOffset + i, this.schedule.routeDrivingShifts.get(i).period);
 				rowOffset++;
 			}
 			else {
-				if (schedule.routeDrivingShifts.get(i).time.start.hour >
-							schedule.routeDrivingShifts.get(i - 1).time.start.hour) {
-					writePeriodRow(rowOffset + i, schedule.routeDrivingShifts.get(i).period);
+				if (this.schedule.routeDrivingShifts.get(i).time.start.hour >
+							this.schedule.routeDrivingShifts.get(i - 1).time.start.hour) {
+					writePeriodRow(rowOffset + i, this.schedule.routeDrivingShifts.get(i).period);
 					rowOffset++;
 				}
 			}
@@ -98,29 +98,29 @@ public class Runsheet extends XSSFWorkbook {
 
 			Cell lastNameCell = shiftRow.createCell(1);
 			lastNameCell.setCellStyle(styles.get("shiftA"));
-			lastNameCell.setCellValue(schedule.routeDrivingShifts.get(i).employee.name.last);
+			lastNameCell.setCellValue(this.schedule.routeDrivingShifts.get(i).employee.name.last);
 
 			Cell firstNameCell = shiftRow.createCell(2);
 			firstNameCell.setCellStyle(styles.get("shiftA"));
-			firstNameCell.setCellValue(schedule.routeDrivingShifts.get(i).employee.name.first);
+			firstNameCell.setCellValue(this.schedule.routeDrivingShifts.get(i).employee.name.first);
 
 			Cell busCell = shiftRow.createCell(3);
 			busCell.setCellStyle(styles.get("bus"));
 
 			Cell positionCell = shiftRow.createCell(4);
-			if (!schedule.routeDrivingShifts.get(i).equals(
-					schedule.lastShiftOnRoute(schedule.routeDrivingShifts.get(i).route)))
+			if (!this.schedule.routeDrivingShifts.get(i).equals(
+					this.schedule.lastShiftOnRoute(this.schedule.routeDrivingShifts.get(i).route)))
 				positionCell.setCellStyle(styles.get("shiftA"));
 			else positionCell.setCellStyle(styles.get("positionBold"));
-			positionCell.setCellValue(schedule.routeDrivingShifts.get(i).name);
+			positionCell.setCellValue(this.schedule.routeDrivingShifts.get(i).name);
 
 			Cell startTimeCell = shiftRow.createCell(5);
 			startTimeCell.setCellStyle(styles.get("time"));
-			startTimeCell.setCellValue(schedule.routeDrivingShifts.get(i).time.start.toString());
+			startTimeCell.setCellValue(this.schedule.routeDrivingShifts.get(i).time.start.toString());
 
 			Cell endTimeCell = shiftRow.createCell(6);
 			endTimeCell.setCellStyle(styles.get("time"));
-			endTimeCell.setCellValue(schedule.routeDrivingShifts.get(i).time.end.toString());
+			endTimeCell.setCellValue(this.schedule.routeDrivingShifts.get(i).time.end.toString());
 
 			Cell shiftChangeBeforeCell = shiftRow.createCell(7);
 			shiftChangeBeforeCell.setCellStyle(styles.get("shiftA"));
