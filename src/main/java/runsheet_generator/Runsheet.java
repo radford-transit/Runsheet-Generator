@@ -35,8 +35,11 @@ public class Runsheet extends XSSFWorkbook {
 		sheet.setFitToPage(true);
 		sheet.setHorizontallyCenter(true);
 
+		// Current row being written
+		int currentRow = 0;
+		
 		// Title row
-		Row titleRow = sheet.createRow(0);
+		Row titleRow = sheet.createRow(currentRow);
 		titleRow.setHeightInPoints(19);
 		Cell titleCell = titleRow.createCell(0);
 		titleCell.setCellValue("Radford Transit");
@@ -44,7 +47,8 @@ public class Runsheet extends XSSFWorkbook {
 		sheet.addMergedRegion(CellRangeAddress.valueOf("$A$1:$I$1"));
 
 		// Date row
-		Row dateRow = sheet.createRow(1);
+		currentRow++;
+		Row dateRow = sheet.createRow(currentRow);
 		dateRow.setHeightInPoints(17);
 		Cell dateCell = dateRow.createCell(0);
 		dateCell.setCellValue(this.schedule.date.toString());
@@ -52,7 +56,8 @@ public class Runsheet extends XSSFWorkbook {
 		sheet.addMergedRegion(CellRangeAddress.valueOf("$A$2:$I$2"));
 
 		// Headers row
-		Row headersRow = sheet.createRow(2);
+		currentRow += 2;
+		Row headersRow = sheet.createRow(currentRow);
 		headersRow.setHeightInPoints((short) 15);
 		String[] headerValues = {
 				"",
@@ -77,21 +82,27 @@ public class Runsheet extends XSSFWorkbook {
 		}
 
 		// Shift rows
-		int rowOffset = 3;
+		currentRow++;
 		for (int i = 0 ; i < this.schedule.routeDrivingShifts.size(); i++) {
 			if (i == 0) {
-				writePeriodRow(rowOffset + i, this.schedule.routeDrivingShifts.get(i).period);
-				rowOffset++;
+				currentRow += i;
+				writePeriodRow(currentRow, this.schedule.routeDrivingShifts.get(i).period);
+				currentRow -= i;
+				currentRow++;
 			}
 			else {
 				if (this.schedule.routeDrivingShifts.get(i).time.start.hour >
 							this.schedule.routeDrivingShifts.get(i - 1).time.start.hour) {
-					writePeriodRow(rowOffset + i, this.schedule.routeDrivingShifts.get(i).period);
-					rowOffset++;
+					currentRow += i;
+					writePeriodRow(currentRow, this.schedule.routeDrivingShifts.get(i).period);
+					currentRow -= i;
+					currentRow++;
 				}
 			}
 
-			Row shiftRow = sheet.createRow(rowOffset + i);
+			currentRow += i;
+			Row shiftRow = sheet.createRow(currentRow);
+			currentRow -= i;
 
 			Cell checkCell = shiftRow.createCell(0);
 			checkCell.setCellStyle(styles.get("shiftA"));
