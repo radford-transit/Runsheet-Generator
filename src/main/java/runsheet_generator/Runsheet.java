@@ -14,6 +14,7 @@ import org.apache.poi.hssf.util.HSSFColor;
 import java.awt.Color;
 
 public class Runsheet extends XSSFWorkbook {
+	private Schedule schedule;
 	private Sheet sheet = createSheet("Runsheet");
 	private Map<String, XSSFCellStyle> styles;
 
@@ -24,6 +25,8 @@ public class Runsheet extends XSSFWorkbook {
 	 */
 	public Runsheet(Schedule schedule) throws Exception {
 		super();
+		
+		this.schedule = schedule;
 
 		styles = createStyles(this);
 
