@@ -274,8 +274,6 @@ public class Runsheet extends XSSFWorkbook {
 
 		// Time cell style
 		style = (XSSFCellStyle) wb.createCellStyle();
-		//shiftFontA.setFontName("Arial");
-		//shiftFontA.setFontHeightInPoints((short) 10);
 		style.setBorderBottom(BorderStyle.THIN);
 		style.setBorderRight(BorderStyle.THIN);
 		style.setBorderTop(BorderStyle.THIN);
