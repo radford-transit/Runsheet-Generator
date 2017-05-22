@@ -71,15 +71,15 @@ public class Runsheet extends XSSFWorkbook {
 				""
 		};
 
-		// Merge H3 and I3 for Shift Change title
-		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$3:$I$3"));
-
 		// Write headers
 		for (int i = 0; i < headerValues.length; i++) {
 			Cell headerCell = headersRow.createCell(i);
 			headerCell.setCellValue(headerValues[i]);
 			headerCell.setCellStyle(styles.get("header"));
 		}
+
+		// Merge cells H4 and I4 for shift change header
+		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$4:$I$4"));
 
 		// Shift rows
 		currentRow++;
@@ -173,10 +173,13 @@ public class Runsheet extends XSSFWorkbook {
 		cell.setCellStyle(styles.get("periodLabel"));
 		cell.setCellValue("" + period);
 
-		for (int i = 1; i < 9; i++) {
+		for (int i = 1; i < 8; i++) {
 			cell = periodRow.createCell(i);
 			cell.setCellStyle(styles.get("shiftChange"));
 		}
+
+		// Merge cells H and I for shift change info
+		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$" + (row + 1)+ ":$I$" + (row + 1)));
 	}
 
 	private static Map<String, XSSFCellStyle> createStyles(
