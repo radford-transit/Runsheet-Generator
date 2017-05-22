@@ -15,8 +15,10 @@ import java.awt.Color;
 
 public class Runsheet extends XSSFWorkbook {
 	private Schedule schedule;
-	private Sheet sheet = createSheet("Runsheet");
+	private XSSFSheet sheet = createSheet("Runsheet");
 	private Map<String, XSSFCellStyle> styles;
+
+	private XSSFPrintSetup printSetup = sheet.getPrintSetup();
 
 	/**
 	 * Constructs a Runsheet object
@@ -170,6 +172,8 @@ public class Runsheet extends XSSFWorkbook {
 		Cell boldCommentCell = boldCommentRow.createCell(8);
 		boldCommentCell.setCellStyle(styles.get("boldComment"));
 		boldCommentCell.setCellValue("*Bold shifts end at the shop");
+
+		setPrintSetup();
 	}
 
 	/**
@@ -319,5 +323,16 @@ public class Runsheet extends XSSFWorkbook {
 		styles.put("boldComment", style);
 
 		return styles;
+	}
+
+	private void setPrintSetup() {
+		this.sheet.setMargin(Sheet.TopMargin, 0.0);
+		this.sheet.setMargin(Sheet.BottomMargin, 0.0);
+		this.sheet.setMargin(Sheet.LeftMargin, 0.0);
+		this.sheet.setMargin(Sheet.RightMargin, 0.0);
+
+		printSetup.setFitHeight((short) 1);
+		printSetup.setFitWidth((short) 1);
+		printSetup.setNoColor(false);
 	}
 }
