@@ -138,6 +138,10 @@ public class Runsheet extends XSSFWorkbook {
 
 			Cell shiftChangeAfterCell = shiftRow.createCell(8);
 			shiftChangeAfterCell.setCellStyle(styles.get("shiftA"));
+
+			// If loop has reached end of list, currentRow is at the end of the runsheet
+			if (i == this.schedule.routeDrivingShifts.size() - 1)
+				currentRow += i;
 		}
 
 		// Set 0th column width
@@ -159,6 +163,13 @@ public class Runsheet extends XSSFWorkbook {
 		if (sheet.getColumnWidth(4) > 6400)
 			sheet.autoSizeColumn(4);
 		else sheet.setColumnWidth(4, 6400);
+
+		// Write bold comment cell
+		currentRow++;
+		Row boldCommentRow = sheet.createRow(currentRow);
+		Cell boldCommentCell = boldCommentRow.createCell(8);
+		boldCommentCell.setCellStyle(styles.get("boldComment"));
+		boldCommentCell.setCellValue("*Bold shifts end at the shop");
 	}
 
 	/**
@@ -299,6 +310,13 @@ public class Runsheet extends XSSFWorkbook {
 		style.setVerticalAlignment(VerticalAlignment.CENTER);
 		style.setFont(shiftFontA);
 		styles.put("time", style);
+
+		// Bold comment cell style
+		style = (XSSFCellStyle) wb.createCellStyle();
+		style.setAlignment(HorizontalAlignment.RIGHT);
+		style.setVerticalAlignment(VerticalAlignment.CENTER);
+		style.setFont(busFont);
+		styles.put("boldComment", style);
 
 		return styles;
 	}
