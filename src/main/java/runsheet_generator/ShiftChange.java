@@ -19,6 +19,6 @@ public class ShiftChange {
 	 */
 	@Override
 	public String toString() {
-		return this.hour + ":15 - " + (this.hour + 1) + ":00";
+		return new TimePoint(this.hour, 15).toString() + " - " + new TimePoint(this.hour + 1, 0).toString();
 	}
 }

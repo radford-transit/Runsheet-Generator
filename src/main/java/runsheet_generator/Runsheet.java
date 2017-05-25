@@ -1,5 +1,6 @@
-
 package main.java.runsheet_generator;
+
+import java.util.ArrayList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -88,7 +89,7 @@ public class Runsheet extends XSSFWorkbook {
 		for (int i = 0 ; i < this.schedule.routeDrivingShifts.size(); i++) {
 			if (i == 0) {
 				currentRow += i;
-				writePeriodRow(currentRow, this.schedule.routeDrivingShifts.get(i).period);
+				writePeriodRow(currentRow, "" + this.schedule.routeDrivingShifts.get(i).period);
 				currentRow -= i;
 				currentRow++;
 			}
@@ -96,7 +97,13 @@ public class Runsheet extends XSSFWorkbook {
 				if (this.schedule.routeDrivingShifts.get(i).time.start.hour >
 							this.schedule.routeDrivingShifts.get(i - 1).time.start.hour) {
 					currentRow += i;
-					writePeriodRow(currentRow, this.schedule.routeDrivingShifts.get(i).period);
+
+					// If there's a shift change at that hour, write a shift change row
+					if (this.hourIsInShiftChanges(this.schedule.routeDrivingShifts.get(i).time.start.hour, this.schedule.shiftChanges))
+						writeShiftChangeRow(currentRow, this.shiftChangeAtHour(this.schedule.routeDrivingShifts.get(i).time.start.hour, this.schedule.shiftChanges));
+					// Otherwise, write a period row
+					else
+						writePeriodRow(currentRow, "" + this.schedule.routeDrivingShifts.get(i).period);
 					currentRow -= i;
 					currentRow++;
 				}
@@ -181,12 +188,12 @@ public class Runsheet extends XSSFWorkbook {
 	 * @param row Row number on the spreadsheet
 	 * @param period Period ID
 	 */
-	private void writePeriodRow(int row, char period) {
+	private void writePeriodRow(int row, String period) {
 		Row periodRow = sheet.createRow(row);
 
 		Cell cell = periodRow.createCell(0);
 		cell.setCellStyle(styles.get("periodLabel"));
-		cell.setCellValue("" + period);
+		cell.setCellValue(period);
 
 		for (int i = 1; i < 8; i++) {
 			cell = periodRow.createCell(i);
@@ -195,6 +202,43 @@ public class Runsheet extends XSSFWorkbook {
 
 		// Merge cells H and I for shift change info
 		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$" + (row + 1)+ ":$I$" + (row + 1)));
+	}
+
+	private void writeShiftChangeRow(int row, ShiftChange shiftChange) {
+		Row shiftChangeRow = sheet.createRow(row);
+
+		Cell cell = shiftChangeRow.createCell(0);
+		cell.setCellStyle(styles.get("periodLabel"));
+		if (shiftChange.id.number < 2)
+			cell.setCellValue("" + shiftChange.id.period);
+		else
+			cell.setCellValue(shiftChange.id.toString());
+
+		for (int i = 1; i < 7; i++) {
+			cell = shiftChangeRow.createCell(i);
+			cell.setCellStyle(styles.get("shiftChange"));
+		}
+
+		cell = shiftChangeRow.createCell(7);
+		cell.setCellStyle(styles.get("shiftChange"));
+		cell.setCellValue(shiftChange.toString());
+
+		// Merge cells H and I for shift change info
+		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$" + (row + 1)+ ":$I$" + (row + 1)));
+	}
+
+	private boolean hourIsInShiftChanges(int hour, ArrayList<ShiftChange> shiftChanges) {
+		for (int i = 0; i < shiftChanges.size(); i++)
+			if (shiftChanges.get(i).hour == hour)
+				return true;
+		return false;
+	}
+
+	private ShiftChange shiftChangeAtHour(int hour, ArrayList<ShiftChange> shiftChanges) {
+		for (int i = 0; i < shiftChanges.size(); i++)
+			if (shiftChanges.get(i).hour == hour)
+				return shiftChanges.get(i);
+		return null;
 	}
 
 	private static Map<String, XSSFCellStyle> createStyles(
