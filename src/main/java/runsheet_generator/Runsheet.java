@@ -44,20 +44,16 @@ public class Runsheet extends XSSFWorkbook {
 		// Current row being written
 		int currentRow = 0;
 		
+		// Title row
 		currentRow = this.writeTitleRow(currentRow);
-
 		// Date row
 		currentRow = this.writeDateRow(currentRow);
-
 		// Headers row
 		currentRow = this.writeHeadersRow(currentRow);
-
 		// Route driving shift rows
 		currentRow = this.writeRouteDrivingShiftRows(currentRow);
-
 		// Autosize last name, first name, and route columns to fit text content
 		this.autosizeColumns();
-
 		// Write bold comment cell
 		currentRow = this.writeBoldComment(currentRow);
 
