@@ -46,7 +46,7 @@ public class Schedule {
 		Header.SHIFT_ID, Header.SCHEDULE_ID,
 		Header.EMPLOYEE_NUMBER, Header.POSITION_ID,
 		Header.POSITION_NAME, Header.PERIOD,
-		Header.DESCRIPTION, Header.DATE,Header.START_TIME,
+		Header.DESCRIPTION, Header.DATE, Header.START_TIME,
 		Header.END_TIME, Header.DURATION,
 		Header.DAY_OF_WEEK, Header.FULL_NAME,
 		Header.FIRST_NAME, Header.LAST_NAME
@@ -105,7 +105,7 @@ public class Schedule {
 						scheduleCSVRecord.get(Header.PERIOD).length() == 1 ?
 								new RouteDrivingShift(
 										scheduleCSVRecord.get(Header.POSITION_NAME),
-										scheduleCSVRecord.get(Header.PERIOD).charAt(0),
+												scheduleCSVRecord.get(Header.PERIOD).charAt(0),
 										new TimePeriod(
 												new TimePoint(scheduleCSVRecord.get(Header.START_TIME)),
 												new TimePoint(scheduleCSVRecord.get(Header.END_TIME))),
