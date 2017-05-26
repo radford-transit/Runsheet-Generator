@@ -11,15 +11,12 @@ import org.apache.poi.xssf.usermodel.XSSFColor;
 import org.apache.poi.xssf.usermodel.XSSFCellStyle;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.hssf.util.HSSFColor;
 import java.awt.Color;
 
 public class Runsheet extends XSSFWorkbook {
 	private Schedule schedule;
 	private XSSFSheet sheet = createSheet("Runsheet");
 	private Map<String, XSSFCellStyle> styles;
-
-	private XSSFPrintSetup printSetup = sheet.getPrintSetup();
 
 	/**
 	 * Constructs a Runsheet object
