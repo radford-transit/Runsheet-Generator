@@ -93,20 +93,14 @@ public class Runsheet extends XSSFWorkbook {
 				currentRow -= i;
 				currentRow++;
 			}
-			else {
-				if (this.schedule.routeDrivingShifts.get(i).time.start.hour >
-							this.schedule.routeDrivingShifts.get(i - 1).time.start.hour) {
-					currentRow += i;
-
-					// If there's a shift change at that hour, write a shift change row
-					if (Runsheet.hourIsInShiftChanges(this.schedule.routeDrivingShifts.get(i).time.start.hour, this.schedule.shiftChanges))
-						writeShiftChangeRow(currentRow, Runsheet.shiftChangeAtHour(this.schedule.routeDrivingShifts.get(i).time.start.hour, this.schedule.shiftChanges));
-					// Otherwise, write a period row
-					else
-						writePeriodRow(currentRow, "" + this.schedule.routeDrivingShifts.get(i).period);
-					currentRow -= i;
-					currentRow++;
-				}
+			else if (this.schedule.routeDrivingShifts.get(i).time.start.hour >
+					this.schedule.routeDrivingShifts.get(i - 1).time.start.hour
+							 && Runsheet.hourIsInShiftChanges(this.schedule.routeDrivingShifts.get(i).time.start.hour,
+																						 		this.schedule.shiftChanges)) {
+				currentRow += i;
+				writeShiftChangeRow(currentRow, Runsheet.shiftChangeAtHour(this.schedule.routeDrivingShifts.get(i).time.start.hour, this.schedule.shiftChanges));
+				currentRow -= i;
+				currentRow++;
 			}
 
 			currentRow += i;
