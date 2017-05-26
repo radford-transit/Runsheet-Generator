@@ -33,11 +33,6 @@ public class Runsheet extends XSSFWorkbook {
 
 		styles = createStyles(this);
 
-		PrintSetup printSetup = sheet.getPrintSetup();
-		printSetup.setLandscape(false);
-		sheet.setFitToPage(true);
-		sheet.setHorizontallyCenter(true);
-
 		// Current row being written
 		int currentRow = 0;
 		
@@ -364,6 +359,11 @@ public class Runsheet extends XSSFWorkbook {
 	}
 
 	private void setPrintSetup() {
+		PrintSetup printSetup = this.sheet.getPrintSetup();
+		printSetup.setLandscape(false);
+		this.sheet.setFitToPage(true);
+		this.sheet.setHorizontallyCenter(true);
+		
 		this.sheet.setMargin(Sheet.TopMargin, 0.0);
 		this.sheet.setMargin(Sheet.BottomMargin, 0.0);
 		this.sheet.setMargin(Sheet.LeftMargin, 0.0);
