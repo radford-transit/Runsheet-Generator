@@ -32,30 +32,63 @@ public class Runsheet extends XSSFWorkbook {
 		this.schedule = schedule;
 
 		this.styles = createStyles(this);
+		
+		// Set 0th column width
+		this.sheet.setColumnWidth(0, 750);
+		// Set bus column width
+		this.sheet.setColumnWidth(3, 1750);
+		// Set time column widths
+		for (int i = 5; i < 9; i++)
+			this.sheet.setColumnWidth(i, 2304);
 
 		// Current row being written
 		int currentRow = 0;
 		
+		currentRow = this.writeTitleRow(currentRow);
+
+		// Date row
+		currentRow = this.writeDateRow(currentRow);
+
+		// Headers row
+		currentRow = this.writeHeadersRow(currentRow);
+
+		// Route driving shift rows
+		currentRow = this.writeRouteDrivingShiftRows(currentRow);
+
+		// Autosize last name, first name, and route columns to fit text content
+		this.autosizeColumns();
+
+		// Write bold comment cell
+		currentRow = this.writeBoldComment(currentRow);
+
+		this.setPrintSetup();
+	}
+
+	private int writeTitleRow(int row) {
 		// Title row
-		Row titleRow = this.sheet.createRow(currentRow);
+		Row titleRow = this.sheet.createRow(row);
 		titleRow.setHeightInPoints(19);
 		Cell titleCell = titleRow.createCell(0);
 		titleCell.setCellValue("Radford Transit");
 		titleCell.setCellStyle(this.styles.get("title"));
 		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$A$1:$I$1"));
-
-		// Date row
-		currentRow++;
-		Row dateRow = this.sheet.createRow(currentRow);
+		
+		return row + 1;
+	}
+	
+	private int writeDateRow(int row) {
+		Row dateRow = this.sheet.createRow(row);
 		dateRow.setHeightInPoints(17);
 		Cell dateCell = dateRow.createCell(0);
 		dateCell.setCellValue(this.schedule.date.toString());
 		dateCell.setCellStyle(this.styles.get("date"));
 		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$A$2:$I$2"));
-
-		// Headers row
-		currentRow += 2;
-		Row headersRow = sheet.createRow(currentRow);
+		
+		return row + 2;
+	}
+	
+	private int writeHeadersRow(int row) {
+		Row headersRow = sheet.createRow(row);
 		headersRow.setHeightInPoints((short) 15);
 		String[] headerValues = {
 				"",
@@ -78,9 +111,11 @@ public class Runsheet extends XSSFWorkbook {
 
 		// Merge cells H4 and I4 for shift change header
 		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$H$4:$I$4"));
+		
+		return row + 1;
+	}
 
-		// Shift rows
-		currentRow++;
+	private int writeRouteDrivingShiftRows(int currentRow) throws Exception {
 		for (int i = 0 ; i < this.schedule.routeDrivingShifts.size(); i++) {
 			if (i == 0) {
 				currentRow += i;
@@ -141,17 +176,20 @@ public class Runsheet extends XSSFWorkbook {
 			if (i == this.schedule.routeDrivingShifts.size() - 1)
 				currentRow += i;
 		}
-
-		// Set 0th column width
-		this.sheet.setColumnWidth(0, 750);
-		// Set bus column width
-		this.sheet.setColumnWidth(3, 1750);
-		// Set time column widths
-		for (int i = 5; i < 9; i++)
-			this.sheet.setColumnWidth(i, 2304);
-
-
-		// Autosize last name, first name, and route columns to fit text content
+		
+		return currentRow + 1;
+	}
+	
+	private int writeBoldComment(int row) {
+		Row boldCommentRow = this.sheet.createRow(row);
+		Cell boldCommentCell = boldCommentRow.createCell(8);
+		boldCommentCell.setCellStyle(this.styles.get("boldComment"));
+		boldCommentCell.setCellValue("*Bold shifts end at the shop");
+		
+		return row + 1;
+	}
+	
+	private void autosizeColumns() {
 		if (this.sheet.getColumnWidth(1) > 4608)
 			this.sheet.autoSizeColumn(1);
 		else this.sheet.setColumnWidth(1, 4608);
@@ -161,17 +199,8 @@ public class Runsheet extends XSSFWorkbook {
 		if (this.sheet.getColumnWidth(4) > 6400)
 			this.sheet.autoSizeColumn(4);
 		else this.sheet.setColumnWidth(4, 6400);
-
-		// Write bold comment cell
-		currentRow++;
-		Row boldCommentRow = this.sheet.createRow(currentRow);
-		Cell boldCommentCell = boldCommentRow.createCell(8);
-		boldCommentCell.setCellStyle(this.styles.get("boldComment"));
-		boldCommentCell.setCellValue("*Bold shifts end at the shop");
-
-		this.setPrintSetup();
 	}
-
+	
 	/**
 	 * Writes a period row on the runsheet
 	 * @param row Row number on the spreadsheet
