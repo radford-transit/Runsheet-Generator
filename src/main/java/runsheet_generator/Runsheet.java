@@ -99,8 +99,8 @@ public class Runsheet extends XSSFWorkbook {
 					currentRow += i;
 
 					// If there's a shift change at that hour, write a shift change row
-					if (this.hourIsInShiftChanges(this.schedule.routeDrivingShifts.get(i).time.start.hour, this.schedule.shiftChanges))
-						writeShiftChangeRow(currentRow, this.shiftChangeAtHour(this.schedule.routeDrivingShifts.get(i).time.start.hour, this.schedule.shiftChanges));
+					if (Runsheet.hourIsInShiftChanges(this.schedule.routeDrivingShifts.get(i).time.start.hour, this.schedule.shiftChanges))
+						writeShiftChangeRow(currentRow, Runsheet.shiftChangeAtHour(this.schedule.routeDrivingShifts.get(i).time.start.hour, this.schedule.shiftChanges));
 					// Otherwise, write a period row
 					else
 						writePeriodRow(currentRow, "" + this.schedule.routeDrivingShifts.get(i).period);
@@ -227,14 +227,14 @@ public class Runsheet extends XSSFWorkbook {
 		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$" + (row + 1)+ ":$I$" + (row + 1)));
 	}
 
-	private boolean hourIsInShiftChanges(int hour, ArrayList<ShiftChange> shiftChanges) {
+	private static boolean hourIsInShiftChanges(int hour, ArrayList<ShiftChange> shiftChanges) {
 		for (int i = 0; i < shiftChanges.size(); i++)
 			if (shiftChanges.get(i).hour == hour)
 				return true;
 		return false;
 	}
 
-	private ShiftChange shiftChangeAtHour(int hour, ArrayList<ShiftChange> shiftChanges) {
+	private static ShiftChange shiftChangeAtHour(int hour, ArrayList<ShiftChange> shiftChanges) {
 		for (int i = 0; i < shiftChanges.size(); i++)
 			if (shiftChanges.get(i).hour == hour)
 				return shiftChanges.get(i);
