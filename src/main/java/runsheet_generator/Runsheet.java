@@ -31,27 +31,27 @@ public class Runsheet extends XSSFWorkbook {
 		
 		this.schedule = schedule;
 
-		styles = createStyles(this);
+		this.styles = createStyles(this);
 
 		// Current row being written
 		int currentRow = 0;
 		
 		// Title row
-		Row titleRow = sheet.createRow(currentRow);
+		Row titleRow = this.sheet.createRow(currentRow);
 		titleRow.setHeightInPoints(19);
 		Cell titleCell = titleRow.createCell(0);
 		titleCell.setCellValue("Radford Transit");
-		titleCell.setCellStyle(styles.get("title"));
-		sheet.addMergedRegion(CellRangeAddress.valueOf("$A$1:$I$1"));
+		titleCell.setCellStyle(this.styles.get("title"));
+		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$A$1:$I$1"));
 
 		// Date row
 		currentRow++;
-		Row dateRow = sheet.createRow(currentRow);
+		Row dateRow = this.sheet.createRow(currentRow);
 		dateRow.setHeightInPoints(17);
 		Cell dateCell = dateRow.createCell(0);
 		dateCell.setCellValue(this.schedule.date.toString());
-		dateCell.setCellStyle(styles.get("date"));
-		sheet.addMergedRegion(CellRangeAddress.valueOf("$A$2:$I$2"));
+		dateCell.setCellStyle(this.styles.get("date"));
+		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$A$2:$I$2"));
 
 		// Headers row
 		currentRow += 2;
@@ -77,7 +77,7 @@ public class Runsheet extends XSSFWorkbook {
 		}
 
 		// Merge cells H4 and I4 for shift change header
-		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$4:$I$4"));
+		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$H$4:$I$4"));
 
 		// Shift rows
 		currentRow++;
@@ -99,43 +99,43 @@ public class Runsheet extends XSSFWorkbook {
 			}
 
 			currentRow += i;
-			Row shiftRow = sheet.createRow(currentRow);
+			Row shiftRow = this.sheet.createRow(currentRow);
 			currentRow -= i;
 
 			Cell checkCell = shiftRow.createCell(0);
-			checkCell.setCellStyle(styles.get("shiftA"));
+			checkCell.setCellStyle(this.styles.get("shiftA"));
 
 			Cell lastNameCell = shiftRow.createCell(1);
-			lastNameCell.setCellStyle(styles.get("shiftA"));
+			lastNameCell.setCellStyle(this.styles.get("shiftA"));
 			lastNameCell.setCellValue(this.schedule.routeDrivingShifts.get(i).employee.name.last);
 
 			Cell firstNameCell = shiftRow.createCell(2);
-			firstNameCell.setCellStyle(styles.get("shiftA"));
+			firstNameCell.setCellStyle(this.styles.get("shiftA"));
 			firstNameCell.setCellValue(this.schedule.routeDrivingShifts.get(i).employee.name.first);
 
 			Cell busCell = shiftRow.createCell(3);
-			busCell.setCellStyle(styles.get("bus"));
+			busCell.setCellStyle(this.styles.get("bus"));
 
 			Cell positionCell = shiftRow.createCell(4);
 			if (!this.schedule.routeDrivingShifts.get(i).equals(
 					this.schedule.lastShiftOnRoute(this.schedule.routeDrivingShifts.get(i).route)))
-				positionCell.setCellStyle(styles.get("shiftA"));
-			else positionCell.setCellStyle(styles.get("positionBold"));
+				positionCell.setCellStyle(this.styles.get("shiftA"));
+			else positionCell.setCellStyle(this.styles.get("positionBold"));
 			positionCell.setCellValue(this.schedule.routeDrivingShifts.get(i).name);
 
 			Cell startTimeCell = shiftRow.createCell(5);
-			startTimeCell.setCellStyle(styles.get("time"));
+			startTimeCell.setCellStyle(this.styles.get("time"));
 			startTimeCell.setCellValue(this.schedule.routeDrivingShifts.get(i).time.start.toString());
 
 			Cell endTimeCell = shiftRow.createCell(6);
-			endTimeCell.setCellStyle(styles.get("time"));
+			endTimeCell.setCellStyle(this.styles.get("time"));
 			endTimeCell.setCellValue(this.schedule.routeDrivingShifts.get(i).time.end.toString());
 
 			Cell shiftChangeBeforeCell = shiftRow.createCell(7);
-			shiftChangeBeforeCell.setCellStyle(styles.get("shiftA"));
+			shiftChangeBeforeCell.setCellStyle(this.styles.get("shiftA"));
 
 			Cell shiftChangeAfterCell = shiftRow.createCell(8);
-			shiftChangeAfterCell.setCellStyle(styles.get("shiftA"));
+			shiftChangeAfterCell.setCellStyle(this.styles.get("shiftA"));
 
 			// If loop has reached end of list, currentRow is at the end of the runsheet
 			if (i == this.schedule.routeDrivingShifts.size() - 1)
@@ -143,33 +143,33 @@ public class Runsheet extends XSSFWorkbook {
 		}
 
 		// Set 0th column width
-		sheet.setColumnWidth(0, 750);
+		this.sheet.setColumnWidth(0, 750);
 		// Set bus column width
-		sheet.setColumnWidth(3, 1750);
+		this.sheet.setColumnWidth(3, 1750);
 		// Set time column widths
 		for (int i = 5; i < 9; i++)
-			sheet.setColumnWidth(i, 2304);
+			this.sheet.setColumnWidth(i, 2304);
 
 
 		// Autosize last name, first name, and route columns to fit text content
-		if (sheet.getColumnWidth(1) > 4608)
-			sheet.autoSizeColumn(1);
-		else sheet.setColumnWidth(1, 4608);
-		if (sheet.getColumnWidth(2) > 4608)
-			sheet.autoSizeColumn(2);
-		else sheet.setColumnWidth(2, 4608);
-		if (sheet.getColumnWidth(4) > 6400)
-			sheet.autoSizeColumn(4);
-		else sheet.setColumnWidth(4, 6400);
+		if (this.sheet.getColumnWidth(1) > 4608)
+			this.sheet.autoSizeColumn(1);
+		else this.sheet.setColumnWidth(1, 4608);
+		if (this.sheet.getColumnWidth(2) > 4608)
+			this.sheet.autoSizeColumn(2);
+		else this.sheet.setColumnWidth(2, 4608);
+		if (this.sheet.getColumnWidth(4) > 6400)
+			this.sheet.autoSizeColumn(4);
+		else this.sheet.setColumnWidth(4, 6400);
 
 		// Write bold comment cell
 		currentRow++;
-		Row boldCommentRow = sheet.createRow(currentRow);
+		Row boldCommentRow = this.sheet.createRow(currentRow);
 		Cell boldCommentCell = boldCommentRow.createCell(8);
-		boldCommentCell.setCellStyle(styles.get("boldComment"));
+		boldCommentCell.setCellStyle(this.styles.get("boldComment"));
 		boldCommentCell.setCellValue("*Bold shifts end at the shop");
 
-		setPrintSetup();
+		this.setPrintSetup();
 	}
 
 	/**
@@ -178,26 +178,26 @@ public class Runsheet extends XSSFWorkbook {
 	 * @param period Period ID
 	 */
 	private void writePeriodRow(int row, String period) {
-		Row periodRow = sheet.createRow(row);
+		Row periodRow = this.sheet.createRow(row);
 
 		Cell cell = periodRow.createCell(0);
-		cell.setCellStyle(styles.get("periodLabel"));
+		cell.setCellStyle(this.styles.get("periodLabel"));
 		cell.setCellValue(period);
 
 		for (int i = 1; i < 8; i++) {
 			cell = periodRow.createCell(i);
-			cell.setCellStyle(styles.get("shiftChange"));
+			cell.setCellStyle(this.styles.get("shiftChange"));
 		}
 
 		// Merge cells H and I for shift change info
-		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$" + (row + 1)+ ":$I$" + (row + 1)));
+		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$H$" + (row + 1)+ ":$I$" + (row + 1)));
 	}
 
 	private void writeShiftChangeRow(int row, ShiftChange shiftChange) {
-		Row shiftChangeRow = sheet.createRow(row);
+		Row shiftChangeRow = this.sheet.createRow(row);
 
 		Cell cell = shiftChangeRow.createCell(0);
-		cell.setCellStyle(styles.get("periodLabel"));
+		cell.setCellStyle(this.styles.get("periodLabel"));
 		if (shiftChange.id.number < 2)
 			cell.setCellValue("" + shiftChange.id.period);
 		else
@@ -205,15 +205,15 @@ public class Runsheet extends XSSFWorkbook {
 
 		for (int i = 1; i < 7; i++) {
 			cell = shiftChangeRow.createCell(i);
-			cell.setCellStyle(styles.get("shiftChange"));
+			cell.setCellStyle(this.styles.get("shiftChange"));
 		}
 
 		cell = shiftChangeRow.createCell(7);
-		cell.setCellStyle(styles.get("shiftChange"));
+		cell.setCellStyle(this.styles.get("shiftChange"));
 		cell.setCellValue(shiftChange.toString());
 
 		// Merge cells H and I for shift change info
-		sheet.addMergedRegion(CellRangeAddress.valueOf("$H$" + (row + 1)+ ":$I$" + (row + 1)));
+		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$H$" + (row + 1)+ ":$I$" + (row + 1)));
 	}
 
 	private static boolean hourIsInShiftChanges(int hour, ArrayList<ShiftChange> shiftChanges) {
