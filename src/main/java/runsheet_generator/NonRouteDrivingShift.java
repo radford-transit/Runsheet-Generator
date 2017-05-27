@@ -13,7 +13,12 @@ public class NonRouteDrivingShift extends Shift implements Comparable<NonRouteDr
 			TimePeriod time, Employee employee) {
 		super(name, time, employee);
 		
-		this.description = description;
+		this.description =
+				description.replace("(S&E)", "")
+									 .replace("(S)", "")
+									 .replace("(H)", "")
+									 .replace("(E)", "")
+									 .trim();
 	}
 
 	/**
