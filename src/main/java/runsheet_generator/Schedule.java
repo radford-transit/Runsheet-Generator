@@ -225,7 +225,7 @@ public class Schedule {
 
 	/**
 	 * Gets a list of shift changes, starting with one during the
-	 * provided shift change hour 
+	 * provided shift change hour
 	 * @param firstShiftChangeHour The hour of the first shift change
 	 * @return A list of shift changes, starting with one during the provided
 	 * hour
@@ -292,7 +292,7 @@ public class Schedule {
 	}
 
 	/**
-	 * Gets the last shift on the provided route 
+	 * Gets the last shift on the provided route
 	 * @param route The route to get the last shift from
 	 * @return The last shift on the provided route
 	 * @throws Exception

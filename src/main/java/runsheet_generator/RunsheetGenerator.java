@@ -15,10 +15,10 @@ public class RunsheetGenerator {
 		Schedule schedule;
 
 		if (noShiftChanges)
-			schedule = new Schedule("EXPORT.CSV", new Date("2/23/2017"), ignoredPositions);
+			schedule = new Schedule("EXPORT.CSV", new Date("4/27/2017"), ignoredPositions);
 		else {
-			int firstShiftChangeHour = 10;
-			schedule = new Schedule("EXPORT.CSV", new Date("2/23/2017"), ignoredPositions, firstShiftChangeHour);
+			int firstShiftChangeHour = 14;
+			schedule = new Schedule("EXPORT.CSV", new Date("4/27/2017"), ignoredPositions, firstShiftChangeHour);
 		}
 
 		System.out.println(schedule);

@@ -28,7 +28,7 @@ public class Runsheet extends XSSFWorkbook {
 	 */
 	public Runsheet(Schedule schedule) throws Exception {
 		super();
-		
+
 		this.schedule = schedule;
 
 		styles = createStyles(this);
@@ -40,7 +40,7 @@ public class Runsheet extends XSSFWorkbook {
 
 		// Current row being written
 		int currentRow = 0;
-		
+
 		// Title row
 		Row titleRow = sheet.createRow(currentRow);
 		titleRow.setHeightInPoints(19);
