@@ -114,7 +114,7 @@ public class Schedule {
 												scheduleCSVRecord.get(Header.FIRST_NAME)))
 								: scheduleCSVRecord.get(Header.POSITION_NAME).equals("Training") ?
 										new TrainingShift(
-												scheduleCSVRecord.get(Header.POSITION_NAME),
+												scheduleCSVRecord.get(Header.DESCRIPTION),
 												new TimePeriod(
 														new TimePoint(scheduleCSVRecord.get(Header.START_TIME)),
 														new TimePoint(scheduleCSVRecord.get(Header.END_TIME))),
