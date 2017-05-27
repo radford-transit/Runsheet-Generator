@@ -8,7 +8,13 @@ public class TrainingShift extends Shift implements Comparable<TrainingShift> {
 	 * @param employee The employee assinged to the training shift
 	 */
 	public TrainingShift(String name, TimePeriod time, Employee employee) {
-		super(name, time, employee);
+		super(name.replace("(S&E)", "")
+							.replace("(S)", "")
+							.replace("(H)", "")
+							.replace("(E)", "")
+							.trim(),
+					time,
+					employee);
 	}
 
 	/**
