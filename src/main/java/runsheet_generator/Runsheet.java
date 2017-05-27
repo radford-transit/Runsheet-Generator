@@ -51,8 +51,8 @@ public class Runsheet extends XSSFWorkbook {
 		if (!this.schedule.routeDrivingShifts.isEmpty())
 			currentRow = this.writeRouteDrivingShiftRows(currentRow);
 		// Non-route driving shift rows
-		//if (!this.schedule.nonRouteDrivingShifts.isEmpty())
-		//	currentRow = this.writeNonRouteDrivingShiftRows(currentRow);
+		if (!this.schedule.nonRouteDrivingShifts.isEmpty())
+			currentRow = this.writeNonRouteDrivingShiftRows(currentRow);
 		// Autosize last name, first name, and route columns to fit text content
 		this.autosizeColumns();
 		// Write bold comment cell
@@ -149,14 +149,42 @@ public class Runsheet extends XSSFWorkbook {
 		shiftChangeAfterCell.setCellStyle(this.styles.get("shiftA"));
 	}
 	
-	private int writeShiftRow(int row, NonRouteDrivingShift shift) {
+	private void writeShiftRow(Row row, NonRouteDrivingShift shift) {
+		Cell checkCell = row.createCell(0);
+		checkCell.setCellStyle(this.styles.get("shiftA"));
 		
-		return row + 1;
+		Cell lastNameCell = row.createCell(1);
+		lastNameCell.setCellStyle(this.styles.get("shiftA"));
+		lastNameCell.setCellValue(shift.employee.name.last);
+
+		Cell firstNameCell = row.createCell(2);
+		firstNameCell.setCellStyle(this.styles.get("shiftA"));
+		firstNameCell.setCellValue(shift.employee.name.first);
+
+		Cell busCell = row.createCell(3);
+		busCell.setCellStyle(this.styles.get("bus"));
+
+		Cell positionCell = row.createCell(4);
+		positionCell.setCellStyle(this.styles.get("positionBold"));
+		positionCell.setCellValue(shift.description);
+
+		Cell startTimeCell = row.createCell(5);
+		startTimeCell.setCellStyle(this.styles.get("time"));
+		startTimeCell.setCellValue(shift.time.start.toString());
+
+		Cell endTimeCell = row.createCell(6);
+		endTimeCell.setCellStyle(this.styles.get("time"));
+		endTimeCell.setCellValue(shift.time.end.toString());
+
+		Cell shiftChangeBeforeCell = row.createCell(7);
+		shiftChangeBeforeCell.setCellStyle(this.styles.get("shiftA"));
+
+		Cell shiftChangeAfterCell = row.createCell(8);
+		shiftChangeAfterCell.setCellStyle(this.styles.get("shiftA"));
 	}
 	
-	private int writeShiftRow(int row, TrainingShift shift) {
+	private void writeShiftRow(Row row, TrainingShift shift) {
 		
-		return row + 1;
 	}
 	
 	private int writeRouteDrivingShiftRows(int currentRow) throws Exception {
@@ -182,7 +210,9 @@ public class Runsheet extends XSSFWorkbook {
 
 			this.writeShiftRow(shiftRow, this.schedule.routeDrivingShifts.get(i));
 
-			// If loop has reached end of list, currentRow is at the end of the runsheet
+			/* If loop has reached end of list, currentRow is at the end of the
+			 * non-route driving shifts section of the runsheet
+			 */
 			if (i == this.schedule.routeDrivingShifts.size() - 1)
 				currentRow += i;
 		}
@@ -190,22 +220,33 @@ public class Runsheet extends XSSFWorkbook {
 		return currentRow + 1;
 	}
 	
-	/*
 	private int writeNonRouteDrivingShiftRows(int currentRow) {
 		for (int i = 0; i < this.schedule.nonRouteDrivingShifts.size(); i++) {
 			if (i == 0
 					|| (i > 0
-							&& this.schedule.nonRouteDrivingShifts.get(i).name
-									!= this.schedule.nonRouteDrivingShifts.get(i - 1).name)) {
-				this.writePeriodRow(currentRow, this.schedule.nonRouteDrivingShifts.get(i).name);
+							&& !this.schedule.nonRouteDrivingShifts.get(i).name
+									.equals(this.schedule.nonRouteDrivingShifts.get(i - 1).name))) {
+				currentRow += i;
+				currentRow = this.writePeriodRow(currentRow, this.schedule.nonRouteDrivingShifts.get(i).name);
+				currentRow -= i;
 			}
 			
+			// Write shift row
+			currentRow += i;
+			Row shiftRow = this.sheet.createRow(currentRow);
+			currentRow -= i;
 			
+			this.writeShiftRow(shiftRow, this.schedule.nonRouteDrivingShifts.get(i));
+			
+			/* If loop has reached end of list, currentRow is at the end of the
+			 * non-route driving shifts section of the runsheet
+			 */
+			if (i == this.schedule.nonRouteDrivingShifts.size() - 1)
+				currentRow += i;
 		}
 		
 		return currentRow + 1;
 	}
-	*/
 	
 	private int writeBoldComment(int row) {
 		Row boldCommentRow = this.sheet.createRow(row);
