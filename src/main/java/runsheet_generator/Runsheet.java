@@ -263,54 +263,54 @@ public class Runsheet extends XSSFWorkbook {
 				currentRow = this.writePeriodRow(currentRow, this.schedule.nonRouteDrivingShifts.get(i).name);
 				currentRow -= i;
 			}
-			
+
 			// Write shift row
 			currentRow += i;
 			Row shiftRow = this.sheet.createRow(currentRow);
 			currentRow -= i;
-			
+
 			this.writeShiftRow(shiftRow, this.schedule.nonRouteDrivingShifts.get(i));
-			
+
 			/* If loop has reached end of list, currentRow is at the end of the
 			 * non-route driving shifts section of the runsheet
 			 */
 			if (i == this.schedule.nonRouteDrivingShifts.size() - 1)
 				currentRow += i;
 		}
-		
+
 		return currentRow + 1;
 	}
 
 	private int writeTrainingShiftRows(int currentRow) {
 		currentRow = this.writePeriodRow(currentRow, "Training");
-		
+
 		for (int i = 0; i < this.schedule.trainingShifts.size(); i++) {
 			// Write shift row
 			currentRow += i;
 			Row shiftRow = this.sheet.createRow(currentRow);
 			currentRow -= i;
-			
+
 			this.writeShiftRow(shiftRow, this.schedule.trainingShifts.get(i));
-			
+
 			/* If loop has reached end of list, currentRow is at the end of the
 			 * training shifts section of the runsheet
 			 */
-			if (i == this.schedule.nonRouteDrivingShifts.size() - 1)
+			if (i == this.schedule.trainingShifts.size() - 1)
 				currentRow += i;
 		}
-		
+
 		return currentRow + 1;
 	}
-	
+
 	private int writeBoldComment(int row) {
 		Row boldCommentRow = this.sheet.createRow(row);
 		Cell boldCommentCell = boldCommentRow.createCell(8);
 		boldCommentCell.setCellStyle(this.styles.get("boldComment"));
 		boldCommentCell.setCellValue("*Bold shifts end at the shop");
-		
+
 		return row + 1;
 	}
-	
+
 	private void autosizeColumns() {
 		if (this.sheet.getColumnWidth(1) > 4608)
 			this.sheet.autoSizeColumn(1);
