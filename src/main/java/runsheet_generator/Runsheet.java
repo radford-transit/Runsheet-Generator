@@ -168,7 +168,7 @@ public class Runsheet extends XSSFWorkbook {
 		busCell.setCellStyle(this.styles.get("bus"));
 
 		Cell positionCell = row.createCell(4);
-		positionCell.setCellStyle(this.styles.get("positionBold"));
+		positionCell.setCellStyle(this.styles.get("shiftA"));
 		positionCell.setCellValue(shift.description);
 
 		Cell startTimeCell = row.createCell(5);
@@ -202,7 +202,7 @@ public class Runsheet extends XSSFWorkbook {
 		busCell.setCellStyle(this.styles.get("bus"));
 
 		Cell positionCell = row.createCell(4);
-		positionCell.setCellStyle(this.styles.get("positionBold"));
+		positionCell.setCellStyle(this.styles.get("shiftA"));
 		positionCell.setCellValue(shift.name);
 
 		Cell startTimeCell = row.createCell(5);
