@@ -176,17 +176,16 @@ public class Schedule {
 			else
 				this.routeDrivingShifts.add(shift);
 
-		else
-			for (int i = 0; i < this.routeDrivingShifts.size(); i++)
-				if (shift.compareTo(this.routeDrivingShifts.get(i)) == -1) {
-					this.routeDrivingShifts.add(i, shift);
-					break;
-				}
+		else for (int i = 0; i < this.routeDrivingShifts.size(); i++)
+			if (shift.compareTo(this.routeDrivingShifts.get(i)) == -1) {
+				this.routeDrivingShifts.add(i, shift);
+				break;
+			}
 
-				else if (i == this.routeDrivingShifts.size() - 1) {
-					this.routeDrivingShifts.add(shift);
-					break;
-				}
+			else if (i == this.routeDrivingShifts.size() - 1) {
+				this.routeDrivingShifts.add(shift);
+				break;
+			}
 	}
 
 	/**
@@ -194,7 +193,25 @@ public class Schedule {
 	 * @param shift The non-route driving shift to add to the Schedule
 	 */
 	private void add(NonRouteDrivingShift shift) {
-		this.nonRouteDrivingShifts.add(shift);
+		if (this.nonRouteDrivingShifts.size() == 0)
+			this.nonRouteDrivingShifts.add(shift);
+
+		else if (this.nonRouteDrivingShifts.size() == 1)
+			if (shift.compareTo(this.nonRouteDrivingShifts.get(0)) < 0)
+				this.nonRouteDrivingShifts.add(0, shift);
+			else
+				this.nonRouteDrivingShifts.add(shift);
+
+		else for (int i = 0; i < this.nonRouteDrivingShifts.size(); i++)
+			if (shift.compareTo(this.nonRouteDrivingShifts.get(i)) < 0) {
+				this.nonRouteDrivingShifts.add(i, shift);
+				break;
+			}
+
+			else if (i == this.nonRouteDrivingShifts.size() - 1) {
+				this.nonRouteDrivingShifts.add(shift);
+				break;
+			}
 	}
 
 	/**
