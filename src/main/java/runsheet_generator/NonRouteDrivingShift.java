@@ -26,13 +26,6 @@ public class NonRouteDrivingShift extends Shift implements Comparable<NonRouteDr
 	 */
 	@Override
 	public int compareTo(NonRouteDrivingShift other) {
-		if (this.name.compareTo(other.name) < 0)
-			System.out.println(this.name + " < " + other.name);
-		else if (this.name.compareTo(other.name) == 0)
-			System.out.println(this.name + " = " + other.name);
-		else if (this.name.compareTo(other.name) > 0)
-			System.out.println(this.name + " > " + other.name);
-		else System.out.println("ERROR");
 		return this.name.compareTo(other.name);
 	}
 }
