@@ -342,7 +342,7 @@ public class Schedule {
 		scheduleStr = scheduleStr + "\n-------- Training Shifts --------\n";
 		for (int i = 0; i < this.trainingShifts.size(); i++)
 			scheduleStr = scheduleStr + trainingShifts.get(i) + "\n";
-		scheduleStr = scheduleStr + "\n-------- SHIFT CHANGES --------\n";
+		scheduleStr = scheduleStr + "\n-------- Shift Changes --------\n";
 		for (int i = 0; i < this.shiftChanges.size(); i++)
 			scheduleStr = scheduleStr + shiftChanges.get(i) + "\n";
 
