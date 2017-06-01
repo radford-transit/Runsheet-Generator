@@ -14,9 +14,9 @@ public class RunsheetGenerator {
 
 		int firstShiftChangeHour = 7;
 
-		Schedule schedule = noShiftChanges ?
-				new Schedule("EXPORT.CSV", new Date("5/3/2017"), ignoredPositions)
-				: new Schedule("EXPORT.CSV", new Date("5/3/2017"), ignoredPositions, firstShiftChangeHour);
+		Schedule schedule = noShiftChanges
+				? new Schedule("EXPORT.CSV", new Date("4/27/2017"), ignoredPositions)
+				: new Schedule("EXPORT.CSV", new Date("4/27/2017"), ignoredPositions, firstShiftChangeHour);
 
 		System.out.println(schedule);
 

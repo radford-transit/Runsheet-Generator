@@ -2,7 +2,7 @@ package main.java.runsheet_generator;
 
 public class NonRouteDrivingShift extends Shift implements Comparable<NonRouteDrivingShift> {
 	String description;
-	
+
 	/**
 	 * Constructs a NonRouteDrivingShift object
 	 * @param name The shift name
@@ -26,12 +26,10 @@ public class NonRouteDrivingShift extends Shift implements Comparable<NonRouteDr
 	 */
 	@Override
 	public int compareTo(NonRouteDrivingShift other) {
-		return (
-				this.name.equals(other.name) ?
-						this.description.equals(other.description) ?
-								this.time.start.compareTo(other.time.start)
-								: this.description.compareTo(other.description)
-						: this.name.compareTo(other.name)
-		);
+		return this.name.equals(other.name)
+				? this.description.equals(other.description)
+						? this.time.start.compareTo(other.time.start)
+						: this.description.compareTo(other.description)
+				: this.name.compareTo(other.name);
 	}
 }

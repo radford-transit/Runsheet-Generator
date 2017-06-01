@@ -102,18 +102,18 @@ public class Schedule {
 				 * then it's a route driving shift
 				 */
 				this.add(
-						scheduleCSVRecord.get(Header.PERIOD).length() == 1 ?
-								new RouteDrivingShift(
+						scheduleCSVRecord.get(Header.PERIOD).length() == 1
+								? new RouteDrivingShift(
 										scheduleCSVRecord.get(Header.POSITION_NAME),
-												scheduleCSVRecord.get(Header.PERIOD).charAt(0),
+										scheduleCSVRecord.get(Header.PERIOD).charAt(0),
 										new TimePeriod(
 												new TimePoint(scheduleCSVRecord.get(Header.START_TIME)),
 												new TimePoint(scheduleCSVRecord.get(Header.END_TIME))),
 										new Employee(
 												scheduleCSVRecord.get(Header.LAST_NAME),
 												scheduleCSVRecord.get(Header.FIRST_NAME)))
-								: scheduleCSVRecord.get(Header.POSITION_NAME).equals("Training") ?
-										new TrainingShift(
+								: scheduleCSVRecord.get(Header.POSITION_NAME).equals("Training")
+										? new TrainingShift(
 												scheduleCSVRecord.get(Header.DESCRIPTION),
 												new TimePeriod(
 														new TimePoint(scheduleCSVRecord.get(Header.START_TIME)),

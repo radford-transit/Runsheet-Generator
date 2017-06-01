@@ -27,10 +27,9 @@ public class Name {
 
 	@Override
 	public boolean equals(Object other) {
-		return
-				other instanceof Name ?
-					this.last.equals(((Name) other).last)
-					&& this.first.equals(((Name) other).first)
+		return other instanceof Name
+				?	this.last.equals(((Name) other).last)
+						&& this.first.equals(((Name) other).first)
 				: false;
 	}
 }
