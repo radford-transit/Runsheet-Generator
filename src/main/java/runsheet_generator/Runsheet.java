@@ -41,25 +41,26 @@ public class Runsheet extends XSSFWorkbook {
 		// Current row being written
 		int currentRow = 0;
 
-		// Title row
-		currentRow = this.writeTitleRow(currentRow);
-		// Date row
-		currentRow = this.writeDateRow(currentRow);
-		// Headers row
-		currentRow = this.writeHeadersRow(currentRow);
-		// Route driving shift rows
-		if (!this.schedule.routeDrivingShifts.isEmpty())
-			currentRow = this.writeRouteDrivingShiftRows(currentRow);
-		// Non-route driving shift rows
-		if (!this.schedule.nonRouteDrivingShifts.isEmpty())
-			currentRow = this.writeNonRouteDrivingShiftRows(currentRow);
-		// Training shift rows
-		if (!this.schedule.trainingShifts.isEmpty())
-			currentRow = this.writeTrainingShiftRows(currentRow);
+		currentRow = (
+				// Write Bold Comment
+				this.writeBoldComment(
+				// Write training shift rows
+				this.writeTrainingShiftRows(
+				// Write non-route driving shift rows
+				this.writeNonRouteDrivingShiftRows(
+				// Write route driving shift rows
+				this.writeRouteDrivingShiftRows(
+				// Write headers row
+				this.writeHeadersRow(
+				// Write date row
+				this.writeDateRow(
+				// Write title row
+				this.writeTitleRow(
+						currentRow)))))))
+		);
+
 		// Autosize last name, first name, and route columns to fit text content
 		this.autosizeColumns();
-		// Write bold comment cell
-		currentRow = this.writeBoldComment(currentRow);
 
 		this.setPrintSetup();
 	}
@@ -219,87 +220,96 @@ public class Runsheet extends XSSFWorkbook {
 		Cell shiftChangeAfterCell = row.createCell(8);
 		shiftChangeAfterCell.setCellStyle(this.styles.get("shiftA"));
 	}
-	
+
 	private int writeRouteDrivingShiftRows(int currentRow) throws Exception {
-		for (int i = 0 ; i < this.schedule.routeDrivingShifts.size(); i++) {
-			if (i == 0) {
+		if (!this.schedule.routeDrivingShifts.isEmpty()) {
+			for (int i = 0 ; i < this.schedule.routeDrivingShifts.size(); i++) {
+				if (i == 0) {
+					currentRow += i;
+					currentRow = writePeriodRow(currentRow, "" + this.schedule.routeDrivingShifts.get(i).period);
+					currentRow -= i;
+				}
+				else if (this.schedule.routeDrivingShifts.get(i).time.start.hour >
+						this.schedule.routeDrivingShifts.get(i - 1).time.start.hour
+								 && Runsheet.hourIsInShiftChanges(this.schedule.routeDrivingShifts.get(i).time.start.hour,
+																							 		this.schedule.shiftChanges)) {
+					currentRow += i;
+					currentRow = writeShiftChangeRow(currentRow, Runsheet.shiftChangeAtHour(this.schedule.routeDrivingShifts.get(i).time.start.hour, this.schedule.shiftChanges));
+					currentRow -= i;
+				}
+
+				// Write shift row
 				currentRow += i;
-				currentRow = writePeriodRow(currentRow, "" + this.schedule.routeDrivingShifts.get(i).period);
+				Row shiftRow = this.sheet.createRow(currentRow);
 				currentRow -= i;
+
+				this.writeShiftRow(shiftRow, this.schedule.routeDrivingShifts.get(i));
+
+				/* If loop has reached end of list, currentRow is at the end of the
+				 * non-route driving shifts section of the runsheet
+				 */
+				if (i == this.schedule.routeDrivingShifts.size() - 1)
+					currentRow += i;
 			}
-			else if (this.schedule.routeDrivingShifts.get(i).time.start.hour >
-					this.schedule.routeDrivingShifts.get(i - 1).time.start.hour
-							 && Runsheet.hourIsInShiftChanges(this.schedule.routeDrivingShifts.get(i).time.start.hour,
-																						 		this.schedule.shiftChanges)) {
-				currentRow += i;
-				currentRow = writeShiftChangeRow(currentRow, Runsheet.shiftChangeAtHour(this.schedule.routeDrivingShifts.get(i).time.start.hour, this.schedule.shiftChanges));
-				currentRow -= i;
-			}
 
-			// Write shift row
-			currentRow += i;
-			Row shiftRow = this.sheet.createRow(currentRow);
-			currentRow -= i;
-
-			this.writeShiftRow(shiftRow, this.schedule.routeDrivingShifts.get(i));
-
-			/* If loop has reached end of list, currentRow is at the end of the
-			 * non-route driving shifts section of the runsheet
-			 */
-			if (i == this.schedule.routeDrivingShifts.size() - 1)
-				currentRow += i;
+			return currentRow + 1;
 		}
-		
-		return currentRow + 1;
+		return currentRow;
 	}
-	
+
 	private int writeNonRouteDrivingShiftRows(int currentRow) {
-		for (int i = 0; i < this.schedule.nonRouteDrivingShifts.size(); i++) {
-			if (i == 0
-					|| (i > 0
-							&& !this.schedule.nonRouteDrivingShifts.get(i).name
-									.equals(this.schedule.nonRouteDrivingShifts.get(i - 1).name))) {
+		if (!this.schedule.nonRouteDrivingShifts.isEmpty()) {
+			for (int i = 0; i < this.schedule.nonRouteDrivingShifts.size(); i++) {
+				if (i == 0
+						|| (i > 0
+								&& !this.schedule.nonRouteDrivingShifts.get(i).name
+										.equals(this.schedule.nonRouteDrivingShifts.get(i - 1).name))) {
+					currentRow += i;
+					currentRow = this.writePeriodRow(currentRow, this.schedule.nonRouteDrivingShifts.get(i).name);
+					currentRow -= i;
+				}
+
+				// Write shift row
 				currentRow += i;
-				currentRow = this.writePeriodRow(currentRow, this.schedule.nonRouteDrivingShifts.get(i).name);
+				Row shiftRow = this.sheet.createRow(currentRow);
 				currentRow -= i;
+
+				this.writeShiftRow(shiftRow, this.schedule.nonRouteDrivingShifts.get(i));
+
+				/* If loop has reached end of list, currentRow is at the end of the
+				 * non-route driving shifts section of the runsheet
+				 */
+				if (i == this.schedule.nonRouteDrivingShifts.size() - 1)
+					currentRow += i;
 			}
 
-			// Write shift row
-			currentRow += i;
-			Row shiftRow = this.sheet.createRow(currentRow);
-			currentRow -= i;
-
-			this.writeShiftRow(shiftRow, this.schedule.nonRouteDrivingShifts.get(i));
-
-			/* If loop has reached end of list, currentRow is at the end of the
-			 * non-route driving shifts section of the runsheet
-			 */
-			if (i == this.schedule.nonRouteDrivingShifts.size() - 1)
-				currentRow += i;
+			return currentRow + 1;
 		}
-
-		return currentRow + 1;
+		return currentRow;
 	}
 
 	private int writeTrainingShiftRows(int currentRow) {
-		currentRow = this.writePeriodRow(currentRow, "Training");
+		if (!this.schedule.trainingShifts.isEmpty()) {
+			currentRow = this.writePeriodRow(currentRow, "Training");
 
-		for (int i = 0; i < this.schedule.trainingShifts.size(); i++) {
-			// Write shift row
-			currentRow += i;
-			Row shiftRow = this.sheet.createRow(currentRow);
-			currentRow -= i;
-
-			this.writeShiftRow(shiftRow, this.schedule.trainingShifts.get(i));
-
-			/* If loop has reached end of list, currentRow is at the end of the
-			 * training shifts section of the runsheet
-			 */
-			if (i == this.schedule.trainingShifts.size() - 1)
+			for (int i = 0; i < this.schedule.trainingShifts.size(); i++) {
+				// Write shift row
 				currentRow += i;
-		}
+				Row shiftRow = this.sheet.createRow(currentRow);
+				currentRow -= i;
 
-		return currentRow + 1;
+				this.writeShiftRow(shiftRow, this.schedule.trainingShifts.get(i));
+
+				/* If loop has reached end of list, currentRow is at the end of the
+				 * training shifts section of the runsheet
+				 */
+				if (i == this.schedule.trainingShifts.size() - 1)
+					currentRow += i;
+			}
+
+			return currentRow + 1;
+		}
+		return currentRow;
 	}
 
 	private int writeBoldComment(int row) {
