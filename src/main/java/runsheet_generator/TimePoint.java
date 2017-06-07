@@ -38,8 +38,8 @@ public class TimePoint implements Comparable<TimePoint> {
 	 * @param n The integer
 	 */
 	private String twoDigits(int n) {
-		return (n < 10 && n >= 0) ?
-				"0" + n
+		return n < 10 && n >= 0
+				? "0" + n
 				: "" + n;
 	}
 
@@ -49,12 +49,12 @@ public class TimePoint implements Comparable<TimePoint> {
 	@Override
 	public String toString() {
 		return (
-				(hour >= 24) ?
-						(hour - 24 - 12 > 0) ?
-								(hour - 24 - 12) + ":" + this.twoDigits(minute) + " PM"
+				(hour >= 24)
+						? (hour - 24 - 12 > 0)
+								? (hour - 24 - 12) + ":" + this.twoDigits(minute) + " PM"
 								: (hour - 24) + ":" + this.twoDigits(minute) + " AM"
-						: (hour - 12  > 0) ?
-								(hour - 12) + ":" + this.twoDigits(minute) + " PM"
+						: (hour - 12  > 0)
+								? (hour - 12) + ":" + this.twoDigits(minute) + " PM"
 								: (hour) + ":" + this.twoDigits(minute) + " AM"
 
 		);
@@ -66,13 +66,13 @@ public class TimePoint implements Comparable<TimePoint> {
 	@Override
 	public int compareTo(TimePoint other) {
 		return (
-				(this.hour < other.hour) ?
-						-1
-						: (this.hour == other.hour) ?
-								(this.minute < other.minute) ?
-										-1
-										: (this.minute == other.minute)?
-												0 : 1
+				(this.hour < other.hour)
+						? -1
+						: (this.hour == other.hour)
+								? (this.minute < other.minute)
+										? -1
+										: (this.minute == other.minute)
+												? 0 : 1
 								: 1
 		);
 	}

@@ -102,18 +102,18 @@ public class Schedule {
 				 * then it's a route driving shift
 				 */
 				this.add(
-						scheduleCSVRecord.get(Header.PERIOD).length() == 1 ?
-								new RouteDrivingShift(
+						scheduleCSVRecord.get(Header.PERIOD).length() == 1
+								? new RouteDrivingShift(
 										scheduleCSVRecord.get(Header.POSITION_NAME),
-												scheduleCSVRecord.get(Header.PERIOD).charAt(0),
+										scheduleCSVRecord.get(Header.PERIOD).charAt(0),
 										new TimePeriod(
 												new TimePoint(scheduleCSVRecord.get(Header.START_TIME)),
 												new TimePoint(scheduleCSVRecord.get(Header.END_TIME))),
 										new Employee(
 												scheduleCSVRecord.get(Header.LAST_NAME),
 												scheduleCSVRecord.get(Header.FIRST_NAME)))
-								: scheduleCSVRecord.get(Header.POSITION_NAME).equals("Training") ?
-										new TrainingShift(
+								: scheduleCSVRecord.get(Header.POSITION_NAME).equals("Training")
+										? new TrainingShift(
 												scheduleCSVRecord.get(Header.DESCRIPTION),
 												new TimePeriod(
 														new TimePoint(scheduleCSVRecord.get(Header.START_TIME)),
@@ -176,17 +176,16 @@ public class Schedule {
 			else
 				this.routeDrivingShifts.add(shift);
 
-		else
-			for (int i = 0; i < this.routeDrivingShifts.size(); i++)
-				if (shift.compareTo(this.routeDrivingShifts.get(i)) == -1) {
-					this.routeDrivingShifts.add(i, shift);
-					break;
-				}
+		else for (int i = 0; i < this.routeDrivingShifts.size(); i++)
+			if (shift.compareTo(this.routeDrivingShifts.get(i)) == -1) {
+				this.routeDrivingShifts.add(i, shift);
+				break;
+			}
 
-				else if (i == this.routeDrivingShifts.size() - 1) {
-					this.routeDrivingShifts.add(shift);
-					break;
-				}
+			else if (i == this.routeDrivingShifts.size() - 1) {
+				this.routeDrivingShifts.add(shift);
+				break;
+			}
 	}
 
 	/**
@@ -194,7 +193,25 @@ public class Schedule {
 	 * @param shift The non-route driving shift to add to the Schedule
 	 */
 	private void add(NonRouteDrivingShift shift) {
-		this.nonRouteDrivingShifts.add(shift);
+		if (this.nonRouteDrivingShifts.size() == 0)
+			this.nonRouteDrivingShifts.add(shift);
+
+		else if (this.nonRouteDrivingShifts.size() == 1)
+			if (shift.compareTo(this.nonRouteDrivingShifts.get(0)) < 0)
+				this.nonRouteDrivingShifts.add(0, shift);
+			else
+				this.nonRouteDrivingShifts.add(shift);
+
+		else for (int i = 0; i < this.nonRouteDrivingShifts.size(); i++)
+			if (shift.compareTo(this.nonRouteDrivingShifts.get(i)) < 0) {
+				this.nonRouteDrivingShifts.add(i, shift);
+				break;
+			}
+
+			else if (i == this.nonRouteDrivingShifts.size() - 1) {
+				this.nonRouteDrivingShifts.add(shift);
+				break;
+			}
 	}
 
 	/**
@@ -226,7 +243,7 @@ public class Schedule {
 
 	/**
 	 * Gets a list of shift changes, starting with one during the
-	 * provided shift change hour 
+	 * provided shift change hour
 	 * @param firstShiftChangeHour The hour of the first shift change
 	 * @return A list of shift changes, starting with one during the provided
 	 * hour
@@ -293,7 +310,7 @@ public class Schedule {
 	}
 
 	/**
-	 * Gets the last shift on the provided route 
+	 * Gets the last shift on the provided route
 	 * @param route The route to get the last shift from
 	 * @return The last shift on the provided route
 	 * @throws Exception
@@ -325,7 +342,7 @@ public class Schedule {
 		scheduleStr = scheduleStr + "\n-------- Training Shifts --------\n";
 		for (int i = 0; i < this.trainingShifts.size(); i++)
 			scheduleStr = scheduleStr + trainingShifts.get(i) + "\n";
-		scheduleStr = scheduleStr + "\n-------- SHIFT CHANGES --------\n";
+		scheduleStr = scheduleStr + "\n-------- Shift Changes --------\n";
 		for (int i = 0; i < this.shiftChanges.size(); i++)
 			scheduleStr = scheduleStr + shiftChanges.get(i) + "\n";
 

@@ -46,16 +46,14 @@ public class Employee {
 	 */
 	@Override
 	public String toString() {
-		return (
-				name.equals(new Name("", "")) ?
-						"NO DRIVER ASSIGNED"
-						: this.name.toString() + "\n"
-							+ (this.hasCDL ?
-									"  CDL Holder"
-									: "  Non-CDL Holder")
-							+ (this.lineInstructor?
-									"\n  Line Instructor"
-									: "")
-		);
+		return name.equals(new Name("", ""))
+				? "NO DRIVER ASSIGNED"
+				: this.name.toString() + "\n"
+						+ (this.hasCDL
+								? "  CDL Holder"
+								: "  Non-CDL Holder")
+						+ (this.lineInstructor
+								? "\n  Line Instructor"
+								: "");
 	}
 }

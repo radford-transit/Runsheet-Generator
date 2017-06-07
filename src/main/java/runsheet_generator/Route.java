@@ -55,10 +55,8 @@ public class Route implements Comparable<Route> {
 	 */
 	@Override
 	public boolean equals(Object other) {
-		return
-				other instanceof Route ?
-					this.id == ((Route)other).id
-					&& this.name.equals(((Route)other).name)
+		return other instanceof Route
+				? this.id == ((Route)other).id && this.name.equals(((Route)other).name)
 				: false;
 	}
 
@@ -67,11 +65,9 @@ public class Route implements Comparable<Route> {
 	 */
 	@Override
 	public int compareTo(Route other) {
-		return (
-			this.id < other.id ?
-					-1
-					: this.id == other.id ?
-							0 : 1
-		);
+		return this.id < other.id
+				? -1
+				: this.id == other.id
+						? 0 : 1;
 	}
 }

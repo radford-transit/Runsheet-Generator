@@ -22,9 +22,6 @@ public class TrainingShift extends Shift implements Comparable<TrainingShift> {
 	 */
 	@Override
 	public int compareTo(TrainingShift other) {
-		return (
-				this.time.compareTo(other.time) == -1 ?
-						-1 : 1
-		);
+		return this.time.compareTo(other.time) == -1 ? -1 : 1;
 	}
 }

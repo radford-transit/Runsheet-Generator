@@ -34,13 +34,11 @@ public class Date {
 	 */
 	@Override
 	public boolean equals(Object other) {
-		return (
-			other instanceof Date ?
-				this.year == ((Date)other).year
-				&& this.month == ((Date)other).month
-				&& this.day == ((Date)other).day
-			: false
-		);
+		return other instanceof Date
+				? this.year == ((Date)other).year
+						&& this.month == ((Date)other).month
+						&& this.day == ((Date)other).day
+				: false;
 	}
 
 	/**

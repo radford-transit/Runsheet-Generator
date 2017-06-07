@@ -43,11 +43,11 @@ public class RouteDrivingShift extends Shift implements Comparable<RouteDrivingS
 		 * their route IDs.
 		 */
 		return (
-			this.time.start.hour < other.time.start.hour ?
-					-1
-					: this.time.start.hour == other.time.start.hour ?
-							this.route.compareTo(other.route) == -1 ?
-									-1 : 1
+			this.time.start.hour < other.time.start.hour
+					? -1
+					: this.time.start.hour == other.time.start.hour
+							? this.route.compareTo(other.route) == -1
+									? -1 : 1
 							: 1
 		);
 	}
