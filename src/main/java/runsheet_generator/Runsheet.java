@@ -29,7 +29,7 @@ public class Runsheet extends XSSFWorkbook {
 		this.schedule = schedule;
 
 		this.styles = createStyles(this);
-		
+
 		// Set 0th column width
 		this.sheet.setColumnWidth(0, 750);
 		// Set bus column width
@@ -73,10 +73,10 @@ public class Runsheet extends XSSFWorkbook {
 		titleCell.setCellValue("Radford Transit");
 		titleCell.setCellStyle(this.styles.get("title"));
 		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$A$1:$I$1"));
-		
+
 		return row + 1;
 	}
-	
+
 	private int writeDateRow(int row) {
 		Row dateRow = this.sheet.createRow(row);
 		dateRow.setHeightInPoints(17);
@@ -84,10 +84,10 @@ public class Runsheet extends XSSFWorkbook {
 		dateCell.setCellValue(this.schedule.date.toString());
 		dateCell.setCellStyle(this.styles.get("date"));
 		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$A$2:$I$2"));
-		
+
 		return row + 2;
 	}
-	
+
 	private int writeHeadersRow(int row) {
 		Row headersRow = sheet.createRow(row);
 		headersRow.setHeightInPoints((short) 15);
@@ -112,7 +112,7 @@ public class Runsheet extends XSSFWorkbook {
 
 		// Merge cells H4 and I4 for shift change header
 		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$H$4:$I$4"));
-		
+
 		return row + 1;
 	}
 
@@ -152,11 +152,11 @@ public class Runsheet extends XSSFWorkbook {
 		Cell shiftChangeAfterCell = row.createCell(8);
 		shiftChangeAfterCell.setCellStyle(this.styles.get("shiftA"));
 	}
-	
+
 	private void writeShiftRow(Row row, NonRouteDrivingShift shift) {
 		Cell checkCell = row.createCell(0);
 		checkCell.setCellStyle(this.styles.get("shiftA"));
-		
+
 		Cell lastNameCell = row.createCell(1);
 		lastNameCell.setCellStyle(this.styles.get("shiftA"));
 		lastNameCell.setCellValue(shift.employee.name.last);
@@ -186,11 +186,11 @@ public class Runsheet extends XSSFWorkbook {
 		Cell shiftChangeAfterCell = row.createCell(8);
 		shiftChangeAfterCell.setCellStyle(this.styles.get("shiftA"));
 	}
-	
+
 	private void writeShiftRow(Row row, TrainingShift shift) {
 		Cell checkCell = row.createCell(0);
 		checkCell.setCellStyle(this.styles.get("shiftA"));
-		
+
 		Cell lastNameCell = row.createCell(1);
 		lastNameCell.setCellStyle(this.styles.get("shiftA"));
 		lastNameCell.setCellValue(shift.employee.name.last);
@@ -332,7 +332,7 @@ public class Runsheet extends XSSFWorkbook {
 			this.sheet.autoSizeColumn(4);
 		else this.sheet.setColumnWidth(4, 6400);
 	}
-	
+
 	/**
 	 * Writes a period row on the runsheet
 	 * @param row Row number on the spreadsheet
@@ -352,7 +352,7 @@ public class Runsheet extends XSSFWorkbook {
 
 		// Merge cells H and I for shift change info
 		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$H$" + (row + 1)+ ":$I$" + (row + 1)));
-		
+
 		return row + 1;
 	}
 
@@ -377,7 +377,7 @@ public class Runsheet extends XSSFWorkbook {
 
 		// Merge cells H and I for shift change info
 		this.sheet.addMergedRegion(CellRangeAddress.valueOf("$H$" + (row + 1)+ ":$I$" + (row + 1)));
-		
+
 		return row + 1;
 	}
 
@@ -528,7 +528,7 @@ public class Runsheet extends XSSFWorkbook {
 		printSetup.setLandscape(false);
 		this.sheet.setFitToPage(true);
 		this.sheet.setHorizontallyCenter(true);
-		
+
 		this.sheet.setMargin(Sheet.TopMargin, 0.0);
 		this.sheet.setMargin(Sheet.BottomMargin, 0.0);
 		this.sheet.setMargin(Sheet.LeftMargin, 0.0);
