@@ -1,24 +1,25 @@
 package main.java.runsheet_generator;
 
+import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 
 public class RunsheetGenerator {
 	public static void main(String[] args) throws Exception {
-			ArrayList<String> ignoredPositions = new ArrayList<String>();
-		ignoredPositions.add("Operations Supervisor");
-		ignoredPositions.add("Meeting");
-		ignoredPositions.add("Admin/Marketing");
+		Settings settings = new Settings(new File("/settings/settings.dat"));
+		
+		settings.ignoredPositions.add("Operations Supervisor");
+		settings.ignoredPositions.add("Meeting");
+		settings.ignoredPositions.add("Admin/Marketing");
 
-		boolean noShiftChanges = false;
+		settings.noShiftChanges = false;
 
 		Schedule schedule;
 
-		if (noShiftChanges)
-			schedule = new Schedule("EXPORT.CSV", new Date("2/23/2017"), ignoredPositions);
+		if (settings.noShiftChanges)
+			schedule = new Schedule("EXPORT.CSV", new Date("2/23/2017"), settings.ignoredPositions);
 		else {
-			int firstShiftChangeHour = 10;
-			schedule = new Schedule("EXPORT.CSV", new Date("2/23/2017"), ignoredPositions, firstShiftChangeHour);
+			settings.firstShiftChangeHour = 14;
+			schedule = new Schedule("EXPORT.CSV", new Date("2/23/2017"), settings.ignoredPositions, settings.firstShiftChangeHour);
 		}
 
 		System.out.println(schedule);
