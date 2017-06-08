@@ -1,10 +1,22 @@
 package main.java.runsheet_generator;
 
+import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileOutputStream;
 
 public class RunsheetGenerator {
 	public static void main(String[] args) throws Exception {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					GUI window = new GUI();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
 		Settings settings = new Settings(new File("/settings/settings.dat"));
 
 		settings.ignoredPositions.add("Operations Supervisor");
