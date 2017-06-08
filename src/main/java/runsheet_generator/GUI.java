@@ -24,7 +24,7 @@ public class GUI {
 		frame = new JFrame();
 		frame.setBounds(100, 100, 450, 300);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		JTextPane txtpnStep = new JTextPane();
 		txtpnStep.setText("1. Log in to WhenToWork."
 											+	"\n2. Click on 'SCHEDULE'"
@@ -35,5 +35,4 @@ public class GUI {
 											+ "\n7. Save the export file to a location you can easily remember (like your Downloads folder).");
 		frame.getContentPane().add(txtpnStep, BorderLayout.CENTER);
 	}
-
 }
