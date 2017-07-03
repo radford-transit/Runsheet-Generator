@@ -4,7 +4,9 @@
  */
 
 apply plugin: 'java'
+apply plugin: 'java-library'
 apply plugin: 'application'
+apply plugin: 'eclipse'
 
 // In this section you declare where to find the dependencies of your project
 repositories {
@@ -31,12 +33,12 @@ dependencies {
   compile 'org.apache.commons:commons-csv:1.4'
 }
 
+mainClassName = 'runsheet_generator.RunsheetGenerator'
+
 jar {
   manifest {
     attributes(
-      'MainClass' : 'main.java.runsheet_generator.RunsheetGenerator'
+      'Main-Class' : 'runsheet_generator.RunsheetGenerator'
     )
   }
 }
-
-mainClassName = "main.java.runsheet_generator.RunsheetGenerator"
