@@ -1,4 +1,4 @@
-package main.java.runsheet_generator;
+package runsheet_generator;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
