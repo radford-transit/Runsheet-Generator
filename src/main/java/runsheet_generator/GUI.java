@@ -1,7 +1,9 @@
 package runsheet_generator;
 
 import java.awt.EventQueue;
+import java.awt.FlowLayout;
 import java.awt.List;
+import java.awt.Panel;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -11,6 +13,10 @@ import javax.swing.SpringLayout;
 import javax.swing.border.EmptyBorder;
 
 import java.awt.BorderLayout;
+import java.awt.CardLayout;
+import java.awt.Component;
+import java.awt.Dimension;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -19,16 +25,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 public class GUI extends JFrame {
-
-	static final int WIDTH = 600;
-	static final int HEIGHT = 400;
-	static final int BORDER_SIZE = 10;
-	static final int N_STEPS = 6;
-	
-	private int currentStep = 0;
-	
-	private JPanel mainPanel = new JPanel();
-	private JPanel[] contentPanels = this.createContentPanels();
 	private class StepButtonsPanel extends JPanel {
 		private JButton backButton = new JButton("Back");
 		private JButton nextButton = new JButton("Next");
@@ -41,13 +37,7 @@ public class GUI extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					if (backButton.isEnabled()) {
 						System.out.println("Back");
-						currentStep--;
-						try {
-							goToStep(currentStep);
-						} catch (Exception e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						mainPanelCardLayout.previous(mainPanel);
 					}
 				}
 
@@ -67,13 +57,7 @@ public class GUI extends JFrame {
 				public void mouseClicked(MouseEvent e) {
 					if (nextButton.isEnabled()) {
 						System.out.println("Next");
-						currentStep++;
-						try {
-							goToStep(currentStep);
-						} catch (Exception e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+						mainPanelCardLayout.next(mainPanel);
 					}
 				}
 
@@ -91,6 +75,16 @@ public class GUI extends JFrame {
 			add(nextButton);
 		}
 	}
+
+	static final int WIDTH = 600;
+	static final int HEIGHT = 400;
+	static final int BORDER_SIZE = 10;
+	static final int N_STEPS = 2;
+	
+	private JPanel contentPane = new JPanel();
+	private CardLayout mainPanelCardLayout = new CardLayout();
+	private JPanel mainPanel = new JPanel(mainPanelCardLayout);
+	private JPanel[] contentPanels = this.createContentPanels();
 	private StepButtonsPanel stepButtonsPanel = new StepButtonsPanel();
 
 	/**
@@ -99,20 +93,30 @@ public class GUI extends JFrame {
 	public GUI() throws Exception {
 		super("Runsheet Generator");
 		
-		this.setSize(GUI.WIDTH, GUI.HEIGHT);
-		this.setLayout(new BorderLayout());
-		this.setResizable(false);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setBounds(100, 100, GUI.WIDTH, GUI.HEIGHT);
+		this.contentPane = new JPanel();
+		this.contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		this.setContentPane(contentPane);
+		this.contentPane.setLayout(new BorderLayout(0, 0));
 		
-		this.initialize();
+		// Main panel
+		this.contentPane.add(this.mainPanel, BorderLayout.CENTER);
 		
-		try {
-			this.goToStep(0);
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// Step buttons panel
+		this.stepButtonsPanel.setBorder(new EmptyBorder(GUI.BORDER_SIZE, GUI.BORDER_SIZE, GUI.BORDER_SIZE, GUI.BORDER_SIZE));
+		
+		// Add content panels to main panel
+		for (int i = 0; i < this.contentPanels.length; i++)
+			this.mainPanel.add(this.contentPanels[i], "" + i);
+		
+		// Add main panel and step buttons panel to GUI
+		this.getContentPane().add(this.mainPanel, BorderLayout.CENTER);
+		this.getContentPane().add(this.stepButtonsPanel, BorderLayout.SOUTH);
+		
+		this.mainPanelCardLayout.show(this.mainPanel, "0");
 	}
+	
 	
 	private JPanel[] createContentPanels() {
 		JPanel[] panels = new JPanel[GUI.N_STEPS];
@@ -123,25 +127,11 @@ public class GUI extends JFrame {
 		return panels;
 	}
 	
-	private void goToStep(int step) throws Exception {
-		this.mainPanel.removeAll();
-		this.invalidate();
-		this.validate();
-		
-		// Back button is not enabled on export file instructions panel
-		if (step == 0)
-			this.stepButtonsPanel.backButton.setEnabled(false);
-		else this.stepButtonsPanel.backButton.setEnabled(true);
-
-		this.mainPanel.add(this.contentPanels[step]);
-		this.invalidate();
-		this.validate();
-	}
 	
 	private JPanel createExportFileInstructionsPanel() {
-		JPanel panel = new JPanel();
+		JPanel exportFileInstructionsPanel = new JPanel();
 		
-		String labelText = String.format("<html><div style=\"width:%dpx;\">%s</div><html>",
+		JLabel exportFileInstructionsLabel = new JLabel(String.format("<html><div style=\"width:%dpx;\">%s</div><html>",
 				450,
 				"<html>"
 						+ "	<b>Before you begin:</b>"
@@ -155,61 +145,42 @@ public class GUI extends JFrame {
 						+ "		<li>Click on 'Create Export File'.</li>"
 						+ "		<li>Save the export file to a location you can easily remember (like your Downloads folder)."
 						+ "	</ol>"
-						+ "</html>");
-		JLabel label = new JLabel(labelText);
-		panel.add(label);
+						+ "</html>"));
+		exportFileInstructionsPanel.add(exportFileInstructionsLabel);
 		
-		return panel;
+		return exportFileInstructionsPanel;
 	}
 	
+	
 	private JPanel createExportFileSelectionPanel() {
-		JPanel panel = new JPanel();
-		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
-		panel.setBorder(new EmptyBorder(GUI.BORDER_SIZE, GUI.BORDER_SIZE, GUI.BORDER_SIZE, GUI.BORDER_SIZE));
+		JPanel exportFileSelectionPanel = new JPanel();
 		
-		// Label
-		String labelText = String.format("<html><div style=\"width:%dpx;\">%s</div><html>",
+		exportFileSelectionPanel.setLayout(new BoxLayout(exportFileSelectionPanel, BoxLayout.Y_AXIS));
+		
+		JLabel exportFileSelectionLabel = new JLabel();
+		exportFileSelectionLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		exportFileSelectionLabel.setText(String.format("<html><div style=\"width:%dpx;\">%s</div><html>",
 				450,
-				"<html>" + "<br><br><br><br>"
+				"<html>"
 						+ " <b>Select the export file</b>"
 						+ " <br>"
 						+ " <br>"
 						+ " This is the file you just saved from WhenToWork. Its name is probably something like 'EXPORT.csv'."
-						+ "</html>");
-		JLabel label = new JLabel(labelText);
-		label.setVerticalAlignment(JLabel.CENTER);
-		panel.add(label, BorderLayout.NORTH);
+						+ "</html>"));
+		exportFileSelectionPanel.add(exportFileSelectionLabel);
 		
-		// Export file path selection panel
-		JPanel exportFilePathSelectionPanel = new JPanel();
-		exportFilePathSelectionPanel.setLayout(new BoxLayout(exportFilePathSelectionPanel, BoxLayout.X_AXIS));
-		exportFilePathSelectionPanel.setBorder(new EmptyBorder(GUI.BORDER_SIZE, GUI.BORDER_SIZE, GUI.BORDER_SIZE, GUI.BORDER_SIZE));
+		Panel exportFileSelectionActivityPanel = new Panel();
+		exportFileSelectionPanel.add(exportFileSelectionActivityPanel);
 		
-		// Export file path text field
-		JTextField exportFilePathTextField = new JTextField("Hello there!", 20);
-		exportFilePathSelectionPanel.add(exportFilePathTextField);
+		JTextField exportFileSelectionTextField = new JTextField();
+		exportFileSelectionActivityPanel.add(exportFileSelectionTextField);
+		exportFileSelectionTextField.setColumns(30);
 		
-		// Export file path browse button
-		JButton exportFilePathBrowseButton = new JButton("Browse...");
-		exportFilePathSelectionPanel.add(exportFilePathBrowseButton);
+		JButton exportFileSelectionBrowseButton = new JButton("Browse...");
+		exportFileSelectionActivityPanel.add(exportFileSelectionBrowseButton);
 		
-		panel.add(exportFilePathSelectionPanel);
-		
-		return panel;
+		return exportFileSelectionPanel;
 	}
 	
-	/**
-	 * Initialize the contents of the frame.
-	 */
-	private void initialize() {
-		// Main panel
-		this.mainPanel.setBorder(new EmptyBorder(GUI.BORDER_SIZE, GUI.BORDER_SIZE, GUI.BORDER_SIZE, GUI.BORDER_SIZE));
-		
-		// Step buttons panel
-		this.stepButtonsPanel.setBorder(new EmptyBorder(GUI.BORDER_SIZE, GUI.BORDER_SIZE, GUI.BORDER_SIZE, GUI.BORDER_SIZE));
-		
-		this.getContentPane().add(this.mainPanel, BorderLayout.CENTER);
-		this.getContentPane().add(this.stepButtonsPanel, BorderLayout.SOUTH);
-	}
 }
 
