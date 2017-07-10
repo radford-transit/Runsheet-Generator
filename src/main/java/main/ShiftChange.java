@@ -1,4 +1,5 @@
-package runsheet_generator;
+package main;
+
 
 public class ShiftChange {
 	int hour;

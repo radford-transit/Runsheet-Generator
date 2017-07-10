@@ -31,14 +31,17 @@ dependencies {
 
   // Apache Commons CSV 1.4
   compile 'org.apache.commons:commons-csv:1.4'
+  
+  // Jide Common 3.6.15
+  compile 'org.bidib.com.jidesoft:jide-common:3.6.15'
 }
 
-mainClassName = 'runsheet_generator.RunsheetGenerator'
+mainClassName = 'main.RunsheetGenerator'
 
 jar {
   manifest {
     attributes(
-      'Main-Class' : 'runsheet_generator.RunsheetGenerator'
+      'Main-Class' : 'main.RunsheetGenerator'
     )
   }
 }

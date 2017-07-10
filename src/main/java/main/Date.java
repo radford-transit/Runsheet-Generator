@@ -1,10 +1,11 @@
-package runsheet_generator;
+package main;
+
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class Date {
+public class Date implements Comparable {
 	int year, month, day;
 	String dayOfWeek;
 
@@ -41,6 +42,27 @@ public class Date {
 				: false;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public int compareTo(Object other) {
+		return other instanceof Date
+				? this.year < ((Date)other).year
+						? -1
+						: this.year > ((Date)other).year
+								? 1
+								: this.month < ((Date)other).month
+										? -1
+										: this.month > ((Date)other).month
+												? 1
+												: this.day < ((Date)other).day
+														? -1
+														: this.day > ((Date)other).day
+																? 1
+																: 0 : 0;
+	}
+	
 	/**
 	 * {@inheritDoc}
 	 */

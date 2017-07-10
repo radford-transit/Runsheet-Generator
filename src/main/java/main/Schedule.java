@@ -1,9 +1,11 @@
-package runsheet_generator;
+package main;
+
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.commons.csv.*;
@@ -22,114 +24,62 @@ public class Schedule {
 	ArrayList<ShiftChange> shiftChanges =
 			new ArrayList<ShiftChange>();
 
-	// WhenToWork schedule CSV column header values
-	class Header {
-		static final String SHIFT_ID = "Shift ID";
-		static final String SCHEDULE_ID = "Schedule ID";
-		static final String EMPLOYEE_NUMBER = "Employee Number";
-		static final String POSITION_ID = "Position ID";
-		static final String POSITION_NAME = "Position Name";
-		static final String PERIOD = "Category";
-		static final String DESCRIPTION = "Shift Description";
-		static final String DATE = "Date";
-		static final String START_TIME = "Start Time";
-		static final String END_TIME = "End Time";
-		static final String DURATION = "Duration";
-		static final String DAY_OF_WEEK = "Day Of Week";
-		static final String FULL_NAME = "Employee Name";
-		static final String FIRST_NAME = "Employee First Name";
-		static final String LAST_NAME = "Employee Last Name";
-	}
-
-	// WhenToWork schedule CSV column header mapping
-	private static final String[] FILE_HEADER_MAPPING = {
-		Header.SHIFT_ID, Header.SCHEDULE_ID,
-		Header.EMPLOYEE_NUMBER, Header.POSITION_ID,
-		Header.POSITION_NAME, Header.PERIOD,
-		Header.DESCRIPTION, Header.DATE, Header.START_TIME,
-		Header.END_TIME, Header.DURATION,
-		Header.DAY_OF_WEEK, Header.FULL_NAME,
-		Header.FIRST_NAME, Header.LAST_NAME
-	};
-
 	/**
 	 * Constructs a Schedule object
 	 * @param fileName Path of WhenToWork export file (CSV)
 	 * @param date Date to get schedule from
-	 * @param ignoredPositions Names of positions to not include in the schedule
+	 * @param includedPositions Names of positions to include in the schedule
 	 * @throws Exception
 	 */
-	public Schedule(String fileName, Date date, List<String> ignoredPositions) throws Exception {
+	public Schedule(String fileName, Date date, String[] includedPositions) throws Exception {
 		this.date = date;
 
-		// Create CSVFormat object. New line separates records.
-		CSVFormat scheduleCSVFormat = CSVFormat.DEFAULT.withHeader(FILE_HEADER_MAPPING);
-
-		// File reader
-		FileReader scheduleCSVReader = null;
-		try {
-			scheduleCSVReader = new FileReader(fileName);
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
-			System.out.println("error: Schedule CSV file not found");
-		}
-		// CSV parser
-		CSVParser scheduleCSVParser = null;
-		try {
-			scheduleCSVParser = new CSVParser(scheduleCSVReader, scheduleCSVFormat);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("error: IOException when attempting to parse schedule CSV file");
-		}
-
-		// Schedule CSV records
-		List<CSVRecord> scheduleCSVRecords = null;
-		try {
-			scheduleCSVRecords = scheduleCSVParser.getRecords();
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("error: IOException when attempting to parse (scheduleCSVRecords");
-		}
-
 		// Read the CSV file records starting from the second record to skip the header
-		for (int i = 1; i < scheduleCSVRecords.size(); i++) {
-			CSVRecord scheduleCSVRecord = scheduleCSVRecords.get(i);
+		for (int i = 1; i < CSVReader.csvRecords.size(); i++) {
+			CSVRecord csvRecord = CSVReader.csvRecords.get(i);
 
-			// Only add shifts with selected date and not in ignored list
-			if (new Date(scheduleCSVRecord.get(Header.DATE)).equals(this.date)
-					&& !ignoredPositions.contains(scheduleCSVRecord.get(Header.POSITION_NAME))) {
+			// Only add shifts with selected date and in include list
+			if (new Date(csvRecord.get(CSVReader.Header.DATE)).equals(this.date)
+					&& Arrays.asList(includedPositions).contains(
+							csvRecord.get(CSVReader.Header.POSITION_NAME))) {
 				/* If period is one character (as opposed to empty),
 				 * then it's a route driving shift
 				 */
 				this.add(
-						scheduleCSVRecord.get(Header.PERIOD).length() == 1
+						CSVReader.recordDescribesRouteDrivingShift(csvRecord)
 								? new RouteDrivingShift(
-										scheduleCSVRecord.get(Header.POSITION_NAME),
-										scheduleCSVRecord.get(Header.PERIOD).charAt(0),
+										csvRecord.get(CSVReader.Header.POSITION_NAME),
+										csvRecord.get(CSVReader.Header.PERIOD).charAt(0),
 										new TimePeriod(
-												new TimePoint(scheduleCSVRecord.get(Header.START_TIME)),
-												new TimePoint(scheduleCSVRecord.get(Header.END_TIME))),
+												new TimePoint(csvRecord.get(
+														CSVReader.Header.START_TIME)),
+												new TimePoint(csvRecord.get(
+														CSVReader.Header.END_TIME))),
 										new Employee(
-												scheduleCSVRecord.get(Header.LAST_NAME),
-												scheduleCSVRecord.get(Header.FIRST_NAME)))
-								: scheduleCSVRecord.get(Header.POSITION_NAME).equals("Training")
+												csvRecord.get(CSVReader.Header.LAST_NAME),
+												csvRecord.get(CSVReader.Header.FIRST_NAME)))
+								: csvRecord.get(CSVReader.Header.POSITION_NAME).equals("Training")
 										? new TrainingShift(
-												scheduleCSVRecord.get(Header.DESCRIPTION),
+												csvRecord.get(CSVReader.Header.DESCRIPTION),
 												new TimePeriod(
-														new TimePoint(scheduleCSVRecord.get(Header.START_TIME)),
-														new TimePoint(scheduleCSVRecord.get(Header.END_TIME))),
+														new TimePoint(csvRecord.get(
+																CSVReader.Header.START_TIME)),
+														new TimePoint(csvRecord.get(
+																CSVReader.Header.END_TIME))),
 												new Employee(
-														scheduleCSVRecord.get(Header.LAST_NAME),
-														scheduleCSVRecord.get(Header.FIRST_NAME)))
+														csvRecord.get(CSVReader.Header.LAST_NAME),
+														csvRecord.get(CSVReader.Header.FIRST_NAME)))
 										: new NonRouteDrivingShift(
-												scheduleCSVRecord.get(Header.POSITION_NAME),
-												scheduleCSVRecord.get(Header.DESCRIPTION),
+												csvRecord.get(CSVReader.Header.POSITION_NAME),
+												csvRecord.get(CSVReader.Header.DESCRIPTION),
 												new TimePeriod(
-														new TimePoint(scheduleCSVRecord.get(Header.START_TIME)),
-														new TimePoint(scheduleCSVRecord.get(Header.END_TIME))),
+														new TimePoint(csvRecord.get(
+																CSVReader.Header.START_TIME)),
+														new TimePoint(csvRecord.get(
+																CSVReader.Header.END_TIME))),
 												new Employee(
-														scheduleCSVRecord.get(Header.LAST_NAME),
-														scheduleCSVRecord.get(Header.FIRST_NAME))));
+														csvRecord.get(CSVReader.Header.LAST_NAME),
+														csvRecord.get(CSVReader.Header.FIRST_NAME))));
 			}
 		}
 	}
@@ -138,13 +88,13 @@ public class Schedule {
 	 * Constructs a Schedule object
 	 * @param fileName Path of WhenToWork export file (CSV)
 	 * @param date Date to get schedule from
-	 * @param ignoredPositions Names of positions to not include in the schedule
+	 * @param includedPositions Names of positions not include in the schedule
 	 * @param firstShiftChangeHour The hour of the first shift change for the day
 	 * @throws Exception
 	 */
 	public Schedule(String fileName, Date date,
-			List<String> ignoredPositions, int firstShiftChangeHour) throws Exception {
-		this(fileName, date, ignoredPositions);
+			String[] includedPositions, int firstShiftChangeHour) throws Exception {
+		this(fileName, date, includedPositions);
 		this.shiftChanges = shiftChanges(firstShiftChangeHour);
 	}
 

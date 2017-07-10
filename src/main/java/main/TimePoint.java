@@ -1,4 +1,5 @@
-package runsheet_generator;
+package main;
+
 
 public class TimePoint implements Comparable<TimePoint> {
 	int hour;
