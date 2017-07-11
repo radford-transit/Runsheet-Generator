@@ -1,6 +1,7 @@
 package ui;
 
 import java.awt.event.ActionListener;
+import java.nio.file.Path;
 
 import javax.swing.*;
 
@@ -37,5 +38,25 @@ public class RunsheetPathSelectionPanel extends JPanel {
 		// Add components
 		this.add(this.runsheetPathSelectionPanel);
 		this.add(this.textField);
+		this.add(this.button);
+	}
+	
+	/**
+	 * Shows a file chooser for selecting a runsheet directory. Returns the
+	 * directory path.
+	 * @param currentFilePath The currently selected directory path. Can be null.
+	 * @return the selected Path
+	 */
+	public static Path getFilePath(Path currentFilePath) {
+		// File chooser settings
+		JFileChooser fileChooser = new JFileChooser();
+		fileChooser.setDialogTitle("Save runsheet");
+		fileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		
+		// If a new file path was selected, return that path
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+			currentFilePath = fileChooser.getSelectedFile().toPath();
+		// Otherwise, return the current file path
+		return currentFilePath;
 	}
 }

@@ -3,9 +3,12 @@ package ui;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.nio.file.Path;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
+
+import org.apache.tools.ant.taskdefs.condition.Os;
 
 import main.*;
 
@@ -47,23 +50,28 @@ public class ExportFileSelectionPanel extends JPanel {
 	}
 	
 	/**
-	 * Shows a file chooser for selecting an export file. Returns the file.
-	 * @param currentFile The currently selected file. Can be null.
-	 * @return the selected File
+	 * Shows a file chooser for selecting an export file. Returns the file path.
+	 * @param currentFilePath The currently selected file. Can be null.
+	 * @return the selected Path
 	 */
-	public static File getFile(File currentFile) {
+	public static Path getFilePath(Path currentFilePath) {
 		// File chooser settings
-		JFileChooser fileChooser = new JFileChooser();
+		JFileChooser fileChooser = new JFileChooser(
+				// By default, point to user's Downloads folder
+				System.getProperty("user.home")
+				+ (System.getProperty("os.name").contains("Windows")
+						? "\\" : "/")
+				+ "Downloads");
+						
 		fileChooser.setDialogTitle("Select export file");
 		fileChooser.setFileFilter(new FileNameExtensionFilter(
 				"Comma-Separated Values Files (.csv)", "CSV", "csv"));
 		fileChooser.setAcceptAllFileFilterUsed(false);
 		
-		// If a new file was selected, return that file
-		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-			currentFile =  fileChooser.getSelectedFile();
-		}
-		// Otherwise, return the current file
-		return currentFile;
+		// If a new file path was selected, return that path
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
+			currentFilePath = fileChooser.getSelectedFile().toPath();
+		// Otherwise, return the current file path
+		return currentFilePath;
 	}
 }

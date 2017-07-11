@@ -1,6 +1,8 @@
 package ui;
 import javax.swing.*;
 
+import main.TimePeriod;
+
 public class FirstShiftChangeSelectionPanel extends JPanel {
 	// First shift change selection label
 	private JLabel firstShiftChangeSelectionLabel = new JLabel(
@@ -16,6 +18,7 @@ public class FirstShiftChangeSelectionPanel extends JPanel {
 	// No shift changes check box
 	private JCheckBox noShiftChangeCheckBox =
 			new JCheckBox("There are no shift changes");
+	private TimePeriod[] possibleShiftChangeTimes;
 	
 	/**
 	 * Constructs a FirstShiftChangeSelectionPanel object

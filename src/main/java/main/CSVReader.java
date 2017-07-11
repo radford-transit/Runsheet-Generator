@@ -155,6 +155,8 @@ public class CSVReader {
 		// Read the CSV file records from the second record to skip the header
 		for (int i = 1; i < CSVReader.csvRecords.size(); i++) {
 			CSVRecord csvRecord = CSVReader.csvRecords.get(i);
+			
+
 		}
 		
 		return possibleShiftChangeTimes.toArray(

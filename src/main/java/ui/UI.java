@@ -107,7 +107,7 @@ public class UI extends JFrame {
 				this.contentPane.add(this.mainPanels.exportFileSelectionPanel);
 				
 				// If there is no export file, disable next button.
-				if (Settings.exportFile == null)
+				if (Settings.exportFilePath == null)
 					this.setNavigationButtonsEnabledStates(true, false);
 				// Otherwise, enable it
 				else this.setNavigationButtonsEnabledStates(true, true);
@@ -144,8 +144,8 @@ public class UI extends JFrame {
 				this.contentPane.remove(this.mainPanels.instructionsPanel);
 				this.contentPane.add(this.mainPanels.exportFileSelectionPanel);
 				
-				// If there is not export file, disable next button
-				if (Settings.exportFile == null)
+				// If there is no export file, disable next button
+				if (Settings.exportFilePath == null)
 					this.setNavigationButtonsEnabledStates(true, false);
 				// Otherwise, enable it
 				else this.setNavigationButtonsEnabledStates(true, true);
@@ -212,25 +212,25 @@ public class UI extends JFrame {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// Get file
-				Settings.exportFile = 
-						ExportFileSelectionPanel.getFile(Settings.exportFile);
-				// If a file is selected,
-				if (Settings.exportFile != null) {
+				// Get file path
+				Settings.exportFilePath = 
+						ExportFileSelectionPanel.getFilePath(Settings.exportFilePath);
+				// If a file path is selected,
+				if (Settings.exportFilePath != null) {
 					// Set text in text field
 					mainPanels.exportFileSelectionPanel.textField.setText(
-							Settings.exportFile.toString());
+							Settings.exportFilePath.toString());
 					// Set CSV file for CSVReader
-					CSVReader.setCSVFile(Settings.exportFile);
+					CSVReader.setCSVFile(Settings.exportFilePath.toFile());
 					// Set contents of date selection combo box
 					mainPanels.dateSelectionPanel.comboBox.setModel(
 							new DefaultComboBoxModel<Date>(CSVReader.getDates()));
 					// Enable next button
 					setNavigationButtonsEnabledStates(true, true);
 				}
-				// Otherwise, if no file is selected,
+				// Otherwise, if no file path is selected,
 				else {
-					// Set text field to show path to export file
+					// Set text field to empty String
 					mainPanels.exportFileSelectionPanel.textField.setText("");
 					// Disable next button
 					setNavigationButtonsEnabledStates(true, false);
@@ -278,7 +278,24 @@ public class UI extends JFrame {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				// Get directory path
+				Settings.runsheetPath = 
+						RunsheetPathSelectionPanel.getFilePath(Settings.runsheetPath);
+				// If a path is selected,
+				if (Settings.runsheetPath != null) {
+					// Set text in text field
+					mainPanels.runsheetPathSelectionPanel.textField.setText(
+							Settings.runsheetPath.toString());
+					// Enable next button
+					setNavigationButtonsEnabledStates(true, true);
+				}
+				// Otherwise, if no path is selected,
+				else {
+					// Set text field to empty String
+					mainPanels.runsheetPathSelectionPanel.textField.setText("");
+					// Disable next button
+					setNavigationButtonsEnabledStates(true, false);
+				}
 			}
 		};
 	}
