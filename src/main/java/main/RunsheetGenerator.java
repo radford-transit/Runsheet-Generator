@@ -5,8 +5,19 @@ import java.awt.EventQueue;
 import java.io.File;
 import java.io.FileOutputStream;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 public class RunsheetGenerator {
 	public static void main(String[] args) throws Exception {
+		// Set look and feel
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+				| UnsupportedLookAndFeelException e) {
+			e.printStackTrace();
+		}
+		
 		UI window = null;
 		try {
 			window = new UI();
