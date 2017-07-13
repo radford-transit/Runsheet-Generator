@@ -248,7 +248,7 @@ public class UI extends JFrame {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
 				// Select all positions in positions check box list
-				mainPanels.positionsSelectionPanel.positionsList.selectAll();
+				//mainPanels.positionsSelectionPanel.positionsList.selectAll();
 				
 				// Set date to selection
 				Settings.date =

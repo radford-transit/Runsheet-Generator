@@ -5,7 +5,7 @@ import java.awt.Dimension;
 import javax.swing.*;
 import javax.swing.event.ListSelectionListener;
 
-import com.jidesoft.swing.CheckBoxList;
+import swing_extensions.JCheckBoxList;
 
 public class PositionsSelectionPanel extends JPanel {
 	// Positions selection label
@@ -21,7 +21,7 @@ public class PositionsSelectionPanel extends JPanel {
 							+ " runsheet. Route positions are included automatically."
 							+ "</html>"));
 	// Positions selection check box list
-	public CheckBoxList positionsList = new CheckBoxList();
+	public JCheckBoxList positionsList = new JCheckBoxList();
 	// Check box list goes in a scroll pane
 	private JScrollPane scrollPane = new JScrollPane(this.positionsList);
 	
@@ -31,10 +31,6 @@ public class PositionsSelectionPanel extends JPanel {
 	public PositionsSelectionPanel(
 			ListSelectionListener positionsSelectionListener) {
 		super();
-		
-		// List selection listener
-		this.positionsList.getCheckBoxListSelectionModel()
-				.addListSelectionListener(positionsSelectionListener);
 		
 		// Add components
 		this.add(this.positionsSelectionLabel);
@@ -47,8 +43,8 @@ public class PositionsSelectionPanel extends JPanel {
 	 */
 	public void setPositionsListData(String[] positions) {
 		// Set list data
-		this.positionsList.setListData(positions);		
+		this.positionsList.setData(positions);		
 		// Select all list elements
-		this.positionsList.selectAll();
+		//this.positionsList.selectAll();
 	}
 }
