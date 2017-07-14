@@ -3,6 +3,8 @@ import javax.swing.*;
 
 import main.TimePeriod;
 
+import swing_extensions.JRadioButtonList;
+
 public class FirstShiftChangeSelectionPanel extends JPanel {
 	// First shift change selection label
 	private JLabel firstShiftChangeSelectionLabel = new JLabel(
@@ -18,7 +20,10 @@ public class FirstShiftChangeSelectionPanel extends JPanel {
 	// No shift changes check box
 	private JCheckBox noShiftChangeCheckBox =
 			new JCheckBox("There are no shift changes");
-	private TimePeriod[] possibleShiftChangeTimes;
+	// First shift change hour radio button list
+	public JRadioButtonList radioButtons = new JRadioButtonList();
+	// Radio button list goes in a scroll pane
+	private JScrollPane scrollPane = new JScrollPane(this.radioButtons);
 	
 	/**
 	 * Constructs a FirstShiftChangeSelectionPanel object
@@ -29,5 +34,10 @@ public class FirstShiftChangeSelectionPanel extends JPanel {
 		// Add components
 		this.add(this.firstShiftChangeSelectionLabel);
 		this.add(this.noShiftChangeCheckBox);
+		this.add(this.scrollPane);
+	}
+	
+	public void setShiftChangeHoursListData(String[] data) {
+		this.radioButtons.setData(data);
 	}
 }
