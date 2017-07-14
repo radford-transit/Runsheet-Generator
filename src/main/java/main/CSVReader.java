@@ -148,18 +148,29 @@ public class CSVReader {
 		return csvRecord.get(Header.PERIOD).length() == 1;
 	}
 
-	public static TimePeriod[] getPossibleShiftChangeTimesOnDate(Date date) {
-		ArrayList<TimePeriod> possibleShiftChangeTimes =
-				new ArrayList<TimePeriod>();
+	public static int[] getPossibleShiftChangeTimesOnDate(Date date) {
+		ArrayList<Integer> shiftChangeTimes =
+				new ArrayList<Integer>();
 		
 		// Read the CSV file records from the second record to skip the header
 		for (int i = 1; i < CSVReader.csvRecords.size(); i++) {
 			CSVRecord csvRecord = CSVReader.csvRecords.get(i);
-			
-
+			try {
+				if (new Date(csvRecord.get(Header.DATE)).equals(date)
+						&& CSVReader.recordDescribesRouteDrivingShift(csvRecord))
+					shiftChangeTimes.add(
+							new Integer(new TimePoint(csvRecord.get(Header.START_TIME)).hour));
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}						
 		}
 		
-		return possibleShiftChangeTimes.toArray(
-				new TimePeriod[possibleShiftChangeTimes.size()]);
+		int[] shiftChangeTimesInts = new int[shiftChangeTimes.size()];
+		for (int i = 0; i < shiftChangeTimes.size(); i++) {
+			shiftChangeTimesInts[i] = shiftChangeTimes.get(i).intValue();
+		}
+		
+		return shiftChangeTimesInts;
 	}
 }
