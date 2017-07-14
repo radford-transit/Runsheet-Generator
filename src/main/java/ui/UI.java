@@ -1,10 +1,13 @@
 package ui;
 
+import zb_utils.*;
+
 import java.awt.BorderLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.Arrays;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -247,9 +250,6 @@ public class UI extends JFrame {
 		return new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// Select all positions in positions check box list
-				//mainPanels.positionsSelectionPanel.positionsList.selectAll();
-				
 				// Set date to selection
 				Settings.date =
 						(Date) mainPanels.dateSelectionPanel.comboBox.getSelectedItem();
@@ -257,6 +257,13 @@ public class UI extends JFrame {
 				// Set list data for positions selection check box list
 				mainPanels.positionsSelectionPanel.setPositionsListData(
 						CSVReader.getNonRouteDrivingPositionsOnDate(Settings.date));
+				
+				/* Set list data for first shift change hour selection radio button
+				 * list
+				 */
+				mainPanels.firstShiftChangeSelectionPanel.setShiftChangeHoursListData(
+						zb_utils.Arrays.eachToString(
+								CSVReader.getPossibleShiftChangeTimesOnDate(Settings.date)));
 			}
 		};
 	}
