@@ -43,8 +43,8 @@ public class PositionsSelectionPanel extends JPanel {
 	 */
 	public void setPositionsListData(String[] positions) {
 		// Set list data
-		this.positionsList.setData(positions);		
+		this.positionsList.setData(positions);
 		// Select all list elements
-		//this.positionsList.selectAll();
+		this.positionsList.selectAll();
 	}
 }
