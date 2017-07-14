@@ -37,6 +37,9 @@ dependencies {
 
   // Swing Extensions
   compile files('lib/swing_extensions.jar')
+  
+  // ZBUtils
+  compile files('lib/zb_utils.jar')
 }
 
 mainClassName = 'main.RunsheetGenerator'
