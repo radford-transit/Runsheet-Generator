@@ -148,29 +148,35 @@ public class CSVReader {
 		return csvRecord.get(Header.PERIOD).length() == 1;
 	}
 
-	public static int[] getPossibleShiftChangeTimesOnDate(Date date) {
-		ArrayList<Integer> shiftChangeTimes =
-				new ArrayList<Integer>();
+	public static ShiftChange[] getPossibleShiftChangesOnDate(Date date) {
+		ArrayList<ShiftChange> shiftChanges =
+				new ArrayList<ShiftChange>();
 		
 		// Read the CSV file records from the second record to skip the header
 		for (int i = 1; i < CSVReader.csvRecords.size(); i++) {
 			CSVRecord csvRecord = CSVReader.csvRecords.get(i);
 			try {
 				if (new Date(csvRecord.get(Header.DATE)).equals(date)
-						&& CSVReader.recordDescribesRouteDrivingShift(csvRecord))
-					shiftChangeTimes.add(
-							new Integer(new TimePoint(csvRecord.get(Header.START_TIME)).hour));
+						&& CSVReader.recordDescribesRouteDrivingShift(csvRecord)
+						&& !shiftChanges.contains(
+								new ShiftChange(
+										new TimePoint(csvRecord.get(Header.START_TIME)),
+										null)))
+					shiftChanges.add(
+							new ShiftChange(
+									new TimePoint(csvRecord.get(Header.START_TIME)),
+									null));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}						
 		}
 		
-		int[] shiftChangeTimesInts = new int[shiftChangeTimes.size()];
-		for (int i = 0; i < shiftChangeTimes.size(); i++) {
-			shiftChangeTimesInts[i] = shiftChangeTimes.get(i).intValue();
-		}
+		Collections.sort(shiftChanges);
 		
-		return shiftChangeTimesInts;
+		for (int i = 0; i < shiftChanges.size(); i++)
+			System.out.println(shiftChanges.get(i));
+		
+		return shiftChanges.toArray(new ShiftChange[shiftChanges.size()]);
 	}
 }
