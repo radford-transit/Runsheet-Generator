@@ -1,4 +1,6 @@
 package ui;
+import java.awt.event.ActionListener;
+
 import javax.swing.*;
 
 import main.TimePeriod;
@@ -18,7 +20,7 @@ public class FirstShiftChangeSelectionPanel extends JPanel {
 							+ " Select the hour during which the first shift change occurs."
 							+ "</html>"));
 	// No shift changes check box
-	private JCheckBox noShiftChangeCheckBox =
+	public JCheckBox noShiftChangeCheckBox =
 			new JCheckBox("There are no shift changes");
 	// First shift change hour radio button list
 	public JRadioButtonList radioButtons = new JRadioButtonList();
@@ -28,8 +30,11 @@ public class FirstShiftChangeSelectionPanel extends JPanel {
 	/**
 	 * Constructs a FirstShiftChangeSelectionPanel object
 	 */
-	public FirstShiftChangeSelectionPanel() {
+	public FirstShiftChangeSelectionPanel(ActionListener noShiftChangeCheckBoxListener) {
 		super();
+		
+		// Add action listeners
+		this.noShiftChangeCheckBox.addActionListener(noShiftChangeCheckBoxListener);
 		
 		// Add components
 		this.add(this.firstShiftChangeSelectionLabel);
@@ -37,7 +42,7 @@ public class FirstShiftChangeSelectionPanel extends JPanel {
 		this.add(this.scrollPane);
 	}
 	
-	public void setShiftChangeHoursListData(String[] data) {
+	public void setShiftChangeListData(String[] data) {
 		this.radioButtons.setData(data);
 	}
 }

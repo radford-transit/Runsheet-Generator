@@ -9,8 +9,7 @@ public class MainPanels {
 	ExportFileSelectionPanel exportFileSelectionPanel;
 	DateSelectionPanel dateSelectionPanel;
 	PositionsSelectionPanel positionsSelectionPanel;
-	FirstShiftChangeSelectionPanel firstShiftChangeSelectionPanel = 
-			new FirstShiftChangeSelectionPanel();
+	FirstShiftChangeSelectionPanel firstShiftChangeSelectionPanel;
 	RunsheetPathSelectionPanel runsheetPathSelectionPanel;
 
 	/**
@@ -22,6 +21,7 @@ public class MainPanels {
 			ActionListener exportFileSelectionPanelButtonListener,
 			ItemListener dateSelectionPanelComboBoxListener,
 			ListSelectionListener positionsSelectionPanelListListener,
+			ActionListener noFirstShiftChangeCheckBoxListener,
 			ActionListener runsheetPathSelectionPanelButtonListener) {
 		this.exportFileSelectionPanel = 
 				new ExportFileSelectionPanel(exportFileSelectionPanelButtonListener);
@@ -29,6 +29,8 @@ public class MainPanels {
 				new DateSelectionPanel(dateSelectionPanelComboBoxListener);
 		this.positionsSelectionPanel =
 				new PositionsSelectionPanel(positionsSelectionPanelListListener);
+		this.firstShiftChangeSelectionPanel = 
+				new FirstShiftChangeSelectionPanel(noFirstShiftChangeCheckBoxListener);
 		this.runsheetPathSelectionPanel = 
 				new RunsheetPathSelectionPanel(
 						runsheetPathSelectionPanelButtonListener);
