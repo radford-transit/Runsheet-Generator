@@ -34,6 +34,8 @@ public class UI extends JFrame {
 			this.makeDateSelectionListener(),
 			// Positions list selection listener
 			this.makePositionsListSelectionListener(),
+			// No shift changes check box listener
+			this.makeNoShiftChangesCheckBoxListener(),
 			// Runsheet path selection panel button listener
 			this.makeRunsheetPathSelectionPanelButtonListener());
 	// Navigation panel
@@ -261,9 +263,9 @@ public class UI extends JFrame {
 				/* Set list data for first shift change hour selection radio button
 				 * list
 				 */
-				mainPanels.firstShiftChangeSelectionPanel.setShiftChangeHoursListData(
+				mainPanels.firstShiftChangeSelectionPanel.setShiftChangeListData(
 						zb_utils.Arrays.eachToString(
-								CSVReader.getPossibleShiftChangeTimesOnDate(Settings.date)));
+								CSVReader.getPossibleShiftChangesOnDate(Settings.date)));
 			}
 		};
 	}
@@ -303,6 +305,25 @@ public class UI extends JFrame {
 					// Disable next button
 					setNavigationButtonsEnabledStates(true, false);
 				}
+			}
+		};
+	}
+	
+	private ActionListener makeNoShiftChangesCheckBoxListener() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (mainPanels.firstShiftChangeSelectionPanel
+						.noShiftChangeCheckBox.isSelected()) {
+					// Disable radio buttons
+					mainPanels.firstShiftChangeSelectionPanel.radioButtons.setEnabled(false);
+					// Deselect all radio buttons
+					mainPanels.firstShiftChangeSelectionPanel.radioButtons.deselectAll();
+				}
+				else
+					// Enable radio buttons
+					mainPanels
+							.firstShiftChangeSelectionPanel.radioButtons.setEnabled(true);
 			}
 		};
 	}
