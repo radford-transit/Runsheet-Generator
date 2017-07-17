@@ -1,7 +1,6 @@
 package main;
 
-
-public class ShiftChange {
+public class ShiftChange implements Comparable {
 	int hour;
 	ShiftChangeID id;
 
@@ -14,6 +13,11 @@ public class ShiftChange {
 		this.hour = hour;
 		this.id = id;
 	}
+	
+	public ShiftChange(TimePoint time, ShiftChangeID id) {
+		this.hour = time.hour;
+		this.id = id;
+	}
 
 	/**
 	 * {@inheritDoc}
@@ -21,5 +25,25 @@ public class ShiftChange {
 	@Override
 	public String toString() {
 		return new TimePoint(this.hour, 15).toString() + " - " + new TimePoint(this.hour + 1, 0).toString();
+	}
+
+	@Override
+	public int compareTo(Object other) {
+		if (other instanceof ShiftChange)
+			return (
+					this.hour < ((ShiftChange) other).hour
+							? -1
+							: this.hour == ((ShiftChange) other).hour
+									? 0
+									: 1
+			);
+		return -2;
+	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof ShiftChange)
+			return this.hour == ((ShiftChange) other).hour && this.id == ((ShiftChange) other).id;
+		return false;
 	}
 }
