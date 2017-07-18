@@ -199,9 +199,9 @@ public class UI extends JFrame {
 	}
 	
 	/**
-	 * Sets enability of the back and next buttons
-	 * @param backEnabled Enability of back button
-	 * @param nextEnabled Enability of next button
+	 * Sets enabled state of the back and next buttons
+	 * @param backEnabled enabled state of back button
+	 * @param nextEnabled Enabled state of next button
 	 */
 	private void setNavigationButtonsEnabledStates(
 			boolean backEnabled, boolean nextEnabled) {
