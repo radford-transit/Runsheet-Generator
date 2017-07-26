@@ -1,6 +1,10 @@
 # Runsheet Generator :oncoming_bus:
 Generates a Radford Transit runsheet, in the XSLS file format, from a CSV file exported by WhenToWork scheduling software.
 
+## Required software
+- [Java 8 SDK](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [Gradle](https://gradle.org/install/) is recommened but not required
+
 ## Build
 If you have Gradle installed, run `gradle build`
 
