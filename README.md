@@ -16,7 +16,7 @@ Otherwise,
 If you have Gradle installed, run `gradle run`
 
 Otherwise,
-- On **Unix-like OSs**, in the project's root directory, run `./gradlew run`
+- On **Linux** or **macOS**, in the project's root directory, run `./gradlew run`
 - On **Windows**, in the project's root directory, run `gradlew.bat run`
 
 ## Dependencies
