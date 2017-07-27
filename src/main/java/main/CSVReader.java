@@ -174,9 +174,6 @@ public class CSVReader {
 		
 		Collections.sort(shiftChanges);
 		
-		for (int i = 0; i < shiftChanges.size(); i++)
-			System.out.println(shiftChanges.get(i));
-		
 		return shiftChanges.toArray(new ShiftChange[shiftChanges.size()]);
 	}
 }
