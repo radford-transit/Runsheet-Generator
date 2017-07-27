@@ -1,7 +1,7 @@
 package main;
 
 public class ShiftChange implements Comparable {
-	int hour;
+	public int hour;
 	ShiftChangeID id;
 
 	/**

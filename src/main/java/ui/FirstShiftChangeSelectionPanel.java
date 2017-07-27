@@ -30,10 +30,11 @@ public class FirstShiftChangeSelectionPanel extends JPanel {
 	/**
 	 * Constructs a FirstShiftChangeSelectionPanel object
 	 */
-	public FirstShiftChangeSelectionPanel(ActionListener noShiftChangeCheckBoxListener) {
+	public FirstShiftChangeSelectionPanel(
+			ActionListener noShiftChangeCheckBoxListener) {
 		super();
 		
-		// Add action listeners
+		// Add action listener
 		this.noShiftChangeCheckBox.addActionListener(noShiftChangeCheckBoxListener);
 		
 		// Add components
@@ -42,7 +43,15 @@ public class FirstShiftChangeSelectionPanel extends JPanel {
 		this.add(this.scrollPane);
 	}
 	
-	public void setShiftChangeListData(String[] data) {
+	public void setShiftChangeListData(Object[] data) {
 		this.radioButtons.setData(data);
+		
+		/* If there are no possible shift changes, select no shift changes check
+		 * box and disable changing its selection state
+		 */
+		if (this.radioButtons.length() == 0) {
+			this.noShiftChangeCheckBox.setSelected(true);
+			this.noShiftChangeCheckBox.setEnabled(false);
+		}
 	}
 }

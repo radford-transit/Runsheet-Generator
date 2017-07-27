@@ -1,10 +1,10 @@
 package ui;
 
-import java.awt.Dimension;
+import java.awt.event.ActionListener;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionListener;
 
+import main.Settings;
 import swing_extensions.JCheckBoxList;
 
 public class PositionsSelectionPanel extends JPanel {
@@ -29,8 +29,12 @@ public class PositionsSelectionPanel extends JPanel {
 	 * Constructs a PositionsSelectionsPanel object
 	 */
 	public PositionsSelectionPanel(
-			ListSelectionListener positionsSelectionListener) {
+			ActionListener positionsSelectionListener) {
 		super();
+		
+		// Add action listener to positions list
+		this.positionsList.addActionListener(positionsSelectionListener);
+		this.setPositionsListData(Settings.includedPositions);
 		
 		// Add components
 		this.add(this.positionsSelectionLabel);

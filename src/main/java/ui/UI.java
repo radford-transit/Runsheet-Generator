@@ -7,12 +7,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-import java.util.Arrays;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 
 import main.CSVReader;
 import main.Date;
@@ -33,7 +30,7 @@ public class UI extends JFrame {
 			// Date selection listener
 			this.makeDateSelectionListener(),
 			// Positions list selection listener
-			this.makePositionsListSelectionListener(),
+			this.makePositionsListActionListener(),
 			// No shift changes check box listener
 			this.makeNoShiftChangesCheckBoxListener(),
 			// Runsheet path selection panel button listener
@@ -129,6 +126,10 @@ public class UI extends JFrame {
 			else if (this.mainPanels.firstShiftChangeSelectionPanel.isShowing()) {
 				this.contentPane.remove(this.mainPanels.firstShiftChangeSelectionPanel);
 				this.contentPane.add(this.mainPanels.positionsSelectionPanel);
+				
+				// Assign selected positions to included positions setting
+				Settings.includedPositions = this.mainPanels.positionsSelectionPanel
+						.positionsList.getSelectedValues();
 			}
 			// Runsheet path selection panel -> First shift change selection panel
 			else if (this.mainPanels.runsheetPathSelectionPanel.isShowing()) {
@@ -167,6 +168,10 @@ public class UI extends JFrame {
 			else if (this.mainPanels.dateSelectionPanel.isShowing()) {
 				this.contentPane.remove(this.mainPanels.dateSelectionPanel);
 				this.contentPane.add(this.mainPanels.positionsSelectionPanel);
+				
+				// Assign selected positions to included positions setting
+				Settings.includedPositions = this.mainPanels.positionsSelectionPanel
+						.positionsList.getSelectedValues();
 			}
 			// Positions selection panel -> First shift change selection panel
 			else if (this.mainPanels.positionsSelectionPanel.isShowing()) {
@@ -178,11 +183,19 @@ public class UI extends JFrame {
 			}
 			// First shift change selection panel -> Runsheet path selection panel
 			else if (this.mainPanels.firstShiftChangeSelectionPanel.isShowing()) {
+				Settings.firstShiftChange =
+						CSVReader.getPossibleShiftChangesOnDate(Settings.date)
+								[this.mainPanels.firstShiftChangeSelectionPanel
+								 		.radioButtons.getSelectedIndex()];
+				
 				this.contentPane.remove(this.mainPanels.firstShiftChangeSelectionPanel);
 				this.contentPane.add(this.mainPanels.runsheetPathSelectionPanel);
 				
 				// Change text of next button to "Done"
 				this.navigationPanel.nextButton.setText("Done");
+				
+				// REMOVE THIS
+				Settings.print();
 				
 				// If no runsheet path is selected, disable next button
 				if (Settings.runsheetPath == null)
@@ -264,25 +277,45 @@ public class UI extends JFrame {
 				 * list
 				 */
 				mainPanels.firstShiftChangeSelectionPanel.setShiftChangeListData(
-						zb_utils.Arrays.eachToString(
-								CSVReader.getPossibleShiftChangesOnDate(Settings.date)));
+						CSVReader.getPossibleShiftChangesOnDate(Settings.date));
 			}
 		};
 	}
 
 	/**
-	 * Makes a list selection listener for the positions check box list
-	 * @return a list selection listener for the positions check box list
+	 * Makes an action listener for the positions check box list
+	 * @return an action listener for the positions check box list
 	 */
-	private ListSelectionListener makePositionsListSelectionListener() {
-		return new ListSelectionListener() {
+	private ActionListener makePositionsListActionListener() {
+		return new ActionListener() {
 			@Override
-			public void valueChanged(ListSelectionEvent e) {
-				// DO SOMETHING HERE!!!!!!!
+			public void actionPerformed(ActionEvent e) {
+				Settings.includedPositions = 
+						mainPanels.positionsSelectionPanel
+								.positionsList.getSelectedValues();
 			}
 		};
 	}
 
+	private ActionListener makeNoShiftChangesCheckBoxListener() {
+		return new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (mainPanels.firstShiftChangeSelectionPanel
+						.noShiftChangeCheckBox.isSelected()) {
+					// Disable radio buttons
+					mainPanels.firstShiftChangeSelectionPanel.radioButtons.setEnabled(false);
+					// Deselect all radio buttons
+					mainPanels.firstShiftChangeSelectionPanel.radioButtons.deselectAll();
+				}
+				else
+					// Enable radio buttons
+					mainPanels
+							.firstShiftChangeSelectionPanel.radioButtons.setEnabled(true);
+			}
+		};
+	}
+	
 	private ActionListener makeRunsheetPathSelectionPanelButtonListener() {
 		return new ActionListener() {
 			@Override
@@ -305,25 +338,6 @@ public class UI extends JFrame {
 					// Disable next button
 					setNavigationButtonsEnabledStates(true, false);
 				}
-			}
-		};
-	}
-	
-	private ActionListener makeNoShiftChangesCheckBoxListener() {
-		return new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				if (mainPanels.firstShiftChangeSelectionPanel
-						.noShiftChangeCheckBox.isSelected()) {
-					// Disable radio buttons
-					mainPanels.firstShiftChangeSelectionPanel.radioButtons.setEnabled(false);
-					// Deselect all radio buttons
-					mainPanels.firstShiftChangeSelectionPanel.radioButtons.deselectAll();
-				}
-				else
-					// Enable radio buttons
-					mainPanels
-							.firstShiftChangeSelectionPanel.radioButtons.setEnabled(true);
 			}
 		};
 	}
