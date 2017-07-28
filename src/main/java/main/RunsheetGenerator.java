@@ -11,6 +11,7 @@ import javax.swing.UnsupportedLookAndFeelException;
 public class RunsheetGenerator {
 	
 	public static void main(String[] args) throws Exception {
+		System.out.println(Thread.currentThread().getId());
 		// Set look and feel
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -27,25 +28,18 @@ public class RunsheetGenerator {
 			e.printStackTrace();
 		}
 		
-		//window.waitForCompletion();
+		// Wait for user to finish
+		while (!window.complete.get()) {}
 		
-		//Settings settings = window.getSettings();
-		Settings settings = new Settings();
-		
-		/*
-		for (int i = 0; i < settings.includedPositions.length; i++)
-			System.out.println(settings.includedPositions[i]);
-`*/
-		/*
 		Schedule schedule = Settings.noShiftChanges
-				? new Schedule(settings.exportFile, new Date(settings.date), settings.includedPositions)
-				: new Schedule(settings.exportFile, new Date(settings.date), settings.includedPositions, settings.firstShiftChangeHour);
-*/
-		//Runsheet runsheet = new Runsheet(schedule);
+				? new Schedule(Settings.date, Settings.includedPositions)
+				: new Schedule(Settings.date, Settings.includedPositions, Settings.firstShiftChange);
+				
+		Runsheet runsheet = new Runsheet(schedule);
 
-		//FileOutputStream out = new FileOutputStream(settings.runsheetPath);
-		//runsheet.write(out);
-		//runsheet.close();
-		//out.close();
+		FileOutputStream out = new FileOutputStream(Settings.runsheetPath.toFile());
+		runsheet.write(out);
+		runsheet.close();
+		out.close();
 	}
 }
