@@ -4,6 +4,7 @@ package main;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -31,7 +32,7 @@ public class Schedule {
 	 * @param includedPositions Names of positions to include in the schedule
 	 * @throws Exception
 	 */
-	public Schedule(String fileName, Date date, String[] includedPositions) throws Exception {
+	public Schedule(Date date, String[] includedPositions) throws Exception {
 		this.date = date;
 
 		// Read the CSV file records starting from the second record to skip the header
@@ -92,10 +93,10 @@ public class Schedule {
 	 * @param firstShiftChangeHour The hour of the first shift change for the day
 	 * @throws Exception
 	 */
-	public Schedule(String fileName, Date date,
-			String[] includedPositions, int firstShiftChangeHour) throws Exception {
-		this(fileName, date, includedPositions);
-		this.shiftChanges = shiftChanges(firstShiftChangeHour);
+	public Schedule(Date date,
+			String[] includedPositions, ShiftChange firstShiftChange) throws Exception {
+		this(date, includedPositions);
+		this.shiftChanges = shiftChanges(firstShiftChange);
 	}
 
 	/**
@@ -192,18 +193,16 @@ public class Schedule {
 	}
 
 	/**
-	 * Gets a list of shift changes, starting with one during the
-	 * provided shift change hour
-	 * @param firstShiftChangeHour The hour of the first shift change
-	 * @return A list of shift changes, starting with one during the provided
-	 * hour
+	 * Gets a list of shift changes, starting with the provided one.
+	 * @param firstShiftChange The first shift change
+	 * @return A list of shift changes, starting with the provided one
 	 */
-	private ArrayList<ShiftChange> shiftChanges(int firstShiftChangeHour) {
+	private ArrayList<ShiftChange> shiftChanges(ShiftChange firstShiftChange) {
 		ArrayList<ShiftChange> shiftChanges = new ArrayList<ShiftChange>();
 
 		if (this.routeDrivingShifts.size() == 0) return shiftChanges;
 		else if (this.routeDrivingShifts.size() == 1) {
-			if (this.routeDrivingShifts.get(0).time.start.hour >= firstShiftChangeHour)
+			if (this.routeDrivingShifts.get(0).time.start.hour >= firstShiftChange.hour)
 				shiftChanges.add(
 						new ShiftChange(
 								this.routeDrivingShifts.get(0).time.start.hour,
@@ -211,7 +210,7 @@ public class Schedule {
 										this.routeDrivingShifts.get(0).period, 1)));
 		}
 		else { // this.routeDrivingShifts.size() > 1
-			if (this.routeDrivingShifts.get(0).time.start.hour >= firstShiftChangeHour)
+			if (this.routeDrivingShifts.get(0).time.start.hour >= firstShiftChange.hour)
 				// Add first shift change
 				shiftChanges.add(
 						new ShiftChange(
@@ -225,7 +224,7 @@ public class Schedule {
 			char currentPeriod = this.routeDrivingShifts.get(0).period;
 
 			for (int i = 1; i < this.routeDrivingShifts.size(); i++) {
-				if (this.routeDrivingShifts.get(i).time.start.hour == firstShiftChangeHour
+				if (this.routeDrivingShifts.get(i).time.start.hour == firstShiftChange.hour
 						&& this.routeDrivingShifts.get(i).time.start.hour !=
 						this.routeDrivingShifts.get(i - 1).time.start.hour) {
 					currentPeriod = this.routeDrivingShifts.get(i).period;
@@ -236,7 +235,7 @@ public class Schedule {
 											this.routeDrivingShifts.get(i).period,
 											1)));
 				}
-				else if (this.routeDrivingShifts.get(i).time.start.hour > firstShiftChangeHour) {
+				else if (this.routeDrivingShifts.get(i).time.start.hour > firstShiftChange.hour) {
 					if (this.routeDrivingShifts.get(i).time.start.hour >
 							this.routeDrivingShifts.get(i - 1).time.start.hour) {
 						if (this.routeDrivingShifts.get(i).period == currentPeriod)
