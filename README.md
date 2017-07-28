@@ -27,3 +27,5 @@ Otherwise,
 #### Downloaded with Gradle
 - [Apache Commons CSV 1.4](https://commons.apache.org/proper/commons-csv/)
 - [Apache POI 3.15](https://poi.apache.org)
+
+The build script also includes a dependency for [Shadow](https://github.com/johnrengelman/shadow), a Gradle plugin for combining dependency classes and resources with a project’s into a single output JAR. This packages the program as a single executable for the end user.
