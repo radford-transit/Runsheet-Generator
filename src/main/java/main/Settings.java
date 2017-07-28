@@ -12,6 +12,8 @@ public class Settings {
 	public static String[] includedPositions = new String[0];
 	// Export file
 	public static Path exportFilePath = null;
+	// No shift changes
+	public static boolean noShiftChanges = false;
 	// First shift change
 	public static ShiftChange firstShiftChange = null;
 	// Runsheet path
