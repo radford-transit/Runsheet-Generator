@@ -144,6 +144,32 @@ public class CSVReader {
 		return positions.toArray(new String[positions.size()]);
 	}
 	
+	public static String[] getRouteDrivingPositionsOnDate(Date date) {
+		ArrayList<String> positions = new ArrayList<String>();
+		
+		// Read the CSV file records from the second record to skip the header
+		for (int i = 1; i < CSVReader.csvRecords.size(); i++) {
+			CSVRecord csvRecord = CSVReader.csvRecords.get(i);
+			
+			try {
+				if (new Date(csvRecord.get(Header.DATE)).equals(date)
+						&& CSVReader.recordDescribesRouteDrivingShift(csvRecord)
+						&& !positions.contains(csvRecord.get(Header.POSITION_NAME)))
+					positions.add(csvRecord.get(Header.POSITION_NAME));
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		Collections.sort(positions);
+		
+		System.out.println("Hello?");
+		for (int i = 0; i < positions.size(); i++)
+			System.out.println(positions.get(i).toString());
+		
+		return positions.toArray(new String[positions.size()]);
+	}
+	
 	public static boolean recordDescribesRouteDrivingShift(CSVRecord csvRecord) {
 		return csvRecord.get(Header.PERIOD).length() == 1;
 	}
