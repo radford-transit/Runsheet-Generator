@@ -98,4 +98,16 @@ public class Date implements Comparable {
 				+ " " + this.day + ", " + this.year
 		);
 	}
+	
+	public String toFileNamePrefixString() {
+		return (
+				(this.month <= 9
+						? "0" : "")
+				+ this.month + "-"
+				+ (this.day <= 9
+						? "0" : "")
+				+ this.day + "-"
+				+ this.year
+		);
+	}
 }
