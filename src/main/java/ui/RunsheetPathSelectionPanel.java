@@ -1,9 +1,12 @@
 package ui;
 
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.nio.file.Path;
 
 import javax.swing.*;
+
+import main.Settings;
 
 public class RunsheetPathSelectionPanel extends JPanel {
 	// Runsheet path selection label
@@ -55,7 +58,11 @@ public class RunsheetPathSelectionPanel extends JPanel {
 		
 		// If a new file path was selected, return that path
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION)
-			currentFilePath = fileChooser.getSelectedFile().toPath();
+			currentFilePath = new File(fileChooser.getSelectedFile().toString()
+					+ (System.getProperty("os.name").contains("Windows")
+							? "\\" : "/")
+					+ Settings.date.toFileNamePrefixString()
+					+ ".xlsx").toPath();
 		// Otherwise, return the current file path
 		return currentFilePath;
 	}
