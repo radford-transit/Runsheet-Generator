@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -22,6 +23,9 @@ public class UI extends JFrame {
 	
 	// Content pane (has border layout)
 	JPanel contentPane = new JPanel(new BorderLayout());
+	
+	// Whether UI part of the program is complete
+	public AtomicBoolean complete = new AtomicBoolean(false);
 	
 	// Main panels
 	MainPanels mainPanels = new MainPanels(
@@ -56,6 +60,7 @@ public class UI extends JFrame {
 	 */
 	public UI() {
 		super("Runsheet Generator");
+		System.out.println(Thread.currentThread().getId());
 		this.init();
 		
 		// Add navigation panel to content pane
@@ -70,7 +75,7 @@ public class UI extends JFrame {
 	 * Sets initial JFrame properties
 	 */
 	private void init() {
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		// Set JFrame bounds
 		this.setBounds(300, 100, UI.WIDTH, UI.HEIGHT);
@@ -194,14 +199,16 @@ public class UI extends JFrame {
 				// Change text of next button to "Done"
 				this.navigationPanel.nextButton.setText("Done");
 				
-				// REMOVE THIS
-				Settings.print();
-				
 				// If no runsheet path is selected, disable next button
 				if (Settings.runsheetPath == null)
 					this.setNavigationButtonsEnabledStates(true, false);
 				// Otherwise, enable it
 				else this.setNavigationButtonsEnabledStates(true, true);
+			}
+			// Done
+			else if (this.mainPanels.runsheetPathSelectionPanel.isShowing()) {
+				this.complete.set(true);
+				this.dispose();
 			}
 		}
 		else throw new Exception("Can't go more than one step");
@@ -290,9 +297,11 @@ public class UI extends JFrame {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Settings.includedPositions = 
+				Settings.includedPositions = zb_utils.Arrays.concatenate(
 						mainPanels.positionsSelectionPanel
-								.positionsList.getSelectedValues();
+								.positionsList.getSelectedValues(),
+						CSVReader.getRouteDrivingPositionsOnDate(Settings.date));
+				System.out.println("HI??????");
 			}
 		};
 	}
