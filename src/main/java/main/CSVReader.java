@@ -89,6 +89,10 @@ public class CSVReader {
 		}
 	}
 	
+	/**
+	 * Gets an array of all dates listed in the CSV file.
+	 * @return an array of Dates
+	 */
 	public static Date[] getDates() {
 		ArrayList<Date> dates = new ArrayList<Date>();
 		
@@ -144,6 +148,11 @@ public class CSVReader {
 		return positions.toArray(new String[positions.size()]);
 	}
 	
+	/**
+	 * Gets an array of position names for all positions in the CSV file on the given date.
+	 * @param date The Date to filter by
+	 * @return an array of position names
+	 */
 	public static String[] getRouteDrivingPositionsOnDate(Date date) {
 		ArrayList<String> positions = new ArrayList<String>();
 		
@@ -170,10 +179,20 @@ public class CSVReader {
 		return positions.toArray(new String[positions.size()]);
 	}
 	
+	/**
+	 * Tells whether a specific CSVRecord describes a route driving shift.
+	 * @param csvRecord The record to check
+	 * @return true if the record describes a route driving shift, or false if it doesn't
+	 */
 	public static boolean recordDescribesRouteDrivingShift(CSVRecord csvRecord) {
 		return csvRecord.get(Header.PERIOD).length() == 1;
 	}
 
+	/**
+	 * Gets an array of possible shift changes on the provided date.
+	 * @param date The Date to filter by
+	 * @return an array of shift changes
+	 */
 	public static ShiftChange[] getPossibleShiftChangesOnDate(Date date) {
 		ArrayList<ShiftChange> shiftChanges =
 				new ArrayList<ShiftChange>();
