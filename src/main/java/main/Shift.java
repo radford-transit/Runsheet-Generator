@@ -1,7 +1,7 @@
 package main;
 
 
-public class Shift {
+public abstract class Shift {
 	String name;
 	TimePeriod time;
 	Employee employee;
