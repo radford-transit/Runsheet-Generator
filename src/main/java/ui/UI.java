@@ -276,12 +276,13 @@ public class UI extends JFrame {
 				// Set list data for positions selection check box list
 				mainPanels.positionsSelectionPanel.setPositionsListData(
 						CSVReader.getNonRouteDrivingPositionsOnDate(Settings.date));
-				
 				/* Set list data for first shift change hour selection radio button
 				 * list
 				 */
 				mainPanels.firstShiftChangeSelectionPanel.setShiftChangeListData(
 						CSVReader.getPossibleShiftChangesOnDate(Settings.date));
+				// Select first radio button by default
+				mainPanels.firstShiftChangeSelectionPanel.radioButtons.select(0);
 			}
 		};
 	}
@@ -314,10 +315,13 @@ public class UI extends JFrame {
 					// Deselect all radio buttons
 					mainPanels.firstShiftChangeSelectionPanel.radioButtons.deselectAll();
 				}
-				else
+				else {
 					// Enable radio buttons
 					mainPanels
 							.firstShiftChangeSelectionPanel.radioButtons.setEnabled(true);
+					// Select first radio button by default
+					mainPanels.firstShiftChangeSelectionPanel.radioButtons.select(0);
+				}
 			}
 		};
 	}
