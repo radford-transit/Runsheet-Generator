@@ -1,9 +1,11 @@
 package main;
 
-
 public class Employee {
-	Name name;
+	/** Name of the employee */
+	public Name name;
+	/** Whether the employee has a CDL */
 	boolean hasCDL;
+	/** Whether the employee is a line instructor */
 	boolean lineInstructor;
 
 	/**
