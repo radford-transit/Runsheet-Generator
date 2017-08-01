@@ -314,6 +314,8 @@ public class UI extends JFrame {
 					mainPanels.firstShiftChangeSelectionPanel.radioButtons.setEnabled(false);
 					// Deselect all radio buttons
 					mainPanels.firstShiftChangeSelectionPanel.radioButtons.deselectAll();
+					// Make first shift change setting null
+					Settings.firstShiftChange = null;
 				}
 				else {
 					// Enable radio buttons
