@@ -75,10 +75,10 @@ public class UI extends JFrame {
 	 * Sets initial JFrame properties
 	 */
 	private void init() {
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 		// Set JFrame bounds
-		this.setBounds(300, 100, UI.WIDTH+10, UI.HEIGHT+10);
+		this.setBounds(300, 100, UI.WIDTH + 10, UI.HEIGHT + 10);
 		this.setResizable(false);
 		
 		// Set border of content pane
