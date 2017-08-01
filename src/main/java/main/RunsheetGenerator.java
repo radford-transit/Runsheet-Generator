@@ -29,7 +29,7 @@ public class RunsheetGenerator {
 		// Wait for user to finish
 		while (!window.complete.get()) {}
 		
-		Schedule schedule = Settings.noShiftChanges
+		Schedule schedule = Settings.firstShiftChange == null
 				? new Schedule(Settings.date, Settings.includedPositions)
 				: new Schedule(Settings.date, Settings.includedPositions, Settings.firstShiftChange);
 				

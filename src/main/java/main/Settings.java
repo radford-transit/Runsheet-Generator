@@ -9,8 +9,6 @@ public class Settings {
 	public static String[] includedPositions = new String[0];
 	/** Path of the WhenToWork export file */
 	public static Path exportFilePath = null;
-	/** Whether there are any shift changes on the runsheet */
-	public static boolean noShiftChanges = false;
 	/** The first shift change */
 	public static ShiftChange firstShiftChange = null;
 	/** Path of the directory to save the runsheet to */
