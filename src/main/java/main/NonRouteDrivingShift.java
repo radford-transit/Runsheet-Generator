@@ -1,8 +1,8 @@
 package main;
 
-
 public class NonRouteDrivingShift extends Shift implements Comparable<NonRouteDrivingShift> {
-	String description;
+	/** Description of the non-route driving shift */
+	public String description;
 
 	/**
 	 * Constructs a NonRouteDrivingShift object
