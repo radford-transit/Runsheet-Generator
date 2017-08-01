@@ -11,8 +11,8 @@ import main.*;
 
 public class UI extends JFrame {
 	// JFrame dimensions
-	static final int WIDTH = 600;
-	static final int HEIGHT = 400;
+	private static final int WIDTH = 600;
+	private static final int HEIGHT = 400;
 	
 	// Content pane (has border layout)
 	JPanel contentPane = new JPanel(new BorderLayout());
@@ -168,8 +168,10 @@ public class UI extends JFrame {
 				this.contentPane.add(this.mainPanels.positionsSelectionPanel);
 				
 				// Assign selected positions to included positions setting
-				Settings.includedPositions = this.mainPanels.positionsSelectionPanel
-						.positionsList.getSelectedValues();
+				Settings.includedPositions = zb_utils.Arrays.concatenate(
+						mainPanels.positionsSelectionPanel
+								.positionsList.getSelectedValues(),
+						CSVReader.getRouteDrivingPositionsOnDate(Settings.date));
 			}
 			// Positions selection panel -> First shift change selection panel
 			else if (this.mainPanels.positionsSelectionPanel.isShowing()) {
@@ -243,6 +245,8 @@ public class UI extends JFrame {
 					// Set contents of date selection combo box
 					mainPanels.dateSelectionPanel.comboBox.setModel(
 							new DefaultComboBoxModel<Date>(CSVReader.getDates()));
+					// Set date to first listed date by default
+					Settings.date = CSVReader.getDates()[0];
 					// Enable next button
 					setNavigationButtonsEnabledStates(true, true);
 				}
