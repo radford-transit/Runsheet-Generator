@@ -2,8 +2,10 @@ package main;
 
 
 public class Name {
-	String last;
-	String first;
+	/** Last name */
+	public String last;
+	/** First name */
+	public String first;
 
 	/**
 	 * Constructs a name object
@@ -26,6 +28,9 @@ public class Name {
 		return last + ", " + first;
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object other) {
 		return other instanceof Name

@@ -51,7 +51,9 @@ public class CSVReader {
 	private static FileReader fileReader = null;
 	// CSV parser
 	private static CSVParser csvParser = null;
-	// CSV records
+	/**
+	 * The set of CSVRecords
+	 */
 	public static List<CSVRecord> csvRecords = null;
 	
 	/**

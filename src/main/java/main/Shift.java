@@ -2,9 +2,12 @@ package main;
 
 
 public abstract class Shift {
-	String name;
-	TimePeriod time;
-	Employee employee;
+	/** Name of the shift */
+	public String name;
+	/** Time of the shift */
+	public TimePeriod time;
+	/** Employee assigned to the shift */
+	public Employee employee;
 
 	/**
 	 * Constructs a Shift object

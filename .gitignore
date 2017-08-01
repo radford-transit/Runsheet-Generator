@@ -8,3 +8,4 @@ EXPORT.CSV
 runsheet.xlsx
 lib/commons-csv-1-3.4
 lib/poi-3-2.15
+doc/*

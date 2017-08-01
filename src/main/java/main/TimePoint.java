@@ -2,8 +2,10 @@ package main;
 
 
 public class TimePoint implements Comparable<TimePoint> {
-	int hour;
-	int minute;
+	/** Hour of the time point */
+	public int hour;
+	/** Minute of the time point */
+	public int minute;
 
 	/**
 	 * Constructs a TimePoint object

@@ -2,7 +2,9 @@ package main;
 
 
 public class Route implements Comparable<Route> {
-	int id;
+	/** The route ID */
+	public int id;
+	/** The route name */
 	String name;
 
 	/**

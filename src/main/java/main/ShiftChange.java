@@ -1,8 +1,10 @@
 package main;
 
 public class ShiftChange implements Comparable {
+	/** Hour of the shift change */
 	public int hour;
-	ShiftChangeID id;
+	/** ID of the shift change */
+	public ShiftChangeID id;
 
 	/**
 	 * Constructs a ShiftChange object
@@ -14,6 +16,11 @@ public class ShiftChange implements Comparable {
 		this.id = id;
 	}
 	
+	/**
+	 * Constructs a ShiftChange object
+	 * @param time The time of the shift change
+	 * @param id The ShiftChangeID to assign to the shift change
+	 */
 	public ShiftChange(TimePoint time, ShiftChangeID id) {
 		this.hour = time.hour;
 		this.id = id;
@@ -27,6 +34,9 @@ public class ShiftChange implements Comparable {
 		return new TimePoint(this.hour, 15).toString() + " - " + new TimePoint(this.hour + 1, 0).toString();
 	}
 
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public int compareTo(Object other) {
 		if (other instanceof ShiftChange)
@@ -40,6 +50,9 @@ public class ShiftChange implements Comparable {
 		return -2;
 	}
 	
+	/**
+	 * {@inheritDoc}
+	 */
 	@Override
 	public boolean equals(Object other) {
 		if (other instanceof ShiftChange)

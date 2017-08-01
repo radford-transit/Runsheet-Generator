@@ -6,21 +6,22 @@ import java.util.ArrayList;
 import java.util.EventListener;
 
 public class Settings {
-	// Date
+	/** Date of the runsheet */
 	public static Date date;
-	// Included positions
+	/** Included non-route positions on the runsheet */
 	public static String[] includedPositions = new String[0];
-	// Export file
+	/** Path of the WhenToWork export file */
 	public static Path exportFilePath = null;
-	// No shift changes
+	/** Whether there are any shift changes on the runsheet */
 	public static boolean noShiftChanges = false;
-	// First shift change
+	/** The first shift change */
 	public static ShiftChange firstShiftChange = null;
-	// Runsheet path
+	/** Path of the directory to save the runsheet to */
 	public static Path runsheetPath = null;
 	
-	public Settings() {}
-	
+	/**
+	 * Prints the settings data to the console.
+	 */
 	public static void print() {
 		System.out.println(
 				"Date:                      " + date.toString());

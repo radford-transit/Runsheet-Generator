@@ -12,17 +12,21 @@ import java.util.List;
 import org.apache.commons.csv.*;
 
 public class Schedule {
-	Date date;
+	/** Date of the schedule */
+	public Date date;
 
-	ArrayList<RouteDrivingShift> routeDrivingShifts =
+	/** The schedule's route driving shifts */
+	public ArrayList<RouteDrivingShift> routeDrivingShifts =
 			new ArrayList<RouteDrivingShift>();
-	ArrayList<NonRouteDrivingShift> nonRouteDrivingShifts =
+	/** The schedule's non-route driving shifts */
+	public ArrayList<NonRouteDrivingShift> nonRouteDrivingShifts =
 			new ArrayList<NonRouteDrivingShift>();
-	ArrayList<TrainingShift> trainingShifts =
+	/** The schedule's training shifts */
+	public ArrayList<TrainingShift> trainingShifts =
 			new ArrayList<TrainingShift>();
 
-	// Shift changes
-	ArrayList<ShiftChange> shiftChanges =
+	/** The set of shift changes */
+	public ArrayList<ShiftChange> shiftChanges =
 			new ArrayList<ShiftChange>();
 
 	/**

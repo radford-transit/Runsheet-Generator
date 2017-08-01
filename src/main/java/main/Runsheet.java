@@ -66,6 +66,11 @@ public class Runsheet extends XSSFWorkbook {
 		this.setPrintSetup();
 	}
 
+	/**
+	 * Writes the title row of the runsheet.
+	 * @param row The number of the title row
+	 * @return The number of the first row after the title row
+	 */
 	private int writeTitleRow(int row) {
 		// Title row
 		Row titleRow = this.sheet.createRow(row);
@@ -78,6 +83,11 @@ public class Runsheet extends XSSFWorkbook {
 		return row + 1;
 	}
 
+	/**
+	 * Writes the date row of the runsheet.
+	 * @param row The number of the date row
+	 * @return The number of the first row after the date row
+	 */
 	private int writeDateRow(int row) {
 		Row dateRow = this.sheet.createRow(row);
 		dateRow.setHeightInPoints(17);
@@ -89,6 +99,11 @@ public class Runsheet extends XSSFWorkbook {
 		return row + 2;
 	}
 
+	/**
+	 * Writes a header row to the runsheet.
+	 * @param row The number of the header row
+	 * @return The number of the first row after the header row
+	 */
 	private int writeHeadersRow(int row) {
 		Row headersRow = sheet.createRow(row);
 		headersRow.setHeightInPoints((short) 15);
@@ -117,6 +132,12 @@ public class Runsheet extends XSSFWorkbook {
 		return row + 1;
 	}
 
+	/**
+	 * Writes a route driving shift row to the runsheet.
+	 * @param row The number of the shift row
+	 * @param shift The route driving shift to be written
+	 * @throws Exception
+	 */
 	private void writeShiftRow(Row row, RouteDrivingShift shift) throws Exception {
 		Cell checkCell = row.createCell(0);
 		checkCell.setCellStyle(this.styles.get("shiftA"));
@@ -154,6 +175,11 @@ public class Runsheet extends XSSFWorkbook {
 		shiftChangeAfterCell.setCellStyle(this.styles.get("shiftA"));
 	}
 
+	/**
+	 * Writes a non-route driving shift to the runsheet.
+	 * @param row The number of the shift row
+	 * @param shift The non-route driving shift to be written
+	 */
 	private void writeShiftRow(Row row, NonRouteDrivingShift shift) {
 		Cell checkCell = row.createCell(0);
 		checkCell.setCellStyle(this.styles.get("shiftA"));
@@ -188,6 +214,11 @@ public class Runsheet extends XSSFWorkbook {
 		shiftChangeAfterCell.setCellStyle(this.styles.get("shiftA"));
 	}
 
+	/**
+	 * Writes a training shift row to the runsheet.
+	 * @param row The number of the shift row
+	 * @param shift The training shift to be written
+	 */
 	private void writeShiftRow(Row row, TrainingShift shift) {
 		Cell checkCell = row.createCell(0);
 		checkCell.setCellStyle(this.styles.get("shiftA"));
@@ -222,6 +253,12 @@ public class Runsheet extends XSSFWorkbook {
 		shiftChangeAfterCell.setCellStyle(this.styles.get("shiftA"));
 	}
 
+	/**
+	 * Writes a series of route driving shift rows to the runsheet.
+	 * @param currentRow The number of the first row to write to
+	 * @return the first row after the shift rows
+	 * @throws Exception
+	 */
 	private int writeRouteDrivingShiftRows(int currentRow) throws Exception {
 		if (!this.schedule.routeDrivingShifts.isEmpty()) {
 			for (int i = 0 ; i < this.schedule.routeDrivingShifts.size(); i++) {
@@ -258,6 +295,11 @@ public class Runsheet extends XSSFWorkbook {
 		return currentRow;
 	}
 
+	/**
+	 * Writes a series of non-route driving shift rows to the runsheet.
+	 * @param currentRow The number of the first row to write to
+	 * @return the first row after the shift rows
+	 */
 	private int writeNonRouteDrivingShiftRows(int currentRow) {
 		if (!this.schedule.nonRouteDrivingShifts.isEmpty()) {
 			for (int i = 0; i < this.schedule.nonRouteDrivingShifts.size(); i++) {
@@ -289,6 +331,11 @@ public class Runsheet extends XSSFWorkbook {
 		return currentRow;
 	}
 
+	/**
+	 * Writes a series of training shift rows to the runsheet.
+	 * @param currentRow The number of the first row to write to
+	 * @return the first row after the shift rows
+	 */
 	private int writeTrainingShiftRows(int currentRow) {
 		if (!this.schedule.trainingShifts.isEmpty()) {
 			currentRow = this.writePeriodRow(currentRow, "Training");
@@ -313,6 +360,11 @@ public class Runsheet extends XSSFWorkbook {
 		return currentRow;
 	}
 
+	/**
+	 * Writes the comment about bold shifts to the runsheet.
+	 * @param row The number of the row to write to
+	 * @return the first row after the bold comment row
+	 */
 	private int writeBoldComment(int row) {
 		Row boldCommentRow = this.sheet.createRow(row);
 		Cell boldCommentCell = boldCommentRow.createCell(8);
@@ -322,6 +374,9 @@ public class Runsheet extends XSSFWorkbook {
 		return row + 1;
 	}
 
+	/**
+	 * Autosizes the runsheet's columns where needed.
+	 */
 	private void autosizeColumns() {
 		if (this.sheet.getColumnWidth(1) > 4608)
 			this.sheet.autoSizeColumn(1);
@@ -338,6 +393,7 @@ public class Runsheet extends XSSFWorkbook {
 	 * Writes a period row on the runsheet
 	 * @param row Row number on the spreadsheet
 	 * @param period Period ID
+	 * @return the first row after the period row
 	 */
 	private int writePeriodRow(int row, String period) {
 		Row periodRow = this.sheet.createRow(row);
@@ -357,6 +413,12 @@ public class Runsheet extends XSSFWorkbook {
 		return row + 1;
 	}
 
+	/**
+	 * Writes a shift change row on the runsheet
+	 * @param row Row number on the spreadsheet
+	 * @param shiftChange Shift change to write
+	 * @return the first row after the period row
+	 */
 	private int writeShiftChangeRow(int row, ShiftChange shiftChange) {
 		Row shiftChangeRow = this.sheet.createRow(row);
 
@@ -382,6 +444,12 @@ public class Runsheet extends XSSFWorkbook {
 		return row + 1;
 	}
 
+	/**
+	 * Tells whether the provided hour is the hour of one of the shift changes
+	 * @param hour The hour to check against the shift changes
+	 * @param shiftChanges The list of shift changes
+	 * @return true if the provided hour is the hour of one of the shift changes, or false otherwise
+	 */
 	private static boolean hourIsInShiftChanges(int hour, ArrayList<ShiftChange> shiftChanges) {
 		for (int i = 0; i < shiftChanges.size(); i++)
 			if (shiftChanges.get(i).hour == hour)
@@ -389,6 +457,12 @@ public class Runsheet extends XSSFWorkbook {
 		return false;
 	}
 
+	/**
+	 * Gets the shift change at the provided hour
+	 * @param hour The hour of the shift change
+	 * @param shiftChanges The list of shift changes
+	 * @return the shift change at the provided hour
+	 */
 	private static ShiftChange shiftChangeAtHour(int hour, ArrayList<ShiftChange> shiftChanges) {
 		for (int i = 0; i < shiftChanges.size(); i++)
 			if (shiftChanges.get(i).hour == hour)
@@ -396,6 +470,11 @@ public class Runsheet extends XSSFWorkbook {
 		return null;
 	}
 
+	/**
+	 * Makes the styles for the runsheet.
+	 * @param wb The workbook to work with
+	 * @return The styles for the runsheet
+	 */
 	private static Map<String, XSSFCellStyle> createStyles(
 			Workbook wb) {
 		Map<String, XSSFCellStyle> styles =
@@ -524,6 +603,9 @@ public class Runsheet extends XSSFWorkbook {
 		return styles;
 	}
 
+	/**
+	 * Sets the print setup for the runsheet document.
+	 */
 	private void setPrintSetup() {
 		PrintSetup printSetup = this.sheet.getPrintSetup();
 		printSetup.setLandscape(false);

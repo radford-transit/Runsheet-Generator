@@ -2,7 +2,10 @@ package main;
 
 
 public class TimePeriod implements Comparable<TimePeriod> {
-	TimePoint start, end;
+	/** Starting time point */
+	public TimePoint start;
+	/** Ending time point */
+	public TimePoint end;
 
 	/**
 	 * Constructs a TimePeriod object

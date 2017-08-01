@@ -2,8 +2,10 @@ package main;
 
 
 public class RouteDrivingShift extends Shift implements Comparable<RouteDrivingShift> {
-	Route route;
-	char period;
+	/** Route of the shift */
+	public Route route;
+	/** Period of the shift */
+	public char period;
 
 	/**
 	 * Constructs a RouteDrivingShift object

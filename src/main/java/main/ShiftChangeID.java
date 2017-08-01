@@ -2,8 +2,10 @@ package main;
 
 
 public class ShiftChangeID {
-	char period;
-	int number;
+	/** Period ID for the ShiftChangeID */
+	public char period;
+	/** Number within the period of the shift change */
+	public int number;
 
 	/**
 	 * Constructs a ShiftChangeID object

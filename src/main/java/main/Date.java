@@ -6,8 +6,14 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class Date implements Comparable {
-	int year, month, day;
-	String dayOfWeek;
+	/** The year */
+	public int year;
+	/** The month */
+	public int month;
+	/** The day */
+	public int day;
+	/** The day of the week */
+	public String dayOfWeek;
 
 	/**
 	 * Constructs a Date object
@@ -99,6 +105,10 @@ public class Date implements Comparable {
 		);
 	}
 	
+	/**
+	 * Gets a text representation of the Date which works as a file name prefix.
+	 * @return a file name prefix representing the Date
+	 */
 	public String toFileNamePrefixString() {
 		return (
 				(this.month <= 9
