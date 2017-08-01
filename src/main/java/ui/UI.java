@@ -183,10 +183,12 @@ public class UI extends JFrame {
 			}
 			// First shift change selection panel -> Runsheet path selection panel
 			else if (this.mainPanels.firstShiftChangeSelectionPanel.isShowing()) {
-				Settings.firstShiftChange =
-						CSVReader.getPossibleShiftChangesOnDate(Settings.date)
-								[this.mainPanels.firstShiftChangeSelectionPanel
-								 		.radioButtons.getSelectedIndex()];
+				if (!mainPanels.firstShiftChangeSelectionPanel.noShiftChangeCheckBox.isSelected())
+					Settings.firstShiftChange =
+							CSVReader.getPossibleShiftChangesOnDate(Settings.date)
+									[this.mainPanels.firstShiftChangeSelectionPanel
+									 		.radioButtons.getSelectedIndex()];
+				else Settings.firstShiftChange = null;
 				
 				this.contentPane.remove(this.mainPanels.firstShiftChangeSelectionPanel);
 				this.contentPane.add(this.mainPanels.runsheetPathSelectionPanel);
