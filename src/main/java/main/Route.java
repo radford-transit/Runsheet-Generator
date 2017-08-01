@@ -1,6 +1,5 @@
 package main;
 
-
 public class Route implements Comparable<Route> {
 	/** The route ID */
 	public int id;

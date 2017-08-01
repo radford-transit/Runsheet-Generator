@@ -1,8 +1,6 @@
 package main;
 import ui.*;
 
-import java.awt.EventQueue;
-import java.io.File;
 import java.io.FileOutputStream;
 
 import javax.swing.UIManager;

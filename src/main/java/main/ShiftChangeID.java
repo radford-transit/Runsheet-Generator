@@ -1,6 +1,5 @@
 package main;
 
-
 public class ShiftChangeID {
 	/** Period ID for the ShiftChangeID */
 	public char period;

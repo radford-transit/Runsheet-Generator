@@ -1,6 +1,5 @@
 package main;
 
-
 public class TimePeriod implements Comparable<TimePeriod> {
 	/** Starting time point */
 	public TimePoint start;

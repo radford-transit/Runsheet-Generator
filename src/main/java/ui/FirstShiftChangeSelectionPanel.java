@@ -3,8 +3,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.*;
 
-import main.TimePeriod;
-
 import swing_extensions.JRadioButtonList;
 
 public class FirstShiftChangeSelectionPanel extends JPanel {

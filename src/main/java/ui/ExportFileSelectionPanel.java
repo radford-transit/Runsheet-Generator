@@ -1,16 +1,10 @@
 package ui;
 
-import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import java.nio.file.Path;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
-import org.apache.tools.ant.taskdefs.condition.Os;
-
-import main.*;
 
 public class ExportFileSelectionPanel extends JPanel {
 	// Export file selection label

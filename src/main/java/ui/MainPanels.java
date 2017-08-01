@@ -2,8 +2,6 @@ package ui;
 
 import java.awt.event.*;
 
-import javax.swing.event.ListSelectionListener;
-
 public class MainPanels {
 	InstructionsPanel instructionsPanel = new InstructionsPanel();
 	ExportFileSelectionPanel exportFileSelectionPanel;

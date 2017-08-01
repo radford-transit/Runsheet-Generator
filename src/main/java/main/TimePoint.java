@@ -1,6 +1,5 @@
 package main;
 
-
 public class TimePoint implements Comparable<TimePoint> {
 	/** Hour of the time point */
 	public int hour;

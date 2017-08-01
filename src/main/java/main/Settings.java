@@ -1,9 +1,6 @@
 package main;
 
-import java.io.File;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.EventListener;
 
 public class Settings {
 	/** Date of the runsheet */

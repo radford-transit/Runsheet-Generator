@@ -1,7 +1,6 @@
 package ui;
 
-import javax.swing.JLabel;
-import javax.swing.JPanel;
+import javax.swing.*;
 
 public class InstructionsPanel extends JPanel {
 	// Instructions label

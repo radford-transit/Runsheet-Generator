@@ -1,20 +1,13 @@
 package ui;
 
-import zb_utils.*;
-
 import java.awt.BorderLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.ItemListener;
+import java.awt.event.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-import main.CSVReader;
-import main.Date;
-import main.Settings;
+import main.*;
 
 public class UI extends JFrame {
 	// JFrame dimensions

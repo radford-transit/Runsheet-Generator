@@ -1,6 +1,5 @@
 package main;
 
-
 public abstract class Shift {
 	/** Name of the shift */
 	public String name;

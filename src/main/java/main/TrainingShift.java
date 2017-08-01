@@ -1,6 +1,5 @@
 package main;
 
-
 public class TrainingShift extends Shift implements Comparable<TrainingShift> {
 	/**
 	 * Constructs a TrainingShift object

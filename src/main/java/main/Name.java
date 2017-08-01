@@ -1,6 +1,5 @@
 package main;
 
-
 public class Name {
 	/** Last name */
 	public String last;
