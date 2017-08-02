@@ -1,6 +1,8 @@
 package main;
 import ui.*;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileOutputStream;
 
 import javax.swing.UIManager;
@@ -39,5 +41,8 @@ public class RunsheetGenerator {
 		runsheet.write(out);
 		runsheet.close();
 		out.close();
+		
+		// Open runsheet
+		Desktop.getDesktop().open(Settings.runsheetPath.toFile());
 	}
 }
