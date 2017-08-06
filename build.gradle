@@ -5,7 +5,10 @@
 
 
 plugins {
+  // Shadow
   id "com.github.johnrengelman.shadow" version "2.0.1"
+  // Launch4J
+  id "edu.sc.seis.launch4j" version "2.4.1"
 }
 
 apply plugin: 'java'
@@ -49,6 +52,7 @@ dependencies {
 
 mainClassName = 'main.RunsheetGenerator'
 
+// Standard JAR build
 jar {
   manifest {
     attributes(
@@ -57,6 +61,7 @@ jar {
   }
 }
 
+// Shadow JAR distribution
 shadowJar {
   baseName = 'RunsheetGenerator'
   classifier = null
@@ -66,4 +71,17 @@ shadowJar {
       'Main-Class' : 'main.RunsheetGenerator'
     )
   }
+}
+
+// Launch4J EXE distribution
+launch4j {
+  mainClassName = 'main.RunsheetGenerator'
+  outfile = 'Runsheet Generator.exe'
+  outputDir = 'distributions/launch4j'
+}
+
+// Builds all distributions
+task buildAll << {
+  tasks.build.execute()
+  tasks.createExe.execute()
 }
