@@ -6,11 +6,11 @@ Generates a Radford Transit runsheet, in the XSLS file format, from a CSV file e
 - [Gradle](https://gradle.org/install/) is recommened but not required
 
 ## Build
-If you have Gradle installed, run `gradle build`
+If you have Gradle installed, run `gradle build`. To wrap the build into a Windows executable, run `gradlew createExe`.
 
 Otherwise,
 - On **Linux** or **macOS**, in the project's root directory, run `./gradlew build`
-- On **Windows**, in the project's root directory, run `gradlew.bat build`
+- On **Windows**, in the project's root directory, run `gradlew.bat build`. To wrap the build into a Windows executable, run `gradlew.bat createExe`.
 
 ## Run
 If you have Gradle installed, run `gradle run`
