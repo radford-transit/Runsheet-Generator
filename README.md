@@ -24,8 +24,10 @@ Otherwise,
 - [ZBUtils](https://github.com/zbeach/ZBUtils)
 - [SwingExtensions](https://github.com/zbeach/SwingExtensions)
 
-#### Downloaded with Gradle
+#### Automatically downloaded with Gradle
 - [Apache Commons CSV 1.4](https://commons.apache.org/proper/commons-csv/)
 - [Apache POI 3.15](https://poi.apache.org)
 
-The build script also includes a dependency for [Shadow](https://github.com/johnrengelman/shadow), a Gradle plugin for combining dependency classes and resources with a project’s into a single output JAR. This packages the program as a single executable for the end user.
+## Gradle plugins (automatically downloaded)
+- [Shadow](https://github.com/johnrengelman/shadow) combines dependency classes and resources with a project’s into a single output JAR.
+- [Launch4J](http://launch4j.sourceforge.net) wraps JARs into Windows executables.
