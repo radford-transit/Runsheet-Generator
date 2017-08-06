@@ -30,4 +30,4 @@ Otherwise,
 
 ## Gradle plugins (automatically downloaded)
 - [Shadow](https://github.com/johnrengelman/shadow) combines dependency classes and resources with a project’s into a single output JAR.
-- [Launch4J](http://launch4j.sourceforge.net) wraps JARs into Windows executables.
+- [gradle-launch4j](https://github.com/TheBoegl/gradle-launch4j) uses [Launch4J](http://launch4j.sourceforge.net) to wrap JARs into Windows executables.
