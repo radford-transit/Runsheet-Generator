@@ -11,8 +11,8 @@ import main.*;
 
 public class UI extends JFrame {
 	// JFrame dimensions
-	private static final int WIDTH = 600;
-	private static final int HEIGHT = 400;
+	private static final int WIDTH = 550;
+	private static final int HEIGHT = 350;
 	
 	// Content pane (has border layout)
 	JPanel contentPane = new JPanel(new BorderLayout());
@@ -271,7 +271,7 @@ public class UI extends JFrame {
 		return new ItemListener() {
 			@Override
 			public void itemStateChanged(ItemEvent e) {
-				// Set date to selection
+			// Set date to selection
 				Settings.date =
 						(Date) mainPanels.dateSelectionPanel.comboBox.getSelectedItem();
 				

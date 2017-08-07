@@ -7,7 +7,7 @@ public class InstructionsPanel extends JPanel {
 	private JLabel instructionsLabel = new JLabel(
 			String.format(
 					"<html><div style=\"width:%dpx;\">%s</div><html>",
-					450,
+					400,
 					"<html>"
 							+ "	<b>Before you begin:</b>"
 							+ "	<br>"

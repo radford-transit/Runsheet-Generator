@@ -13,7 +13,7 @@ public class RunsheetPathSelectionPanel extends JPanel {
 	private JLabel runsheetPathSelectionPanel = new JLabel(
 			String.format(
 					"<html><div style=\"width:%dpx;\">%s</div><html>",
-					450,
+					400,
 					"<html>"
 							+ " <b>Save runsheet</b>"
 							+ " <br>"

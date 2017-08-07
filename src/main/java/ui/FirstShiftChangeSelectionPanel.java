@@ -10,7 +10,7 @@ public class FirstShiftChangeSelectionPanel extends JPanel {
 	private JLabel firstShiftChangeSelectionLabel = new JLabel(
 			String.format(
 					"<html><div style=\"width:%dpx;\">%s</div><html>",
-					450,
+					400,
 					"<html>"
 							+ " <b>Select hour of first shift change</b>"
 							+ " <br>"

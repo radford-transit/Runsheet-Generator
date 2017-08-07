@@ -11,7 +11,7 @@ public class ExportFileSelectionPanel extends JPanel {
 	private JLabel label = new JLabel(
 			String.format(
 					"<html><div style=\"width:%dpx;\">%s</div><html>",
-					450,
+					400,
 					"<html>"
 							+ " <b>Select export file</b>"
 							+ " <br>"

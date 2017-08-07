@@ -12,7 +12,7 @@ public class PositionsSelectionPanel extends JPanel {
 	private JLabel positionsSelectionLabel = new JLabel(
 			String.format(
 					"<html><div style=\"width:%dpx;\">%s</div><html>",
-					450,
+					400,
 					"<html>"
 							+ " <b>Select positions</b>"
 							+ " <br>"
