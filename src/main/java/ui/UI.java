@@ -53,7 +53,6 @@ public class UI extends JFrame {
 	 */
 	public UI() {
 		super("Runsheet Generator");
-		System.out.println(Thread.currentThread().getId());
 		this.init();
 		
 		// Add navigation panel to content pane
@@ -301,7 +300,6 @@ public class UI extends JFrame {
 						mainPanels.positionsSelectionPanel
 								.positionsList.getSelectedValues(),
 						CSVReader.getRouteDrivingPositionsOnDate(Settings.date));
-				System.out.println("HI??????");
 			}
 		};
 	}

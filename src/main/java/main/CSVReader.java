@@ -168,10 +168,6 @@ public class CSVReader {
 		
 		Collections.sort(positions);
 		
-		System.out.println("Hello?");
-		for (int i = 0; i < positions.size(); i++)
-			System.out.println(positions.get(i).toString());
-		
 		return positions.toArray(new String[positions.size()]);
 	}
 	
