@@ -19,6 +19,7 @@ public class RunsheetGenerator {
 			e.printStackTrace();
 		}
 		
+		// Start user interface
 		UI window = null;
 		try {
 			window = new UI();
@@ -30,10 +31,13 @@ public class RunsheetGenerator {
 		// Wait for user to finish
 		while (!window.complete.get()) {}
 		
+		// Make schedule
 		Schedule schedule = Settings.firstShiftChange == null
 				? new Schedule(Settings.date, Settings.includedPositions)
 				: new Schedule(Settings.date, Settings.includedPositions, Settings.firstShiftChange);
 				
+				
+		// Make runsheet
 		Runsheet runsheet = new Runsheet(schedule);
 
 		FileOutputStream out = new FileOutputStream(Settings.runsheetPath.toFile());
