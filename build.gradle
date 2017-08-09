@@ -78,6 +78,7 @@ launch4j {
   mainClassName = 'main.RunsheetGenerator'
   outfile = 'Runsheet Generator.exe'
   outputDir = 'distributions/launch4j'
+  icon = 'resources/icon.ico'
 }
 
 // Builds all distributions
