@@ -40,9 +40,6 @@ dependencies {
   // Apache Commons CSV 1.4
   compile 'org.apache.commons:commons-csv:1.4'
 
-  // Jide Common 3.6.15
-  compile 'org.bidib.com.jidesoft:jide-common:3.6.15'
-
   // Swing Extensions
   compile files('lib/swing_extensions.jar')
 
