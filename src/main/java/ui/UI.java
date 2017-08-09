@@ -13,13 +13,13 @@ public class UI extends JFrame {
 	// JFrame dimensions
 	private static final int WIDTH = 550;
 	private static final int HEIGHT = 350;
-	
+
 	// Content pane (has border layout)
 	JPanel contentPane = new JPanel(new BorderLayout());
-	
+
 	// Whether UI part of the program is complete
 	public AtomicBoolean complete = new AtomicBoolean(false);
-	
+
 	// Main panels
 	MainPanels mainPanels = new MainPanels(
 			// Export file selection panel button listener
@@ -33,7 +33,7 @@ public class UI extends JFrame {
 			// Runsheet path selection panel button listener
 			this.makeRunsheetPathSelectionPanelButtonListener());
 	// Navigation panel
-	NavigationPanel navigationPanel = 
+	NavigationPanel navigationPanel =
 			new NavigationPanel(
 					new ActionListener() {
 						public void actionPerformed(ActionEvent e) {try {
@@ -47,37 +47,37 @@ public class UI extends JFrame {
 							changeMainPanel(1);
 						} catch (Exception e1) {e1.printStackTrace();}}
 					});
-	
+
 	/**
 	 * Constructs a UI object
 	 */
 	public UI() {
 		super("Runsheet Generator");
 		this.init();
-		
+
 		// Add navigation panel to content pane
 		this.contentPane.add(this.navigationPanel, BorderLayout.SOUTH);
-		
+
 		// Initialize to instructions panel
 		this.contentPane.add(this.mainPanels.instructionsPanel, BorderLayout.CENTER);
 		this.navigationPanel.backButton.setEnabled(false);
 	}
-	
+
 	/**
 	 * Sets initial JFrame properties
 	 */
 	private void init() {
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		
+
 		// Set JFrame bounds
 		this.setBounds(300, 100, UI.WIDTH + 10, UI.HEIGHT + 10);
 		this.setResizable(false);
-		
+
 		// Set border of content pane
 		final int BORDER_SIZE = 10;
 		this.contentPane.setBorder(new EmptyBorder(
 				BORDER_SIZE, BORDER_SIZE, BORDER_SIZE, BORDER_SIZE));
-		
+
 		this.setContentPane(this.contentPane);
 	}
 
@@ -87,7 +87,7 @@ public class UI extends JFrame {
 	 * and the addition of another. The second is the setting of each navigation
 	 * button's enabled state.
 	 * @param panel The direction of the step being taken
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	private void changeMainPanel(int direction) throws Exception {
 		// If negative direction
@@ -96,7 +96,7 @@ public class UI extends JFrame {
 			if (this.mainPanels.exportFileSelectionPanel.isShowing()) {
 				this.contentPane.remove(this.mainPanels.exportFileSelectionPanel);
 				this.contentPane.add(this.mainPanels.instructionsPanel);
-				
+
 				// Disable back button and enable next button
 				this.setNavigationButtonsEnabledStates(false, true);
 			}
@@ -104,7 +104,7 @@ public class UI extends JFrame {
 			else if (this.mainPanels.dateSelectionPanel.isShowing()) {
 				this.contentPane.remove(this.mainPanels.dateSelectionPanel);
 				this.contentPane.add(this.mainPanels.exportFileSelectionPanel);
-				
+
 				// If there is no export file, disable next button.
 				if (Settings.exportFilePath == null)
 					this.setNavigationButtonsEnabledStates(true, false);
@@ -115,7 +115,7 @@ public class UI extends JFrame {
 			else if (this.mainPanels.positionsSelectionPanel.isShowing()) {
 				this.contentPane.remove(this.mainPanels.positionsSelectionPanel);
 				this.contentPane.add(this.mainPanels.dateSelectionPanel);
-				
+
 				// Enable both navigation buttons
 				this.setNavigationButtonsEnabledStates(true, true);
 			}
@@ -123,7 +123,7 @@ public class UI extends JFrame {
 			else if (this.mainPanels.firstShiftChangeSelectionPanel.isShowing()) {
 				this.contentPane.remove(this.mainPanels.firstShiftChangeSelectionPanel);
 				this.contentPane.add(this.mainPanels.positionsSelectionPanel);
-				
+
 				// Assign selected positions to included positions setting
 				Settings.includedPositions = this.mainPanels.positionsSelectionPanel
 						.positionsList.getSelectedValues();
@@ -132,10 +132,10 @@ public class UI extends JFrame {
 			else if (this.mainPanels.runsheetPathSelectionPanel.isShowing()) {
 				this.contentPane.remove(this.mainPanels.runsheetPathSelectionPanel);
 				this.contentPane.add(this.mainPanels.firstShiftChangeSelectionPanel);
-				
+
 				// Change text of next button to "Next"
 				this.navigationPanel.nextButton.setText("Next");
-				
+
 				// Enable both navigation buttons
 				this.setNavigationButtonsEnabledStates(true, true);
 			}
@@ -146,7 +146,7 @@ public class UI extends JFrame {
 			if (this.mainPanels.instructionsPanel.isShowing()) {
 				this.contentPane.remove(this.mainPanels.instructionsPanel);
 				this.contentPane.add(this.mainPanels.exportFileSelectionPanel);
-				
+
 				// If there is no export file, disable next button
 				if (Settings.exportFilePath == null)
 					this.setNavigationButtonsEnabledStates(true, false);
@@ -157,7 +157,7 @@ public class UI extends JFrame {
 			else if (this.mainPanels.exportFileSelectionPanel.isShowing()) {
 				this.contentPane.remove(this.mainPanels.exportFileSelectionPanel);
 				this.contentPane.add(this.mainPanels.dateSelectionPanel);
-			
+
 				// Enable both navigation buttons
 				this.setNavigationButtonsEnabledStates(true, true);
 			}
@@ -165,7 +165,7 @@ public class UI extends JFrame {
 			else if (this.mainPanels.dateSelectionPanel.isShowing()) {
 				this.contentPane.remove(this.mainPanels.dateSelectionPanel);
 				this.contentPane.add(this.mainPanels.positionsSelectionPanel);
-				
+
 				// Assign selected positions to included positions setting
 				Settings.includedPositions = zb_utils.Arrays.concatenate(
 						mainPanels.positionsSelectionPanel
@@ -176,7 +176,7 @@ public class UI extends JFrame {
 			else if (this.mainPanels.positionsSelectionPanel.isShowing()) {
 				this.contentPane.remove(this.mainPanels.positionsSelectionPanel);
 				this.contentPane.add(this.mainPanels.firstShiftChangeSelectionPanel);
-			
+
 				// Enable both navigation buttons
 				this.setNavigationButtonsEnabledStates(true, true);
 			}
@@ -188,13 +188,13 @@ public class UI extends JFrame {
 									[this.mainPanels.firstShiftChangeSelectionPanel
 									 		.radioButtons.getSelectedIndex()];
 				else Settings.firstShiftChange = null;
-				
+
 				this.contentPane.remove(this.mainPanels.firstShiftChangeSelectionPanel);
 				this.contentPane.add(this.mainPanels.runsheetPathSelectionPanel);
-				
+
 				// Change text of next button to "Done"
 				this.navigationPanel.nextButton.setText("Done");
-				
+
 				// If no runsheet path is selected, disable next button
 				if (Settings.runsheetPath == null)
 					this.setNavigationButtonsEnabledStates(true, false);
@@ -208,12 +208,12 @@ public class UI extends JFrame {
 			}
 		}
 		else throw new Exception("Can't go more than one step");
-		
+
 		// Refresh content pane
 		this.contentPane.revalidate();
 		this.contentPane.repaint();
 	}
-	
+
 	/**
 	 * Sets enabled state of the back and next buttons
 	 * @param backEnabled enabled state of back button
@@ -234,7 +234,7 @@ public class UI extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Get file path
-				Settings.exportFilePath = 
+				Settings.exportFilePath =
 						ExportFileSelectionPanel.getFilePath(Settings.exportFilePath);
 				// If a file path is selected,
 				if (Settings.exportFilePath != null) {
@@ -273,7 +273,7 @@ public class UI extends JFrame {
 			// Set date to selection
 				Settings.date =
 						(Date) mainPanels.dateSelectionPanel.comboBox.getSelectedItem();
-				
+
 				// Set list data for positions selection check box list
 				mainPanels.positionsSelectionPanel.setPositionsListData(
 						CSVReader.getNonRouteDrivingPositionsOnDate(Settings.date));
@@ -327,13 +327,13 @@ public class UI extends JFrame {
 			}
 		};
 	}
-	
+
 	private ActionListener makeRunsheetPathSelectionPanelButtonListener() {
 		return new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// Get directory path
-				Settings.runsheetPath = 
+				Settings.runsheetPath =
 						RunsheetPathSelectionPanel.getFilePath(Settings.runsheetPath);
 				// If a path is selected,
 				if (Settings.runsheetPath != null) {
