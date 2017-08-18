@@ -24,7 +24,6 @@ public class Schedule {
 
 	/**
 	 * Constructs a Schedule object
-	 * @param fileName Path of WhenToWork export file (CSV)
 	 * @param date Date to get schedule from
 	 * @param includedPositions Names of positions to include in the schedule
 	 * @throws Exception
@@ -84,10 +83,9 @@ public class Schedule {
 
 	/**
 	 * Constructs a Schedule object
-	 * @param fileName Path of WhenToWork export file (CSV)
 	 * @param date Date to get schedule from
 	 * @param includedPositions Names of positions not include in the schedule
-	 * @param firstShiftChangeHour The hour of the first shift change for the day
+	 * @param firstShiftChange The first shift change for the day
 	 * @throws Exception
 	 */
 	public Schedule(Date date,
