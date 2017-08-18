@@ -2,10 +2,10 @@
 .settings
 bin
 build/classes
-build/distributions/Runsheet Generator-shadow.tar
-build/distributions/Runsheet Generator.tar
-build/distributions/Runsheet Generator-shadow.zip
-build/distributions/Runsheet Generator.zip
+build/distributions/Runsheet-Generator-shadow.tar
+build/distributions/Runsheet-Generator.tar
+build/distributions/Runsheet-Generator-shadow.zip
+build/distributions/Runsheet-Generator.zip
 build/distributions/launch4j/lib
 build/distributions/launch4j/Runsheet Generator.exe
 build/libs
@@ -19,7 +19,5 @@ runsheet.xlsx
 lib/commons-csv-1-3.4
 lib/poi-3-2.15
 doc/*
-
 build/distributions/Runsheet Generator (Windows).zip
-
 build/distributions/RunsheetGenerator.jar
