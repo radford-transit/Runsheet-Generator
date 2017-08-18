@@ -8,9 +8,8 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 public class RunsheetGenerator {
-	
+
 	public static void main(String[] args) throws Exception {
-		System.out.println(Thread.currentThread().getId());
 		// Set look and feel
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -18,7 +17,7 @@ public class RunsheetGenerator {
 				| UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
-		
+
 		// Start user interface
 		UI window = null;
 		try {
@@ -27,16 +26,16 @@ public class RunsheetGenerator {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		// Wait for user to finish
 		while (!window.complete.get()) {}
-		
+
 		// Make schedule
 		Schedule schedule = Settings.firstShiftChange == null
 				? new Schedule(Settings.date, Settings.includedPositions)
 				: new Schedule(Settings.date, Settings.includedPositions, Settings.firstShiftChange);
-				
-				
+
+
 		// Make runsheet
 		Runsheet runsheet = new Runsheet(schedule);
 
@@ -44,7 +43,7 @@ public class RunsheetGenerator {
 		runsheet.write(out);
 		runsheet.close();
 		out.close();
-		
+
 		// Open runsheet
 		Desktop.getDesktop().open(Settings.runsheetPath.toFile());
 	}
