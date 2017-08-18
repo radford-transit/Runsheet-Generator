@@ -77,9 +77,3 @@ launch4j {
   outputDir = 'distributions/launch4j'
   icon = 'resources/icon.ico'
 }
-
-// Builds all distributions
-task buildAll << {
-  tasks.build.execute()
-  tasks.createExe.execute()
-}
