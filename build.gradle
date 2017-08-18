@@ -77,3 +77,13 @@ launch4j {
   outputDir = 'distributions/launch4j'
   icon = 'resources/icon.ico'
 }
+
+// Javadoc
+task makeJavadocs(type: Javadoc) {
+  source = sourceSets.main.allJava
+  classpath = configurations.compile
+}
+
+configurations {
+  jaxDoclet
+}

@@ -1,12 +1,14 @@
 .gradle
 .settings
 bin
+build/docs
 build/classes
 build/distributions/Runsheet-Generator-shadow.tar
 build/distributions/Runsheet-Generator.tar
 build/distributions/Runsheet-Generator-shadow.zip
 build/distributions/Runsheet-Generator.zip
 build/distributions/launch4j/lib
+build/distributions/launch4j/createExe.xml
 build/distributions/launch4j/Runsheet Generator.exe
 build/libs
 build/scripts
