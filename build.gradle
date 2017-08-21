@@ -40,11 +40,13 @@ dependencies {
   // Apache Commons CSV 1.4
   compile 'org.apache.commons:commons-csv:1.4'
 
-  // Swing Extensions
-  compile files('lib/swing_extensions.jar')
-
-  // ZBUtils
-  compile files('lib/zb_utils.jar')
+  // Local dependencies
+  compile files(
+    // SwingExtensions
+    'lib/swing_extensions.jar',
+    // ZBUtils
+    'lib/zb_utils.jar'
+  )
 }
 
 mainClassName = 'main.RunsheetGenerator'
