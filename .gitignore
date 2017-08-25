@@ -14,6 +14,7 @@ build/distributions/Runsheet Generator.zip
 build/distributions/launch4j/lib
 build/distributions/launch4j/createExe.xml
 build/distributions/launch4j/Runsheet Generator.exe
+build/google-java-format
 build/libs
 build/scripts
 build/scriptsShadow

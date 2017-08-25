@@ -9,6 +9,8 @@ plugins {
   id "com.github.johnrengelman.shadow" version "2.0.1"
   // Launch4J
   id "edu.sc.seis.launch4j" version "2.4.1"
+  // google-java-format-gradle-plugin
+  id 'com.github.sherter.google-java-format' version '0.6'
 }
 
 apply plugin: 'java'

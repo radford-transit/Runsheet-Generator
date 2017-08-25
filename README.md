@@ -19,6 +19,15 @@ Otherwise,
 - On **Linux** or **macOS**, in the project's root directory, run `./gradlew run`
 - On **Windows**, in the project's root directory, run `gradlew.bat run`
 
+## Style requirement
+Runsheet Generator's source code complies with [Google's Java Style standard](https://google.github.io/styleguide/javaguide.html).
+
+If you have Gradle installed, to easily format the source code, run `gradle goJF`. To verify that all `*.java` files are formatted properly, run `gradle verGJF`.
+
+Otherwise,
+- On **Linux** or **macOS**, in the project's root directory, run `./gradlew goJF`. To verify that all `*.java` files are formatted properly, run `./gradlew verGJF`.
+- On **Windows**, in the project's root directory, run `gradlew.bat goJF`. To verify that all `*.java` files are formatted properly, run `gradlew.bat verGJF`.
+
 ## Generate Javadoc
 If you have Gradle installed, run `gradle makeJavadocs`
 
@@ -38,3 +47,4 @@ Otherwise,
 ## Gradle plugins (automatically downloaded)
 - [Shadow](https://github.com/johnrengelman/shadow) combines dependency classes and resources with a project’s into a single output JAR.
 - [gradle-launch4j](https://github.com/TheBoegl/gradle-launch4j) uses [Launch4J](http://launch4j.sourceforge.net) to wrap JARs into Windows executables.
+- [google-java-format-gradle-plugin](https://github.com/sherter/google-java-format-gradle-plugin) uses [google-java-format](https://github.com/google/google-java-format) to reformat Java source code to comply with Google Java Style.
