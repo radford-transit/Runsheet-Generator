@@ -37,8 +37,8 @@ Otherwise,
 
 ## Dependencies
 #### Included as JARs
-- [ZBUtils](https://github.com/zbeach/ZBUtils)
-- [SwingExtensions](https://github.com/zbeach/SwingExtensions)
+- [zb-utils](https://github.com/zbeach/zb-utils)
+- [swing-extensions](https://github.com/zbeach/swing-extensions)
 
 #### Automatically downloaded with Gradle
 - [Apache Commons CSV 1.4](https://commons.apache.org/proper/commons-csv/)
