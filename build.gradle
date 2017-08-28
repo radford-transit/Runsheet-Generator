@@ -45,9 +45,9 @@ dependencies {
   // Local dependencies
   compile files(
     // SwingExtensions
-    'lib/swing_extensions.jar',
+    'lib/swing-extensions.jar',
     // ZBUtils
-    'lib/zb_utils.jar'
+    'lib/zb-utils.jar'
   )
 }
 
