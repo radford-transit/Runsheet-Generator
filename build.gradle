@@ -18,12 +18,10 @@ apply plugin: 'java-library'
 apply plugin: 'application'
 apply plugin: 'eclipse'
 
-// In this section you declare where to find the dependencies of your project
 repositories {
-  // Use 'jcenter' for resolving your dependencies.
-  // You can declare any Maven/Ivy/file repository here.
   jcenter()
   mavenCentral()
+  maven { url "https://jitpack.io" }
 }
 
 // In this section you declare the dependencies for your production and test code
@@ -42,13 +40,13 @@ dependencies {
   // Apache Commons CSV 1.4
   compile 'org.apache.commons:commons-csv:1.4'
 
-  // Local dependencies
-  compile files(
-    // SwingExtensions
-    'lib/swing-extensions.jar',
-    // ZBUtils
-    'lib/zb-utils.jar'
-  )
+  // Git repositories
+  dependencies {
+    // ZB Utils
+    compile 'com.github.zbeach:zb-utils:v1.0'
+    // Swing Extensions
+    compile 'com.github.zbeach:swing-extensions:v1.0'
+  }
 }
 
 mainClassName = 'main.RunsheetGenerator'
@@ -79,7 +77,7 @@ launch4j {
   mainClassName = 'main.RunsheetGenerator'
   outfile = 'Runsheet Generator.exe'
   outputDir = 'distributions/launch4j'
-  icon = 'resources/icon.ico'
+  icon = 'res/icon.ico'
 }
 
 // Javadoc
