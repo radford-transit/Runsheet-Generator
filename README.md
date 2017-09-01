@@ -36,11 +36,9 @@ Otherwise,
 - On **Windows**, in the project's root directory, run `gradlew.bat  makeJavadocs`
 
 ## Dependencies
-#### Included as JARs
-- [zb-utils](https://github.com/zbeach/zb-utils)
-- [swing-extensions](https://github.com/zbeach/swing-extensions)
-
 #### Automatically downloaded with Gradle
+- [ZB Utils 1.1](https://github.com/zbeach/zb-utils)
+- [Swing Extensions 1.0](https://github.com/zbeach/swing-extensions)
 - [Apache Commons CSV 1.4](https://commons.apache.org/proper/commons-csv/)
 - [Apache POI 3.15](https://poi.apache.org)
 
