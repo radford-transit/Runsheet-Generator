@@ -1,4 +1,4 @@
-# Runsheet Generator :oncoming_bus: ![Build Status](https://travis-ci.org/zbeach/runsheet-generator.svg?branch=master)
+# Runsheet Generator :oncoming_bus: ![Build Status](https://travis-ci.org/radford-transit/runsheet-generator.svg?branch=master)
 Generates a Radford Transit runsheet, in the XSLS file format, from a CSV file exported by WhenToWork scheduling software.
 
 ## Required software
