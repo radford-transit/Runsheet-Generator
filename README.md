@@ -42,7 +42,8 @@ Otherwise,
 - [Apache Commons CSV 1.4](https://commons.apache.org/proper/commons-csv/)
 - [Apache POI 3.15](https://poi.apache.org)
 
-## Gradle plugins (automatically downloaded)
+## Gradle plugins (automatically downloaded) and dependencies
+- [JitPack](https://jitpack.io) adds the ability to use Git repos as dependencies.
 - [Shadow](https://github.com/johnrengelman/shadow) combines dependency classes and resources with a project’s into a single output JAR.
 - [gradle-launch4j](https://github.com/TheBoegl/gradle-launch4j) uses [Launch4J](http://launch4j.sourceforge.net) to wrap JARs into Windows executables.
 - [google-java-format-gradle-plugin](https://github.com/sherter/google-java-format-gradle-plugin) uses [google-java-format](https://github.com/google/google-java-format) to reformat Java source code to comply with Google Java Style.
