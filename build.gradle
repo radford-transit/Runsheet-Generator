@@ -41,12 +41,10 @@ dependencies {
   compile 'org.apache.commons:commons-csv:1.4'
 
   // Git repositories
-  dependencies {
-    // ZB Utils
-    compile 'com.github.zbeach:zb-utils:v1.1'
-    // Swing Extensions
-    compile 'com.github.zbeach:swing-extensions:v1.0'
-  }
+  // ZB Utils
+  compile 'com.github.zbeach:zb-utils:v1.1'
+  // Swing Extensions
+  compile 'com.github.zbeach:swing-extensions:v1.0'
 }
 
 mainClassName = 'main.RunsheetGenerator'
