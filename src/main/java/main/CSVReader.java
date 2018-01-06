@@ -183,7 +183,8 @@ public class CSVReader {
    * @return true if the record describes a route driving shift, or false if it doesn't
    */
   public static boolean recordDescribesRouteDrivingShift(CSVRecord csvRecord) {
-    return csvRecord.get(Header.PERIOD).length() == 1;
+    return csvRecord.get(Header.PERIOD).length() == 1
+        && !csvRecord.get(Header.POSITION_NAME).equals("Training");
   }
 
   /**
