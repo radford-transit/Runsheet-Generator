@@ -242,8 +242,13 @@ public class UI extends JFrame {
           // Set contents of date selection combo box
           mainPanels.dateSelectionPanel.comboBox.setModel(
               new DefaultComboBoxModel<Date>(CSVReader.getDates()));
-          // Set date to first listed date by default
-          Settings.date = CSVReader.getDates()[0];
+          /*
+           * Set date to first listed by default. For some reason, you have to select another index
+           * first and then index 0. Perhaps selecting index 0 first isn't registered because it's
+           * considered redundant after setting the model of the combo box?
+           */
+          mainPanels.dateSelectionPanel.comboBox.setSelectedIndex(1);
+          mainPanels.dateSelectionPanel.comboBox.setSelectedIndex(0);
           // Enable next button
           setNavigationButtonsEnabledStates(true, true);
         }
