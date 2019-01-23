@@ -18,13 +18,13 @@ public class MainPanels {
    */
   public MainPanels(
       ActionListener exportFileSelectionPanelButtonListener,
-      ItemListener dateSelectionPanelComboBoxListener,
+      ActionListener dateSelectionPanelActionListener,
       ActionListener positionsSelectionPanelActionListener,
       ActionListener noFirstShiftChangeCheckBoxListener,
       ActionListener runsheetPathSelectionPanelButtonListener) {
     this.exportFileSelectionPanel =
         new ExportFileSelectionPanel(exportFileSelectionPanelButtonListener);
-    this.dateSelectionPanel = new DateSelectionPanel(dateSelectionPanelComboBoxListener);
+    this.dateSelectionPanel = new DateSelectionPanel(dateSelectionPanelActionListener);
     this.positionsSelectionPanel =
         new PositionsSelectionPanel(positionsSelectionPanelActionListener);
     this.firstShiftChangeSelectionPanel =

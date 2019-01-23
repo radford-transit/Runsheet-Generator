@@ -24,7 +24,7 @@ public class UI extends JFrame {
           // Export file selection panel button listener
           this.makeExportFileSelectionPanelButtonListener(),
           // Date selection listener
-          this.makeDateSelectionListener(),
+          this.makeDateSelectionActionListener(),
           // Positions list selection listener
           this.makePositionsListActionListener(),
           // No shift changes check box listener
@@ -268,10 +268,11 @@ public class UI extends JFrame {
    *
    * @return an item listener for the date selection combo box
    */
-  private ItemListener makeDateSelectionListener() {
-    return new ItemListener() {
+  private ActionListener makeDateSelectionActionListener() {
+    return new ActionListener() {
       @Override
-      public void itemStateChanged(ItemEvent e) {
+      public void actionPerformed(ActionEvent e) {
+    	  System.out.println("action performed");
         // Set date to selection
         Settings.date = (Date) mainPanels.dateSelectionPanel.comboBox.getSelectedItem();
 

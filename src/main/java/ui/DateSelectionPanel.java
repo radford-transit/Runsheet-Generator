@@ -1,6 +1,6 @@
 package ui;
 
-import java.awt.event.ItemListener;
+import java.awt.event.ActionListener;
 import javax.swing.*;
 import main.*;
 
@@ -21,11 +21,11 @@ public class DateSelectionPanel extends JPanel {
   public JComboBox<Date> comboBox = new JComboBox<Date>(new DefaultComboBoxModel<Date>());
 
   /** Constructs a DateSelectionPanel object */
-  public DateSelectionPanel(ItemListener comboBoxListener) {
+  public DateSelectionPanel(ActionListener comboBoxListener) {
     super();
 
     // Add listener to combo box
-    this.comboBox.addItemListener(comboBoxListener);
+    this.comboBox.addActionListener(comboBoxListener);
 
     // Add components
     this.add(this.label);
