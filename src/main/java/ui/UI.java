@@ -272,7 +272,7 @@ public class UI extends JFrame {
     return new ActionListener() {
       @Override
       public void actionPerformed(ActionEvent e) {
-    	  System.out.println("action performed");
+        System.out.println("action performed");
         // Set date to selection
         Settings.date = (Date) mainPanels.dateSelectionPanel.comboBox.getSelectedItem();
 
