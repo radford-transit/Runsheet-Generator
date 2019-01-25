@@ -39,13 +39,5 @@ public class FirstShiftChangeSelectionPanel extends JPanel {
 
   public void setShiftChangeListData(Object[] data) {
     this.radioButtons.setData(data);
-
-    /* If there are no possible shift changes, select no shift changes check
-     * box and disable changing its selection state
-     */
-    if (this.radioButtons.length() == 0) {
-      this.noShiftChangeCheckBox.setSelected(true);
-      this.noShiftChangeCheckBox.setEnabled(false);
-    }
   }
 }

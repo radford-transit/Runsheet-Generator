@@ -174,6 +174,14 @@ public class UI extends JFrame {
       }
       // Positions selection panel -> First shift change selection panel
       else if (this.mainPanels.positionsSelectionPanel.isShowing()) {
+        if (this.mainPanels.firstShiftChangeSelectionPanel.radioButtons.length() == 0) {
+          this.mainPanels.firstShiftChangeSelectionPanel.noShiftChangeCheckBox.setSelected(true);
+          this.mainPanels.firstShiftChangeSelectionPanel.noShiftChangeCheckBox.setEnabled(false);
+        } else {
+          this.mainPanels.firstShiftChangeSelectionPanel.noShiftChangeCheckBox.setSelected(false);
+          this.mainPanels.firstShiftChangeSelectionPanel.noShiftChangeCheckBox.setEnabled(true);
+        }
+
         this.contentPane.remove(this.mainPanels.positionsSelectionPanel);
         this.contentPane.add(this.mainPanels.firstShiftChangeSelectionPanel);
 
@@ -242,12 +250,7 @@ public class UI extends JFrame {
           // Set contents of date selection combo box
           mainPanels.dateSelectionPanel.comboBox.setModel(
               new DefaultComboBoxModel<Date>(CSVReader.getDates()));
-          /*
-           * Set date to first listed by default. For some reason, you have to select another index
-           * first and then index 0. Perhaps selecting index 0 first isn't registered because it's
-           * considered redundant after setting the model of the combo box?
-           */
-          mainPanels.dateSelectionPanel.comboBox.setSelectedIndex(1);
+          // Select first date by default
           mainPanels.dateSelectionPanel.comboBox.setSelectedIndex(0);
           // Enable next button
           setNavigationButtonsEnabledStates(true, true);
@@ -284,7 +287,8 @@ public class UI extends JFrame {
         mainPanels.firstShiftChangeSelectionPanel.setShiftChangeListData(
             CSVReader.getPossibleShiftChangesOnDate(Settings.date));
         // Select first radio button by default
-        mainPanels.firstShiftChangeSelectionPanel.radioButtons.select(0);
+        if (mainPanels.firstShiftChangeSelectionPanel.radioButtons.length() != 0)
+          mainPanels.firstShiftChangeSelectionPanel.radioButtons.select(0);
       }
     };
   }
