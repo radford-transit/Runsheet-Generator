@@ -36,20 +36,22 @@ public class Runsheet extends XSSFWorkbook {
 
     currentRow =
         (
-        // Write Bold Comment
-        this.writeBoldComment(
-            // Write training shift rows
-            this.writeTrainingShiftRows(
-                // Write non-route driving shift rows
-                this.writeNonRouteDrivingShiftRows(
-                    // Write route driving shift rows
-                    this.writeRouteDrivingShiftRows(
-                        // Write headers row
-                        this.writeHeadersRow(
-                            // Write date row
-                            this.writeDateRow(
-                                // Write title row
-                                this.writeTitleRow(currentRow))))))));
+        // Write credit note
+        this.writeCreditNote(
+            // Write Bold Comment
+            this.writeBoldComment(
+                // Write training shift rows
+                this.writeTrainingShiftRows(
+                    // Write non-route driving shift rows
+                    this.writeNonRouteDrivingShiftRows(
+                        // Write route driving shift rows
+                        this.writeRouteDrivingShiftRows(
+                            // Write headers row
+                            this.writeHeadersRow(
+                                // Write date row
+                                this.writeDateRow(
+                                    // Write title row
+                                    this.writeTitleRow(currentRow)))))))));
 
     // Autosize last name, first name, and route columns to fit text content
     this.autosizeColumns();
@@ -373,6 +375,28 @@ public class Runsheet extends XSSFWorkbook {
     return row + 1;
   }
 
+  /**
+   * Write the note crediting the author.
+   *
+   * @param row The number of the row to write to
+   * @return the first row after the bold comment row
+   */
+  private int writeCreditNote(int row) {
+    Row creditNoteRow1 = this.sheet.createRow(row);
+    Cell creditNoteRow1Cell = creditNoteRow1.createCell(0);
+    creditNoteRow1Cell.setCellStyle(this.styles.get("creditNote"));
+    creditNoteRow1Cell.setCellValue("Created by Zack Beach for Radford Transit");
+
+    row += 1;
+
+    Row creditNoteRow2 = this.sheet.createRow(row);
+    Cell creditNoteRow2Cell = creditNoteRow2.createCell(0);
+    creditNoteRow2Cell.setCellStyle(this.styles.get("creditNote"));
+    creditNoteRow2Cell.setCellValue("github.com/zbeach");
+
+    return row + 1;
+  }
+
   /** Autosizes the runsheet's columns where needed. */
   private void autosizeColumns() {
     if (this.sheet.getColumnWidth(1) > 4608) this.sheet.autoSizeColumn(1);
@@ -591,6 +615,18 @@ public class Runsheet extends XSSFWorkbook {
     style.setVerticalAlignment(VerticalAlignment.CENTER);
     style.setFont(busFont);
     styles.put("boldComment", style);
+
+    // Credit note cell style
+    style = (XSSFCellStyle) wb.createCellStyle();
+    Font creditNoteFont = wb.createFont();
+    creditNoteFont.setFontName("Arial");
+    creditNoteFont.setBold(false);
+    creditNoteFont.setFontHeightInPoints((short) 8);
+    creditNoteFont.setColor(new XSSFColor(new Color(77, 77, 77)).getIndex());
+    style.setAlignment(HorizontalAlignment.LEFT);
+    style.setVerticalAlignment(VerticalAlignment.CENTER);
+    style.setFont(creditNoteFont);
+    styles.put("creditNote", style);
 
     return styles;
   }
