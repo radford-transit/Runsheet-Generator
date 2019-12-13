@@ -88,7 +88,7 @@ public class UI extends JFrame {
    * changed. The first is the removal of one main panel and the addition of another. The second is
    * the setting of each navigation button's enabled state.
    *
-   * @param panel The direction of the step being taken
+   * @param direction The direction of the step being taken
    * @throws Exception
    */
   private void changeMainPanel(int direction) throws Exception {
