@@ -31,7 +31,7 @@ public class ShiftChange implements Comparable {
   /** {@inheritDoc} */
   @Override
   public String toString() {
-    return new TimePoint(this.hour, 15).toString()
+    return new TimePoint(this.hour, 10).toString()
         + " - "
         + new TimePoint(this.hour + 1, 0).toString();
   }
