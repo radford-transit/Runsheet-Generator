@@ -49,7 +49,14 @@ public class Route implements Comparable<Route> {
    * @return
    */
   private String getRouteName(String fullName) {
-    return fullName.substring(5, fullName.length());
+    // New format - Route ID only
+    if (fullName.length() < 6) {
+      return fullName;
+    }
+    // Old format - Extract route name
+    else {
+      return fullName.substring(5, fullName.length());
+    }
   }
 
   /** {@inheritDoc} */
