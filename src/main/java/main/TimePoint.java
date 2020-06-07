@@ -67,4 +67,13 @@ public class TimePoint implements Comparable<TimePoint> {
             ? (this.minute < other.minute) ? -1 : (this.minute == other.minute) ? 0 : 1
             : 1);
   }
+
+  /** {@inheritDoc} */
+  @Override
+  public boolean equals(Object other) {
+    return
+      this.hour == ((TimePoint) other).hour
+      && this.minute == ((TimePoint) other).minute
+    ;
+  }
 }
