@@ -470,7 +470,7 @@ public class Runsheet extends XSSFWorkbook {
    * @return true if the provided hour is the hour of one of the shift changes, or false otherwise
    */
   private static boolean hourIsInShiftChanges(int hour, ArrayList<ShiftChange> shiftChanges) {
-    for (int i = 0; i < shiftChanges.size(); i++) if (shiftChanges.get(i).hour == hour) return true;
+    for (int i = 0; i < shiftChanges.size(); i++) if (shiftChanges.get(i).startTime.hour == hour) return true;
     return false;
   }
 
@@ -483,7 +483,7 @@ public class Runsheet extends XSSFWorkbook {
    */
   private static ShiftChange shiftChangeAtHour(int hour, ArrayList<ShiftChange> shiftChanges) {
     for (int i = 0; i < shiftChanges.size(); i++)
-      if (shiftChanges.get(i).hour == hour) return shiftChanges.get(i);
+      if (shiftChanges.get(i).startTime.hour == hour) return shiftChanges.get(i);
     return null;
   }
 

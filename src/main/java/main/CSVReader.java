@@ -200,11 +200,19 @@ public class CSVReader {
     for (int i = 1; i < CSVReader.csvRecords.size(); i++) {
       CSVRecord csvRecord = CSVReader.csvRecords.get(i);
       try {
+        ShiftChange possibleShiftChange = new ShiftChange(
+          (new TimePoint(csvRecord.get(Header.START_TIME))).hour,
+          10,
+          (new TimePoint(csvRecord.get(Header.START_TIME))).hour,
+          50,
+          null
+        );
         if (new Date(csvRecord.get(Header.DATE)).equals(date)
             && CSVReader.recordDescribesRouteDrivingShift(csvRecord)
-            && !shiftChanges.contains(
-                new ShiftChange(new TimePoint(csvRecord.get(Header.START_TIME)), null)))
-          shiftChanges.add(new ShiftChange(new TimePoint(csvRecord.get(Header.START_TIME)), null));
+            && !shiftChanges.contains(possibleShiftChange)
+          ) {
+            shiftChanges.add(possibleShiftChange);
+          }
       } catch (Exception e) {
         // TODO Auto-generated catch block
         e.printStackTrace();
