@@ -201,13 +201,13 @@ public class Schedule {
               new ShiftChange(
                   this.routeDrivingShifts.get(i).time.start.hour,
                   new ShiftChangeID(this.routeDrivingShifts.get(i).period, 1)));
-        } else if (this.routeDrivingShifts.get(i).time.start.hour > firstShiftChange.startTime.hour) {
+        } else if (this.routeDrivingShifts.get(i).time.start.hour
+            > firstShiftChange.startTime.hour) {
           if (this.routeDrivingShifts.get(i).time.start.hour
               > this.routeDrivingShifts.get(i - 1).time.start.hour) {
             if (this.routeDrivingShifts.get(i).period == currentPeriod) {
               nthShiftChangeInPeriod++;
-            }
-            else {
+            } else {
               currentPeriod = this.routeDrivingShifts.get(i).period;
               nthShiftChangeInPeriod = 1;
             }
@@ -222,16 +222,13 @@ public class Schedule {
             // 35 route exception
             else {
               shiftChanges.add(
-                new ShiftChange(
-                  this.routeDrivingShifts.get(i).time.start.hour,
-                  00,
-                  this.routeDrivingShifts.get(i).time.start.hour,
-                  10,
-                  new ShiftChangeID(
-                    this.routeDrivingShifts.get(i).period, nthShiftChangeInPeriod
-                  )
-                )
-              );
+                  new ShiftChange(
+                      this.routeDrivingShifts.get(i).time.start.hour,
+                      00,
+                      this.routeDrivingShifts.get(i).time.start.hour,
+                      10,
+                      new ShiftChangeID(
+                          this.routeDrivingShifts.get(i).period, nthShiftChangeInPeriod)));
             }
           }
         }
