@@ -74,8 +74,7 @@ public class ShiftChange implements Comparable {
     if (other instanceof ShiftChange)
       return this.startTime.equals(((ShiftChange) other).startTime)
           && this.endTime.equals(((ShiftChange) other).endTime)
-          && this.id == ((ShiftChange) other).id
-      ;
+          && this.id == ((ShiftChange) other).id;
     return false;
   }
 }
