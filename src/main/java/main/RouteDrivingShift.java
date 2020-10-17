@@ -47,4 +47,27 @@ public class RouteDrivingShift extends Shift implements Comparable<RouteDrivingS
             ? this.route.compareTo(other.route) == -1 ? -1 : 1
             : 1);
   }
+
+  /**
+   * Compares this with another shift by comparing route IDs first, then starting TimePoints.
+   *
+   * @param other the RouteDrivingShift to compare to
+   * @return a negative integer, zero, or a positive integer as this object is less than, equal to,
+   *     or greater than the specified object.
+   */
+  public int compareByRouteFirst(RouteDrivingShift other) {
+    if (this.route.compareTo(other.route) == -1) {
+      return -1;
+    } else if (this.route.compareTo(other.route) == 1) {
+      return 1;
+    } else {
+      // Compare starting TimePoints
+      if (this.time.start.hour < other.time.start.hour) {
+        return -1;
+      } else if (this.time.start.hour > other.time.start.hour) {
+        return 1;
+      }
+    }
+    return 0;
+  }
 }

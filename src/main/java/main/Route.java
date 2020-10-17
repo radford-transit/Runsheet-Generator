@@ -4,7 +4,7 @@ public class Route implements Comparable<Route> {
   /** The route ID */
   public int id;
   /** The route name */
-  String name;
+  public String name;
 
   /**
    * Constructs a Route object

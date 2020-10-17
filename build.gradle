@@ -44,7 +44,7 @@ dependencies {
   // ZB Utils
   compile 'com.github.zbeach:zb-utils:v1.1'
   // Swing Extensions
-  compile 'com.github.zbeach:swing-extensions:v1.0'
+  compile 'com.github.zbeach:swing-extensions:v1.1'
 }
 
 mainClassName = 'main.RunsheetGenerator'

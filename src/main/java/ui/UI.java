@@ -10,7 +10,7 @@ import main.*;
 public class UI extends JFrame {
   // JFrame dimensions
   private static final int WIDTH = 550;
-  private static final int HEIGHT = 350;
+  private static final int HEIGHT = 450;
 
   // Content pane (has border layout)
   JPanel contentPane = new JPanel(new BorderLayout());
@@ -29,6 +29,8 @@ public class UI extends JFrame {
           this.makePositionsListActionListener(),
           // No shift changes check box listener
           this.makeNoShiftChangesCheckBoxListener(),
+          // End shifts list selection listener
+          this.makeEndShiftsListActionListener(),
           // Runsheet path selection panel button listener
           this.makeRunsheetPathSelectionPanelButtonListener());
   // Navigation panel
@@ -129,10 +131,18 @@ public class UI extends JFrame {
         Settings.includedPositions =
             this.mainPanels.positionsSelectionPanel.positionsList.getSelectedValues();
       }
-      // Runsheet path selection panel -> First shift change selection panel
+      // End shifts selection panel -> First shift change selection panel
+      else if (this.mainPanels.endShiftsSelectionPanel.isShowing()) {
+        this.contentPane.remove(this.mainPanels.endShiftsSelectionPanel);
+        this.contentPane.add(this.mainPanels.firstShiftChangeSelectionPanel);
+
+        // Enable both navigation buttons
+        this.setNavigationButtonsEnabledStates(true, true);
+      }
+      // Runsheet path selection panel -> End shifts selection panel
       else if (this.mainPanels.runsheetPathSelectionPanel.isShowing()) {
         this.contentPane.remove(this.mainPanels.runsheetPathSelectionPanel);
-        this.contentPane.add(this.mainPanels.firstShiftChangeSelectionPanel);
+        this.contentPane.add(this.mainPanels.endShiftsSelectionPanel);
 
         // Change text of next button to "Next"
         this.navigationPanel.nextButton.setText("Next");
@@ -188,13 +198,28 @@ public class UI extends JFrame {
         // Enable both navigation buttons
         this.setNavigationButtonsEnabledStates(true, true);
       }
-      // First shift change selection panel -> Runsheet path selection panel
+      // First shift change selection panel -> End shifts selection panel
       else if (this.mainPanels.firstShiftChangeSelectionPanel.isShowing()) {
         if (!mainPanels.firstShiftChangeSelectionPanel.noShiftChangeCheckBox.isSelected())
           Settings.firstShiftChange =
               CSVReader.getPossibleShiftChangesOnDate(Settings.date)[
                   this.mainPanels.firstShiftChangeSelectionPanel.radioButtons.getSelectedIndex()];
         else Settings.firstShiftChange = null;
+
+        this.contentPane.remove(this.mainPanels.firstShiftChangeSelectionPanel);
+        this.contentPane.add(this.mainPanels.endShiftsSelectionPanel);
+
+        // If ending shifts aren't selected, disable 'Next' button
+        if (this.mainPanels.endShiftsSelectionPanel.shiftsList.getSelectedIndices().length == 0) {
+          this.setNavigationButtonsEnabledStates(true, false);
+        }
+        // Otherwise, enable it
+        else this.setNavigationButtonsEnabledStates(true, true);
+      }
+      // End shifts selection panel -> Runsheet path selection panel
+      else if (this.mainPanels.endShiftsSelectionPanel.isShowing()) {
+        // If no runsheet path is selected, disable next button
+        if (Settings.runsheetPath == null) this.setNavigationButtonsEnabledStates(true, false);
 
         this.contentPane.remove(this.mainPanels.firstShiftChangeSelectionPanel);
         this.contentPane.add(this.mainPanels.runsheetPathSelectionPanel);
@@ -207,6 +232,25 @@ public class UI extends JFrame {
         // Otherwise, enable it
         else this.setNavigationButtonsEnabledStates(true, true);
       }
+      // else if (this.mainPanels.firstShiftChangeSelectionPanel.isShowing()) {
+      //   if (!mainPanels.firstShiftChangeSelectionPanel.noShiftChangeCheckBox.isSelected())
+      //     Settings.firstShiftChange =
+      //         CSVReader.getPossibleShiftChangesOnDate(Settings.date)[
+      //
+      // this.mainPanels.firstShiftChangeSelectionPanel.radioButtons.getSelectedIndex()];
+      //   else Settings.firstShiftChange = null;
+
+      //   this.contentPane.remove(this.mainPanels.firstShiftChangeSelectionPanel);
+      //   this.contentPane.add(this.mainPanels.runsheetPathSelectionPanel);
+
+      //   // Change text of next button to "Done"
+      //   this.navigationPanel.nextButton.setText("Done");
+
+      //   // If no runsheet path is selected, disable next button
+      //   if (Settings.runsheetPath == null) this.setNavigationButtonsEnabledStates(true, false);
+      //   // Otherwise, enable it
+      //   else this.setNavigationButtonsEnabledStates(true, true);
+      // }
       // Done
       else if (this.mainPanels.runsheetPathSelectionPanel.isShowing()) {
         this.complete.set(true);
@@ -281,14 +325,15 @@ public class UI extends JFrame {
         // Set list data for positions selection check box list
         mainPanels.positionsSelectionPanel.setPositionsListData(
             CSVReader.getNonRouteDrivingPositionsOnDate(Settings.date));
-        /* Set list data for first shift change hour selection radio button
-         * list
-         */
+        // Set list data for first shift change hour selection radio button
         mainPanels.firstShiftChangeSelectionPanel.setShiftChangeListData(
             CSVReader.getPossibleShiftChangesOnDate(Settings.date));
         // Select first radio button by default
         if (mainPanels.firstShiftChangeSelectionPanel.radioButtons.length() != 0)
           mainPanels.firstShiftChangeSelectionPanel.radioButtons.select(0);
+        // Set list data for possible end shifts
+        mainPanels.endShiftsSelectionPanel.setEndShiftsListData(
+            CSVReader.getPossibleShiftsEndingAtShopOnDate(Settings.date));
       }
     };
   }
@@ -327,6 +372,15 @@ public class UI extends JFrame {
           // Select first radio button by default
           mainPanels.firstShiftChangeSelectionPanel.radioButtons.select(0);
         }
+      }
+    };
+  }
+
+  private ActionListener makeEndShiftsListActionListener() {
+    return new ActionListener() {
+      @Override
+      public void actionPerformed(ActionEvent e) {
+        Settings.shiftsEndingAtShop = CSVReader.getPossibleShiftsEndingAtShopOnDate(Settings.date);
       }
     };
   }

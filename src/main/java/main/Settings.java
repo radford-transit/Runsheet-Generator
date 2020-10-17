@@ -11,6 +11,8 @@ public class Settings {
   public static Path exportFilePath = null;
   /** The first shift change */
   public static ShiftChange firstShiftChange = null;
+  /** Route driving shifts that end at the shop */
+  public static RouteDrivingShift[] shiftsEndingAtShop = new RouteDrivingShift[0];
   /** Path of the directory to save the runsheet to */
   public static Path runsheetPath = null;
 
@@ -21,6 +23,11 @@ public class Settings {
     for (int i = 0; i < includedPositions.length; i++) {
       if (i == 0) System.out.println(includedPositions[i]);
       else System.out.println("                           " + includedPositions[i]);
+    }
+    System.out.print("Shifts ending at the shop:        ");
+    for (int i = 0; i < shiftsEndingAtShop.length; i++) {
+      if (i == 0) System.out.println(shiftsEndingAtShop[i]);
+      else System.out.println("                                  " + shiftsEndingAtShop[i]);
     }
     System.out.println(
         "Export file path:          "

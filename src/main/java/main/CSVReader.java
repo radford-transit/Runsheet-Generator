@@ -222,4 +222,78 @@ public class CSVReader {
 
     return shiftChanges.toArray(new ShiftChange[shiftChanges.size()]);
   }
+
+  private static String[] getUniquePositions(RouteDrivingShift[] shifts) {
+    ArrayList<String> positions = new ArrayList<String>();
+    for (RouteDrivingShift shift : shifts) {
+      if (!positions.contains(shift.name)) {
+        positions.add(shift.name);
+      }
+    }
+    Collections.sort(positions);
+    return positions.toArray(new String[positions.size()]);
+  }
+
+  private static ArrayList<ArrayList<RouteDrivingShift>> groupByPosition(
+      RouteDrivingShift[] shifts) {
+    String[] positions = CSVReader.getUniquePositions(shifts);
+    ArrayList<ArrayList<RouteDrivingShift>> groupedShifts =
+        new ArrayList<ArrayList<RouteDrivingShift>>();
+    for (String position : positions) {
+      ArrayList<RouteDrivingShift> group = new ArrayList<RouteDrivingShift>();
+      for (RouteDrivingShift shift : shifts) {
+        if (shift.name.equals(position)) {
+          group.add(shift);
+        }
+      }
+      groupedShifts.add(group);
+    }
+    for (ArrayList<RouteDrivingShift> group : groupedShifts) {
+      // Sort by route first
+      for (int i = 0; i < group.size(); i++) {
+        for (int j = 0; j < group.size(); j++) {
+          if (group.get(i).compareByRouteFirst(group.get(j)) == -1 && i > j) {
+            Collections.swap(group, i, j);
+          }
+        }
+      }
+    }
+    return groupedShifts;
+  }
+
+  public static RouteDrivingShift[] getPossibleShiftsEndingAtShopOnDate(Date date) {
+    ArrayList<RouteDrivingShift> routeDrivingShifts = new ArrayList<RouteDrivingShift>();
+
+    // Read the CSV file records from the second record to skip the header
+    for (int i = 1; i < CSVReader.csvRecords.size(); i++) {
+      CSVRecord csvRecord = CSVReader.csvRecords.get(i);
+      try {
+        if (new Date(csvRecord.get(Header.DATE)).equals(date)
+            && CSVReader.recordDescribesRouteDrivingShift(csvRecord)) {
+          routeDrivingShifts.add(
+              new RouteDrivingShift(
+                  csvRecord.get(Header.POSITION_NAME),
+                  csvRecord.get(Header.PERIOD).charAt(0),
+                  new TimePeriod(
+                      new TimePoint(csvRecord.get(Header.START_TIME)),
+                      new TimePoint(csvRecord.get(Header.START_TIME))),
+                  new Employee(csvRecord.get(Header.LAST_NAME), csvRecord.get(Header.FIRST_NAME))));
+        }
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    }
+    ArrayList<ArrayList<RouteDrivingShift>> groupedRouteDrivingShifts =
+        CSVReader.groupByPosition(
+            routeDrivingShifts.toArray(new RouteDrivingShift[routeDrivingShifts.size()]));
+
+    ArrayList<RouteDrivingShift> lastShifts = new ArrayList<RouteDrivingShift>();
+    // Add if shift is last on route
+    for (ArrayList<RouteDrivingShift> group : groupedRouteDrivingShifts) {
+      lastShifts.add(group.get(group.size() - 1));
+    }
+
+    Collections.sort(lastShifts);
+    return lastShifts.toArray(new RouteDrivingShift[lastShifts.size()]);
+  }
 }
